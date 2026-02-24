@@ -7,28 +7,44 @@
   min-height: 100dvh;
   max-width: var(--max-width);
   margin: 0 auto;
-  background: #F8F7F5;
+  background: #111827; /* Dark slate background exactly like the image */
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-/* ─── Background Image ─── */
-.onboard-bg {
+/* ─── Background Grids & Curves ─── */
+.onboard-bg-grid {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.onboard-bg-curve {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60vh;
+  z-index: 1;
+  pointer-events: none;
   overflow: hidden;
 }
 
-.onboard-bg img {
+.onboard-bg-curve svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.3;
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0) 80%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0) 80%);
+  height: auto;
+  min-width: 1440px; /* Ensure curve doesn't warp too much on thin screens */
+  transform: translateX(-50%);
+  margin-left: 50%;
 }
 
 /* ─── Main Content ─── */
@@ -36,30 +52,38 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 4rem 1.5rem 2.5rem;
+  padding: 0;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* ─── Header ─── */
-.onboard-header {
-  margin-bottom: 2.5rem;
+.onboard-header-center {
+  padding: 4rem 1.5rem 2rem;
+  text-align: center;
+  position: relative;
 }
 
-.onboard-icon-wrap {
-  width: 48px;
-  height: 48px;
-  background: rgba(251, 126, 24, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 16px;
-  margin-bottom: 1.5rem;
+.onboard-title-elegant {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-style: italic;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
 }
 
-.onboard-icon-wrap .material-symbols-outlined {
-  font-size: 28px;
-  color: var(--color-primary);
+.title-emoji {
+  font-style: normal;
+}
+
+.onboard-desc-elegant {
+  font-size: 0.875rem;
+  color: #9CA3AF;
+  line-height: 1.6;
+  max-width: 320px;
+  margin: 0 auto;
 }
 
 .onboard-title {
@@ -102,33 +126,91 @@
   background: #F1F5F9;
 }
 
-.onboard-auth-options {
+/* ─── Carousel Section ─── */
+.onboard-carousel-container {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+}
+
+.carousel-track {
+  position: relative;
+  height: 280px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
   margin-top: 1rem;
+}
+
+.carousel-card {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  will-change: transform, opacity;
+}
+
+.carousel-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.carousel-dot {
+  width: 24px;
+  height: 4px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+.carousel-dot.active {
+  background: #3B82F6; /* The specific light blue active color */
+  width: 32px;
+}
+
+/* ─── Bottom Actions Block ─── */
+.onboard-auth-block {
+  margin-top: auto;
+  padding: 0 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .onboard-google-btn {
   width: 100%;
-  height: 64px;
+  height: 56px;
   background: #FFFFFF;
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 14px;
+  border: none;
+  border-radius: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: #0F172A;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  color: #111827;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  transition: transform 0.15s ease;
 }
 
 .onboard-google-btn img {
   width: 28px;
   height: 28px;
+  object-fit: contain;
 }
 
 .onboard-google-btn:active {
@@ -136,58 +218,32 @@
   background: #F8FAFC;
 }
 
-.onboard-divider {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  color: #94A3B8;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.onboard-divider::before,
-.onboard-divider::after {
-  content: '';
-  flex: 1;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
-}
-
-.onboard-divider span {
-  padding: 0 1rem;
-}
-
 .onboard-qp-btn {
   width: 100%;
-  height: 64px;
-  background: rgba(251, 126, 24, 0.1);
-  border: 1px solid rgba(251, 126, 24, 0.2);
-  border-radius: 14px;
+  height: 56px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: var(--color-primary);
+  color: #FFFFFF;
   transition: transform 0.15s ease, background 0.15s;
 }
 
-.onboard-qp-btn .material-symbols-outlined {
-  font-size: 24px;
-}
-
 .onboard-qp-btn:active {
-  transform: scale(0.98);
-  background: rgba(251, 126, 24, 0.15);
+  background: rgba(255,255,255,0.1);
 }
 
-/* ─── Form ─── */
+/* ─── Form Section (Adjusted for Dark Mode) ─── */
 .onboard-form {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  padding: 0 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .onboard-field {
@@ -199,7 +255,7 @@
 .onboard-label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #1E293B;
+  color: #D1D5DB; /* Lighter text for dark bg */
   padding-left: 4px;
 }
 
@@ -213,29 +269,29 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 22px;
-  color: #94A3B8;
+  color: #9CA3AF;
   pointer-events: none;
 }
 
 .onboard-input {
   width: 100%;
   height: 56px;
-  background: #FFFFFF;
-  border: 1px solid rgba(251, 126, 24, 0.2);
+  background: rgba(255,255,255,0.05); /* slightly visible input box */
+  border: 1px solid rgba(255,255,255,0.1);
   border-radius: 14px;
   padding: 0 16px 0 48px;
   font-size: 1rem;
-  color: #0F172A;
+  color: #FFFFFF;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .onboard-input::placeholder {
-  color: #94A3B8;
+  color: #6B7280;
 }
 
 .onboard-input:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(251, 126, 24, 0.1);
+  border-color: #3B82F6; /* Accent blue */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 /* ─── Address Section ─── */
