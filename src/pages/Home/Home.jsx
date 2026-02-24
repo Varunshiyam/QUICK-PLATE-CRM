@@ -26,6 +26,7 @@ const IMG = {
   dessert: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBOhl1yjOKt_cFiqW9w_vcZMp1dEUEqSkIF_1PZ2iIkZrAMPdZWmq5nS0UsAxyiyLEANe-rPR00vzNRPE7gtW5F_ZxagryLxi0ew6lKQX3HlNyzqu5iDJHCJ5K-lyvjvro7takNhJHZXCemHKBQWECAbNr0M7UqsYN56Y7IwMX3szaterAKcLL9gjnTAhk1Z5X2ZjsrOEQUEbt_qilhyYQDuwE2oaBRpNEGotfphSL4XSiYM5zKYG8L2ce2Prupm8XZIwamR4fa9m0p',
   hero:    'https://lh3.googleusercontent.com/aida-public/AB6AXuBgH-b5tMofcESETTPskyBzLwfv0wmn3BssBWy4aqdG8Ssu1OA1zUF2-TkuMacuyuQnoamQ4yvmIXABcP0MXCPutGYk8oB8I0eJm2roL1mIa82SPjNwxdGCBvp-hLaPDfy6vfFwURop7N_5LTua6vyyS1iL9YkdjoWw2iRqqoXdIVu9Zy4-YBB6Tb5xwpsEoL6uinVUhgE1qmtfNs7FvVHc6EPMsF0VGJOSE0BB03Im-Zk1sn3MvqbVGgSt2rNNtIgASlsV6cwbEPIx',
   salad:   'https://lh3.googleusercontent.com/aida-public/AB6AXuBZH03LnZFjClUcB8auLGFe4iXGTZKPwtoc_7earTpfFLFpyJCZs0HnZvrIO9lRdlin_owGopgjo-eMqf8FxKWEdpRN11FShwLWF9Z7l7FV4qhusFk-YM9Ks3x-rR0l5pwRW6qQw9GcaCIK3IqOd9Nz0uQQzjdk9sAMRsSGOCpGXdvHjngM0ys6JcRfgZOyFuc2oxVMdee-vgSsOXFYq0vfqrhchkpb3dIRU1wD8DmpC7q6DlUQgQqjy4q2ZHuM5uOaqz6FmsWuOjuR',
+  masala:  'https://images.unsplash.com/photo-1565557623262-b51c2513a641?q=80&w=2571&auto=format&fit=crop',
 };
 
 const TRENDING = [
@@ -50,16 +51,16 @@ const RESTAURANTS = [
     offerColor: 'orange',
   },
   {
-    img: IMG.pasta,
-    name: 'Verona Trattoria',
-    cuisine: 'Italian',
+    img: IMG.masala,
+    name: 'Masala Tango',
+    cuisine: 'Indian Fusion',
     price: '$$',
     distance: '1.1 mi',
     time: '15-25 min',
     rating: '4.9',
     reviews: '800',
-    offer: 'FREE DELIVERY',
-    offerColor: 'indigo',
+    offer: 'JUICY & SPICY SPECIAL',
+    offerColor: 'orange',
   },
   {
     img: IMG.sushi,
