@@ -662,3 +662,145 @@
   border-radius: 50%;
   border: 2px solid #FFFFFF;
 }
+
+/* ─── Empty State ─── */
+.home-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: #64748B;
+}
+
+.home-empty-state .material-symbols-outlined {
+  font-size: 48px;
+  color: #CBD5E1;
+  margin-bottom: 1rem;
+}
+
+.home-empty-state h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 0.5rem;
+}
+
+.home-empty-state p {
+  font-size: 14px;
+}
+
+/* ─── Filter Bottom Sheet Modal ─── */
+.filter-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 100;
+}
+
+.filter-modal-content {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #FFFFFF;
+  border-radius: 2rem 2rem 0 0;
+  padding: 1.5rem 1.5rem 3rem;
+  z-index: 101;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.filter-drag-handle {
+  width: 48px;
+  height: 4px;
+  background: #CBD5E1;
+  border-radius: 999px;
+  margin: 0 auto 1.5rem;
+}
+
+.filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.filter-header h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.filter-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #F1F5F9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748B;
+  transition: all 0.2s;
+}
+
+.filter-close-btn:active {
+  background: #E2E8F0;
+}
+
+.filter-section {
+  margin-bottom: 2rem;
+}
+
+.filter-section h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 1rem;
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.filter-chip {
+  padding: 0.5rem 1.25rem;
+  border-radius: 999px;
+  background: #F1F5F9;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.filter-chip.active {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(251, 126, 24, 0.25);
+}
+
+.filter-actions {
+  margin-top: 2rem;
+}
+
+.filter-apply-btn {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: #0F172A;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 15px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.2);
+  transition: transform 0.15s;
+}
+
+.filter-apply-btn:active {
+  transform: scale(0.98);
+}
