@@ -5,7 +5,8 @@ import useHaptic from '../../hooks/useHaptic';
 import './Home.css';
 
 /* ─── Mock Data ─── */
-const USER_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDsOHwxoJdRqvt1KTJIjuBMnjUaHgiksXnnUgjrmpBS0wd0xVeLXgJwm5dxcLg3Ch1mY36USOW8Y2r5wMpCNKnapaSogKpeZ1TIJs0b3Z5XshtP8tKhIFQn7nHAP9i4nEo0TCEFZS9RJ4vbQIzlpsLW9hJHoTgnEv8whF2w2-ZrZlhxAhmSxPjoS46LeeVmEfRq-x5lOsvRpmvoXtUZ4U-IdolXC4brRLSzHEuZ8N7PVQcsYF6XABAUTNtuGk7sR67Xp4gfXtHPBpZh';
+import userEmoji from '../../assets/images/Emoji.avif';
+const USER_IMG = userEmoji;
 
 const CATEGORIES = [
   { icon: 'restaurant', label: 'All', active: true },
