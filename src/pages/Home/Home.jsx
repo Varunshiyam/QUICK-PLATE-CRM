@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { useState, useMemo, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useNavigate } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
 import './Home.css';
 
@@ -31,6 +31,45 @@ const IMG = {
   pastry:  'https://images.unsplash.com/photo-1509365465985-25d11c17e812?q=80&w=2630&auto=format&fit=crop',
   cake:    'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80&w=2536&auto=format&fit=crop',
 };
+
+const BANNERS = [
+  {
+    id: 1,
+    supertitle: 'New Year Offer',
+    title: '30% OFF',
+    subtitle: '16 - 31 Dec',
+    buttonText: 'Get Now',
+    theme: 'green',
+    img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2670&auto=format&fit=crop', // Pizza
+  },
+  {
+    id: 2,
+    supertitle: 'Mid-Day Cravings',
+    title: 'Free Delivery',
+    subtitle: 'For spaghetti',
+    buttonText: 'Order now',
+    theme: 'dark',
+    img: 'https://images.unsplash.com/photo-1626844131082-256783844137?q=80&w=2535&auto=format&fit=crop', // Spaghetti
+  },
+  {
+    id: 3,
+    supertitle: 'Daily Reward',
+    title: 'Claim Your',
+    subtitle: 'Free delivery now!',
+    buttonText: 'Order now',
+    theme: 'primary',
+    img: 'https://images.unsplash.com/photo-1525648199074-cee30ba79a4a?q=80&w=2670&auto=format&fit=crop', // Burger/delivery
+  },
+  {
+    id: 4,
+    supertitle: 'Happy Hours',
+    title: 'Buy 1 Get 1',
+    subtitle: 'On premium sushi platters',
+    buttonText: 'Explore',
+    theme: 'slate',
+    img: sushiPlatter,
+  }
+];
 
 const TRENDING = [
   { img: IMG.dessert, badge: '#1 Trending',    name: 'Chocolate Lava Dream',  price: 'Starting at $9.99' },
@@ -112,15 +151,65 @@ const fadeUp = {
 };
 
 const Home = () => {
-  const { lightTap } = useHaptic();
+  const { lightTap, mediumTap } = useHaptic();
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [activeSort, setActiveSort] = useState('Recommended');
+  const [currentBanner, setCurrentBanner] = useState(0);
+
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentBanner((prev) => (prev + 1) % BANNERS.length);
+    }, 5500); // changes every 5.5s
+    return () => clearInterval(timer);
+  }, []);
+
+  // Filter & Sort Logic
+  const filteredRestaurants = useMemo(() => {
+    let result = RESTAURANTS;
+    
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(r => r.name.toLowerCase().includes(q) || r.cuisine.toLowerCase().includes(q));
+    }
+    
+    if (activeCategory !== 'All') {
+      result = result.filter(r => {
+        const c = r.cuisine.toLowerCase();
+        if (activeCategory === 'Bakery') return c.includes('bakery') || c.includes('dessert') || r.name.toLowerCase().includes('sweet');
+        if (activeCategory === 'Pizza') return c.includes('pizza') || c.includes('italian');
+        if (activeCategory === 'Sushi') return c.includes('sushi') || c.includes('japanese');
+        if (activeCategory === 'Burgers') return c.includes('burger') || c.includes('american') || c.includes('bbq');
+        return true;
+      });
+    }
+
+    if (activeSort === 'Rating') {
+      result = [...result].sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
+    } else if (activeSort === 'Delivery Time') {
+      result = [...result].sort((a, b) => parseInt(a.time) - parseInt(b.time));
+    }
+    
+    return result;
+  }, [searchQuery, activeCategory, activeSort]);
+
+  const filteredTrending = useMemo(() => {
+    if (!searchQuery) return TRENDING;
+    const q = searchQuery.toLowerCase();
+    return TRENDING.filter(item => item.name.toLowerCase().includes(q) || item.badge.toLowerCase().includes(q));
+  }, [searchQuery]);
 
   return (
     <div className="home-page">
       {/* ─── Header ─── */}
       <header className="home-header">
         <div className="home-header-top">
-          <div className="home-location">
+          <div className="home-location" onClick={() => { lightTap(); setIsAddressModalOpen(!isAddressModalOpen); setIsProfileModalOpen(false); }}>
             <div className="home-location-icon">
               <span className="material-symbols-outlined">location_on</span>
             </div>
@@ -128,14 +217,84 @@ const Home = () => {
               <span className="home-location-label">Deliver to</span>
               <h2 className="home-location-city">
                 San Francisco, CA
-                <span className="material-symbols-outlined">expand_more</span>
+                <motion.span 
+                  className="material-symbols-outlined"
+                  animate={{ rotate: isAddressModalOpen ? 180 : 0 }}
+                >
+                  expand_more
+                </motion.span>
               </h2>
             </div>
           </div>
-          <div className="home-avatar">
-            <img src={USER_IMG} alt="User" />
+          <div className="home-avatar" onClick={() => { lightTap(); setIsProfileModalOpen(!isProfileModalOpen); setIsAddressModalOpen(false); }}>
+            <img src={USER_IMG} alt="User Avatar" />
           </div>
         </div>
+
+        {/* ─── Header Dropdowns ─── */}
+        <AnimatePresence>
+          {isAddressModalOpen && (
+            <motion.div
+              className="home-address-dropdown dropdown-glass"
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="address-slot active" onClick={() => { lightTap(); setIsAddressModalOpen(false); }}>
+                <div className="address-icon"><span className="material-symbols-outlined">home</span></div>
+                <div className="address-details">
+                  <h4>Home (Default)</h4>
+                  <p>123 Silicon Valley, SF, CA</p>
+                </div>
+                <span className="material-symbols-outlined check">check_circle</span>
+              </div>
+              <div className="address-slot" onClick={() => { lightTap(); setIsAddressModalOpen(false); }}>
+                <div className="address-icon"><span className="material-symbols-outlined">work</span></div>
+                <div className="address-details">
+                  <h4>Office</h4>
+                  <p>456 Market St, SF, CA</p>
+                </div>
+              </div>
+              <button className="address-add-btn" onClick={mediumTap}>
+                <span className="material-symbols-outlined">add</span>
+                Add new address
+              </button>
+            </motion.div>
+          )}
+          
+          {isProfileModalOpen && (
+            <motion.div
+              className="home-profile-dropdown dropdown-glass"
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="profile-header">
+                <div className="profile-img-large">
+                  <img src={USER_IMG} alt="User" />
+                </div>
+                <div className="profile-info">
+                  <h4>Hey, Foodie!</h4>
+                  <p>Your Orders & Details</p>
+                </div>
+              </div>
+              <div className="profile-menu">
+                <button onClick={() => { setIsProfileModalOpen(false); lightTap(); navigate('/profile'); }}>
+                  <span className="material-symbols-outlined">person</span> My Profile
+                </button>
+                <button onClick={() => { setIsProfileModalOpen(false); lightTap(); navigate('/favorites'); }}>
+                  <span className="material-symbols-outlined">favorite</span> Favorites
+                </button>
+                <div className="dropdown-divider"></div>
+                <button className="logout-btn" onClick={() => { setIsProfileModalOpen(false); mediumTap(); navigate('/'); }}>
+                  <span className="material-symbols-outlined">logout</span> Log Out
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="home-search-wrap">
           <div className="home-search">
@@ -144,8 +303,10 @@ const Home = () => {
               className="home-search-input"
               type="text"
               placeholder="Search restaurants, dishes..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button className="home-search-filter" onClick={lightTap}>
+            <button className="home-search-filter" onClick={() => { mediumTap(); setIsFilterOpen(true); }}>
               <span className="material-symbols-outlined">tune</span>
             </button>
           </div>
@@ -153,25 +314,48 @@ const Home = () => {
       </header>
 
       <main>
-        {/* ─── Hero Banner ─── */}
+        {/* ─── Hero Carousel Banner ─── */}
         <motion.section
-          className="home-hero"
+          className="home-hero-carousel"
           variants={fadeUp}
           initial="hidden"
           animate="visible"
           custom={0}
         >
-          <div className="home-hero-card">
-            <img src={IMG.hero} alt="Delicious food" />
-            <div className="home-hero-overlay" />
-            <div className="home-hero-content">
-              <div>
-                <h1 className="home-hero-title">
-                  Delivered hot.<br />Delivered fast.
-                </h1>
-                <p className="home-hero-subtitle">Premium eats from your favorite spots.</p>
-              </div>
-              <button className="home-hero-btn" onClick={lightTap}>Order Now</button>
+          <div className="home-banner-wrapper">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentBanner}
+                className={`home-banner-card theme-${BANNERS[currentBanner].theme}`}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.4 }}
+              >
+                <div className="home-banner-bg-img">
+                   <img src={BANNERS[currentBanner].img} alt="" />
+                </div>
+                <div className="home-banner-content">
+                  <div>
+                    <span className="home-banner-supertitle">{BANNERS[currentBanner].supertitle}</span>
+                    <h1 className="home-banner-title">{BANNERS[currentBanner].title}</h1>
+                    <p className="home-banner-subtitle">{BANNERS[currentBanner].subtitle}</p>
+                  </div>
+                  <button className="home-banner-btn" onClick={lightTap}>
+                    {BANNERS[currentBanner].buttonText}
+                  </button>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+            
+            <div className="home-banner-dots">
+              {BANNERS.map((_, idx) => (
+                <div 
+                  key={idx} 
+                  className={`home-banner-dot ${idx === currentBanner ? 'active' : ''}`} 
+                  onClick={() => { lightTap(); setCurrentBanner(idx); }}
+                />
+              ))}
             </div>
           </div>
         </motion.section>
@@ -216,16 +400,26 @@ const Home = () => {
             </button>
           </div>
           <div className="home-trending-scroll">
-            {TRENDING.map((item, i) => (
-              <div key={i} className="home-trending-card">
-                <div className="home-trending-img">
-                  <img src={item.img} alt={item.name} />
-                  <div className="home-trending-badge">{item.badge}</div>
-                </div>
-                <h4 className="home-trending-name">{item.name}</h4>
-                <p className="home-trending-price">{item.price}</p>
-              </div>
-            ))}
+            <AnimatePresence>
+              {filteredTrending.map((item) => (
+                <motion.div
+                  key={item.name}
+                  className="home-trending-card"
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div className="home-trending-img">
+                    <img src={item.img} alt={item.name} />
+                    <div className="home-trending-badge">{item.badge}</div>
+                  </div>
+                  <h4 className="home-trending-name">{item.name}</h4>
+                  <p className="home-trending-price">{item.price}</p>
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         </motion.section>
 
@@ -245,39 +439,61 @@ const Home = () => {
             </button>
           </div>
 
-          <div className="home-premium-list">
-            {RESTAURANTS.map((r, i) => (
-              <div key={i} className="home-restaurant-card">
-                <div className="home-restaurant-img">
-                  <img src={r.img} alt={r.name} />
-                  <div className={`home-offer-badge ${r.offerColor === 'indigo' ? 'indigo' : ''}`}>
-                    {r.offer}
-                  </div>
-                  <div className="home-rating-badge">
-                    <span className="material-symbols-outlined">star</span>
-                    <span className="home-rating-score">{r.rating}</span>
-                    <span className="home-rating-count">({r.reviews})</span>
-                  </div>
-                </div>
-                <div className="home-restaurant-info">
-                  <div>
-                    <h3 className="home-restaurant-name">{r.name}</h3>
-                    <p className="home-restaurant-meta">
-                      {r.cuisine}
-                      <span className="home-restaurant-dot" />
-                      {r.price}
-                      <span className="home-restaurant-dot" />
-                      {r.distance}
-                    </p>
-                  </div>
-                  <div className="home-time-badge">
-                    <span className="material-symbols-outlined">schedule</span>
-                    <span>{r.time}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <motion.div className="home-premium-list" layout>
+            <AnimatePresence>
+              {filteredRestaurants.length > 0 ? (
+                filteredRestaurants.map((r) => (
+                  <motion.div
+                    key={r.name}
+                    className="home-restaurant-card"
+                    layout
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="home-restaurant-img">
+                      <img src={r.img} alt={r.name} />
+                      <div className={`home-offer-badge ${r.offerColor === 'indigo' ? 'indigo' : ''}`}>
+                        {r.offer}
+                      </div>
+                      <div className="home-rating-badge">
+                        <span className="material-symbols-outlined">star</span>
+                        <span className="home-rating-score">{r.rating}</span>
+                        <span className="home-rating-count">({r.reviews})</span>
+                      </div>
+                    </div>
+                    <div className="home-restaurant-info">
+                      <div>
+                        <h3 className="home-restaurant-name">{r.name}</h3>
+                        <p className="home-restaurant-meta">
+                          {r.cuisine}
+                          <span className="home-restaurant-dot" />
+                          {r.price}
+                          <span className="home-restaurant-dot" />
+                          {r.distance}
+                        </p>
+                      </div>
+                      <div className="home-time-badge">
+                        <span className="material-symbols-outlined">schedule</span>
+                        <span>{r.time}</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))
+              ) : (
+                <motion.div 
+                  className="home-empty-state"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  <span className="material-symbols-outlined">search_off</span>
+                  <h3>No matches found</h3>
+                  <p>Try adjusting your search or filters.</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
         </motion.section>
 
         {/* ─── Smart Protection ─── */}
@@ -325,6 +541,69 @@ const Home = () => {
           </Link>
         </div>
       </nav>
+
+      {/* ─── Filter Bottom Sheet Modal ─── */}
+      <AnimatePresence>
+        {isFilterOpen && (
+          <>
+            <motion.div 
+              className="filter-modal-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsFilterOpen(false)}
+            />
+            <motion.div 
+              className="filter-modal-content"
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            >
+              <div className="filter-drag-handle" />
+              <div className="filter-header">
+                <h3>Filter & Sort</h3>
+                <button className="filter-close-btn" onClick={() => { setIsFilterOpen(false); lightTap(); }}>
+                  <span className="material-symbols-outlined">close</span>
+                </button>
+              </div>
+              
+              <div className="filter-section">
+                <h4>Sort By</h4>
+                <div className="filter-chips">
+                  {['Recommended', 'Rating', 'Delivery Time'].map(sort => (
+                    <button 
+                      key={sort} 
+                      className={`filter-chip ${activeSort === sort ? 'active' : ''}`}
+                      onClick={() => { setActiveSort(sort); lightTap(); }}
+                    >
+                      {sort}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="filter-section">
+                <h4>Price Range</h4>
+                <div className="filter-chips">
+                  {['$', '$$', '$$$', '$$$$'].map(price => (
+                    <button key={price} className="filter-chip">{price}</button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="filter-actions">
+                <button 
+                  className="filter-apply-btn"
+                  onClick={() => { setIsFilterOpen(false); mediumTap(); }}
+                >
+                  Apply Filters
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
