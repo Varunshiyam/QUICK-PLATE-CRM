@@ -158,6 +158,9 @@ const Home = () => {
   const [activeSort, setActiveSort] = useState('Recommended');
   const [currentBanner, setCurrentBanner] = useState(0);
 
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentBanner((prev) => (prev + 1) % BANNERS.length);
@@ -205,7 +208,7 @@ const Home = () => {
       {/* ─── Header ─── */}
       <header className="home-header">
         <div className="home-header-top">
-          <div className="home-location">
+          <div className="home-location" onClick={() => { lightTap(); setIsAddressModalOpen(!isAddressModalOpen); setIsProfileModalOpen(false); }}>
             <div className="home-location-icon">
               <span className="material-symbols-outlined">location_on</span>
             </div>
@@ -213,14 +216,79 @@ const Home = () => {
               <span className="home-location-label">Deliver to</span>
               <h2 className="home-location-city">
                 San Francisco, CA
-                <span className="material-symbols-outlined">expand_more</span>
+                <motion.span 
+                  className="material-symbols-outlined"
+                  animate={{ rotate: isAddressModalOpen ? 180 : 0 }}
+                >
+                  expand_more
+                </motion.span>
               </h2>
             </div>
           </div>
-          <div className="home-avatar">
-            <img src={USER_IMG} alt="User" />
+          <div className="home-avatar" onClick={() => { lightTap(); setIsProfileModalOpen(!isProfileModalOpen); setIsAddressModalOpen(false); }}>
+            <span className="home-avatar-emoji">😎</span>
           </div>
         </div>
+
+        {/* ─── Header Dropdowns ─── */}
+        <AnimatePresence>
+          {isAddressModalOpen && (
+            <motion.div
+              className="home-address-dropdown dropdown-glass"
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="address-slot active" onClick={() => { lightTap(); setIsAddressModalOpen(false); }}>
+                <div className="address-icon"><span className="material-symbols-outlined">home</span></div>
+                <div className="address-details">
+                  <h4>Home (Default)</h4>
+                  <p>123 Silicon Valley, SF, CA</p>
+                </div>
+                <span className="material-symbols-outlined check">check_circle</span>
+              </div>
+              <div className="address-slot" onClick={() => { lightTap(); setIsAddressModalOpen(false); }}>
+                <div className="address-icon"><span className="material-symbols-outlined">work</span></div>
+                <div className="address-details">
+                  <h4>Office</h4>
+                  <p>456 Market St, SF, CA</p>
+                </div>
+              </div>
+              <button className="address-add-btn" onClick={mediumTap}>
+                <span className="material-symbols-outlined">add</span>
+                Add new address
+              </button>
+            </motion.div>
+          )}
+          
+          {isProfileModalOpen && (
+            <motion.div
+              className="home-profile-dropdown dropdown-glass"
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="profile-header">
+                <div className="profile-emoji-large">😎</div>
+                <div className="profile-info">
+                  <h4>Hey, Foodie!</h4>
+                  <p>Your Orders & Settings</p>
+                </div>
+              </div>
+              <div className="profile-menu">
+                <button onClick={() => { setIsProfileModalOpen(false); lightTap(); }}><span className="material-symbols-outlined">person</span> My Profile</button>
+                <button onClick={() => { setIsProfileModalOpen(false); lightTap(); }}><span className="material-symbols-outlined">favorite</span> Favorites</button>
+                <button onClick={() => { setIsProfileModalOpen(false); lightTap(); }}><span className="material-symbols-outlined">settings</span> Settings</button>
+                <div className="dropdown-divider"></div>
+                <button className="logout-btn" onClick={() => { setIsProfileModalOpen(false); mediumTap(); }}>
+                  <span className="material-symbols-outlined">logout</span> Log Out
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="home-search-wrap">
           <div className="home-search">
