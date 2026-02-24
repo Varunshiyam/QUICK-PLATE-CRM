@@ -1,121 +1,35 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import {
+  FiShield, FiCreditCard, FiTruck, FiActivity,
+  FiClock, FiLayers, FiSearch, FiLock,
+  FiTerminal, FiFileText, FiZap, FiServer
+} from 'react-icons/fi';
 import useHaptic from '../../hooks/useHaptic';
+import techBg from '../../assets/images/tech-bg.png';
 import './Features.css';
 
-// Icons
-import { 
-  FiShield, FiCreditCard, FiTruck, FiActivity, 
-  FiClock, FiLayers, FiSearch, FiKey, 
-  FiTerminal, FiFileText, FiAlertTriangle, FiServer 
-} from 'react-icons/fi';
-
-import techBg from '../../assets/images/tech-bg.png';
-
-const FEATURES_DATA = [
-  {
-    id: 1,
-    title: 'Enterprise-Grade Refund Governance',
-    subtitle: 'Multi-layer approval & audit trails',
-    desc: 'Refunds aren’t just processed — they are governed. Our multi-stage refund workflow ensures fairness, transparency, and financial accountability.',
-    icon: <FiShield />,
-  },
-  {
-    id: 2,
-    title: 'Stripe-Secured, Server-Verified Payments',
-    subtitle: 'Webhook-based confirmation',
-    desc: 'Payments are verified server-side using Stripe webhooks, ensuring no false confirmations and maximum financial integrity without storing card data.',
-    icon: <FiCreditCard />,
-  },
-  {
-    id: 3,
-    title: 'Intelligent Delivery Assignment Engine',
-    subtitle: 'Load balancing & zone assignment',
-    desc: 'Smart dispatch engine automatically assigns the optimal delivery partner based on availability, workload, and service zones. True enterprise logistics logic.',
-    icon: <FiTruck />,
-  },
-  {
-    id: 4,
-    title: 'Real-Time Order State Machine',
-    subtitle: 'Strict state transition control',
-    desc: 'Every order moves through a controlled state engine, ensuring real-time visibility and zero ambiguous status changes (CREATED → PAID → ASSIGNED → PICKED_UP).',
-    icon: <FiActivity />,
-  },
-  {
-    id: 5,
-    title: 'Wallet Credit System with Expiry',
-    subtitle: 'Partial redemption & lifecycle tracking',
-    desc: 'Refunds can be converted into smart wallet credits with expiry tracking and partial redemption support natively built into the financial core.',
-    icon: <FiClock />,
-  },
-  {
-    id: 6,
-    title: 'Queue-Based Operational Routing',
-    subtitle: 'Role-based operational resolution',
-    desc: 'Operational tickets are intelligently routed through service and finance queues for structured resolution, protecting team bandwidth.',
-    icon: <FiLayers />,
-  },
-  {
-    id: 7,
-    title: 'Transparent Refund Timeline',
-    subtitle: 'Real-time customer visibility',
-    desc: 'Customers can track refund status in real time with transparent approval visibility, building trust through process clarity.',
-    icon: <FiSearch />,
-  },
-  {
-    id: 8,
-    title: 'Role-Based Backend Governance',
-    subtitle: 'Strict separation of duties',
-    desc: 'Strict separation of duties ensures customers, service agents, and finance teams operate within controlled permission boundaries.',
-    icon: <FiKey />,
-  },
-  {
-    id: 9,
-    title: 'API-First Architecture',
-    subtitle: 'Built for scale and microservices',
-    desc: 'Built with an API-first architecture, enabling scalability, mobile expansion, and microservice integration. The React frontend is purely API-driven.',
-    icon: <FiTerminal />,
-  },
-  {
-    id: 10,
-    title: 'Full Financial Audit Trail',
-    subtitle: 'Timestamped & role-tracked',
-    desc: 'Every financial event is logged with a complete audit trail, ensuring traceability and compliance down to the original transaction.',
-    icon: <FiFileText />,
-  },
-  {
-    id: 11,
-    title: 'Automated SLA & Escalation',
-    subtitle: 'Operational monitoring capability',
-    desc: 'Designed to support SLA-based escalation and automated operational monitoring, ensuring no order is left behind during peak spikes.',
-    icon: <FiAlertTriangle />,
-  },
-  {
-    id: 12,
-    title: 'Production-Ready Backend',
-    subtitle: 'Bulk-safe logic & robust validation',
-    desc: 'Unlike typical demo applications, this system is built with production-grade validation rules, bulk-safe logic, and governor-limit awareness.',
-    icon: <FiServer />,
-  },
+const FEATURES = [
+  { icon: <FiShield />,     color: 'orange', title: 'Refund Governance',       desc: 'Multi-stage approval workflow with full audit trail.' },
+  { icon: <FiCreditCard />, color: 'blue',   title: 'Stripe Payments',         desc: 'Server-verified via webhooks. Zero card data stored.' },
+  { icon: <FiTruck />,      color: 'green',  title: 'Smart Delivery Engine',   desc: 'Zone-based assignment with load balancing.' },
+  { icon: <FiActivity />,   color: 'purple', title: 'Order State Machine',     desc: 'Controlled transitions from Created → Delivered.' },
+  { icon: <FiClock />,      color: 'pink',   title: 'Wallet Credits',          desc: 'Expiry tracking with partial redemption support.' },
+  { icon: <FiLayers />,     color: 'cyan',   title: 'Queue Routing',           desc: 'Role-based ticket routing through service layers.' },
+  { icon: <FiSearch />,     color: 'amber',  title: 'Refund Timeline',         desc: 'Real-time status visibility builds customer trust.' },
+  { icon: <FiLock />,       color: 'lime',   title: 'Role-Based Access',       desc: 'Strict permission boundaries per team role.' },
+  { icon: <FiTerminal />,   color: 'rose',   title: 'API-First Design',        desc: 'Scalable architecture ready for microservices.' },
+  { icon: <FiFileText />,   color: 'sky',    title: 'Audit Trail',             desc: 'Every financial event timestamped & role-tracked.' },
+  { icon: <FiZap />,        color: 'teal',   title: 'SLA & Escalation',        desc: 'Automated monitoring with escalation triggers.' },
+  { icon: <FiServer />,     color: 'indigo', title: 'Production Backend',      desc: 'Governor-aware with bulk-safe validation logic.' },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
-  },
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: i => ({
+    opacity: 1, y: 0,
+    transition: { delay: i * 0.06, duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] },
+  }),
 };
 
 const Features = () => {
@@ -123,9 +37,9 @@ const Features = () => {
 
   return (
     <div className="features-page">
-      {/* ─── Glassmorphic Header ─── */}
+      {/* Nav */}
       <header className="landing-header">
-        <nav className="landing-nav" style={{ background: 'rgba(253, 252, 251, 0.85)' }}>
+        <nav className="landing-nav" style={{ background: 'rgba(15, 23, 42, 0.75)', borderColor: 'rgba(255,255,255,0.08)' }}>
           <div className="landing-logo">QP</div>
           <div className="landing-nav-links">
             <Link to="/" className="landing-nav-link" onClick={lightTap}>Home</Link>
@@ -135,64 +49,68 @@ const Features = () => {
         </nav>
       </header>
 
-      {/* ─── Hero Section ─── */}
-      <section className="features-hero">
-        <div className="features-hero-bg">
-          <img src={techBg} alt="Tech abstract background" />
+      {/* Hero */}
+      <section className="feat-hero">
+        <div className="feat-hero-bg">
+          <img src={techBg} alt="" />
         </div>
-        <div className="features-hero-content">
-          <motion.div
+        <div className="feat-hero-content">
+          <motion.div className="feat-badge"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="features-badge"
+            transition={{ duration: 0.4 }}
           >
-            <FiServer /> Enterprise Backend
+            <FiServer size={13} /> Enterprise Backend
           </motion.div>
-          <motion.h1
-            className="features-title"
-            initial={{ opacity: 0, y: 20 }}
+          <motion.h1 className="feat-title"
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.5, delay: 0.08 }}
           >
-            Production Grade. <br />
-            <span>Built for Scale.</span>
+            Built for <span>Scale</span>
           </motion.h1>
-          <motion.p
-            className="features-subtitle"
-            initial={{ opacity: 0, y: 20 }}
+          <motion.p className="feat-subtitle"
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.16 }}
           >
-            Explore the 12 robust architectural capabilities that make Quick Plate a true enterprise-ready food delivery platform, far beyond a typical demo.
+            12 production-grade capabilities powering a real enterprise food delivery platform.
           </motion.p>
         </div>
       </section>
 
-      {/* ─── Features Grid ─── */}
-      <section className="features-grid-container">
-        <motion.div
-          className="features-grid"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
-        >
-          {FEATURES_DATA.map((feature, index) => (
-            <motion.div key={feature.id} className="feature-card" variants={itemVariants}>
-              <div className="feature-number">{String(index + 1).padStart(2, '0')}</div>
-              <div className="feature-icon-wrapper">
-                {feature.icon}
-              </div>
-              <div className="feature-content">
-                <h4>{feature.subtitle}</h4>
-                <h3>{feature.title}</h3>
-                <p>{feature.desc}</p>
-              </div>
+      {/* Grid */}
+      <section className="feat-section">
+        <div className="feat-grid">
+          {FEATURES.map((f, i) => (
+            <motion.div
+              key={i}
+              className="feat-card"
+              custom={i}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-30px' }}
+            >
+              <div className={`feat-icon ${f.color}`}>{f.icon}</div>
+              <h3>{f.title}</h3>
+              <p>{f.desc}</p>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </section>
+
+      {/* Bottom CTA */}
+      <div className="feat-bottom">
+        <Link to="/" onClick={lightTap}>
+          <motion.button
+            className="feat-back-btn"
+            whileTap={{ scale: 0.95 }}
+          >
+            ← Back to Home
+          </motion.button>
+        </Link>
+      </div>
     </div>
   );
 };
