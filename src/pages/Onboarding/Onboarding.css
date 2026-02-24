@@ -78,6 +78,111 @@
   line-height: 1.5;
 }
 
+/* ─── Auth Selection Options ─── */
+.onboard-back-btn {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0F172A;
+  z-index: 10;
+  transition: transform 0.2s;
+}
+
+.onboard-back-btn:active {
+  transform: scale(0.95);
+  background: #F1F5F9;
+}
+
+.onboard-auth-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.onboard-google-btn {
+  width: 100%;
+  height: 64px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0F172A;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.onboard-google-btn img {
+  width: 28px;
+  height: 28px;
+}
+
+.onboard-google-btn:active {
+  transform: scale(0.98);
+  background: #F8FAFC;
+}
+
+.onboard-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #94A3B8;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.onboard-divider::before,
+.onboard-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.onboard-divider span {
+  padding: 0 1rem;
+}
+
+.onboard-qp-btn {
+  width: 100%;
+  height: 64px;
+  background: rgba(251, 126, 24, 0.1);
+  border: 1px solid rgba(251, 126, 24, 0.2);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  transition: transform 0.15s ease, background 0.15s;
+}
+
+.onboard-qp-btn .material-symbols-outlined {
+  font-size: 24px;
+}
+
+.onboard-qp-btn:active {
+  transform: scale(0.98);
+  background: rgba(251, 126, 24, 0.15);
+}
+
 /* ─── Form ─── */
 .onboard-form {
   display: flex;

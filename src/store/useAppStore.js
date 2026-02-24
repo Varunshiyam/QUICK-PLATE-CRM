@@ -1,10 +1,13 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 /**
  * Global application store using Zustand.
  * Manages cart, user, and UI state.
  */
-const useAppStore = create((set, get) => ({
+const useAppStore = create(
+  persist(
+    (set, get) => ({
   // ─── User State ───
   user: null,
   isAuthenticated: false,
@@ -72,6 +75,17 @@ const useAppStore = create((set, get) => ({
 
   searchQuery: '',
   setSearchQuery: (searchQuery) => set({ searchQuery }),
-}));
+    }),
+    {
+      name: 'quick-plate-storage', // key in localStorage
+      partialize: (state) => ({ 
+        user: state.user, 
+        isAuthenticated: state.isAuthenticated, 
+        cart: state.cart, 
+        cartRestaurantId: state.cartRestaurantId 
+      }),
+    }
+  )
+);
 
 export default useAppStore;
