@@ -5,7 +5,6 @@ import useHaptic from '../../hooks/useHaptic';
 import './Home.css';
 
 /* ─── Mock Data ─── */
-const HERO_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuBgH-b5tMofcESETTPskyBzLwfv0wmn3BssBWy4aqdG8Ssu1OA1zUF2-TkuMacuyuQnoamQ4yvmIXABcP0MXCPutGYk8oB8I0eJm2roL1mIa82SPjNwxdGCBvp-hLaPDfy6vfFwURop7N_5LTua6vyyS1iL9YkdjoWw2iRqqoXdIVu9Zy4-YBB6Tb5xwpsEoL6uinVUhgE1qmtfNs7FvVHc6EPMsF0VGJOSE0BB03Im-Zk1sn3MvqbVGgSt2rNNtIgASlsV6cwbEPIx';
 const USER_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDsOHwxoJdRqvt1KTJIjuBMnjUaHgiksXnnUgjrmpBS0wd0xVeLXgJwm5dxcLg3Ch1mY36USOW8Y2r5wMpCNKnapaSogKpeZ1TIJs0b3Z5XshtP8tKhIFQn7nHAP9i4nEo0TCEFZS9RJ4vbQIzlpsLW9hJHoTgnEv8whF2w2-ZrZlhxAhmSxPjoS46LeeVmEfRq-x5lOsvRpmvoXtUZ4U-IdolXC4brRLSzHEuZ8N7PVQcsYF6XABAUTNtuGk7sR67Xp4gfXtHPBpZh';
 
 const CATEGORIES = [
@@ -16,24 +15,30 @@ const CATEGORIES = [
   { icon: 'lunch_dining', label: 'Burgers' },
 ];
 
+import sushiPlatter from '../../assets/images/sushi-platter.png';
+
+/* Vibrant food imagery from various high-quality sources */
+const IMG = {
+  pasta:   'https://lh3.googleusercontent.com/aida-public/AB6AXuA7rRqrqQB8WlaPGEnNWpyhdP-PJiwWeP9SL--8b8mCFbqKRAp8ySZBcYOpWC_osbofXS3FhMghzEXj1WzAaysflWk79zTtw2OoN2T4ee7Pn11Vz1rp70xvF0DrnMANaRwY0eY_NkDxVjU6sWQZnxB2xST9n-j0F9KjFKd0_F3y0AAb6T6FGtcLSf9_fTcnrVht3s_SleVk3_bbyLHzFFgZfcamgnzB2vShoIxaY7XRlH3T-419ipyigS7bRFKP0kNFoG0G5NrpCN_K',
+  grill:   'https://lh3.googleusercontent.com/aida-public/AB6AXuDRVg4WHeLML4GR_FT_Qw2vnFTiy1T2ux5QaExfnIcN-9F5ma-BjKPAo0Qw7V_C2vQqA3UsAkfzKR5h7oAGr5lT4FN9Nui8lhC2Qal40qJvGanldNT3FvbzyVUMbAkvSOoDmsMfY0QHgkZOjWPpEdWXjwQxDotyzhlPzhpK9rB3i9gL076JH9wnsX5SHq_NS0dEWW7UIs5a4TIM86doVTMv5orv5tGlXzV0OZFq8laVjkiJW3WSdzMBtaCEgOMGTfabbkykSkvUp17R',
+  sushi:   sushiPlatter,
+  burger:  'https://lh3.googleusercontent.com/aida-public/AB6AXuBIVLq7cg2DsY4Dw1Dv-N3mH1ev7hGiwMSEtAkMb41GEGZ3NWK7evAuqaBMyAPxKkiWfWKvgy0nDn19gJTl36RHd5hphjpBZEHwnD5zk20Xz3OOqpcEORX-TSKWVxR8Sq03vPIHUrMBpMSwfx8YauQJCYaM9mvF_O0B0wiiuU6A1tz_aSdynsxPxodhs5brxxdbojLh_t-ic0gUZNfT-lRUTmhxPYdl_r1BhB55YUDUtCc1hXK1RrtsjFHPykKJvwn2ChzHDcNNp9Px',
+  dessert: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBOhl1yjOKt_cFiqW9w_vcZMp1dEUEqSkIF_1PZ2iIkZrAMPdZWmq5nS0UsAxyiyLEANe-rPR00vzNRPE7gtW5F_ZxagryLxi0ew6lKQX3HlNyzqu5iDJHCJ5K-lyvjvro7takNhJHZXCemHKBQWECAbNr0M7UqsYN56Y7IwMX3szaterAKcLL9gjnTAhk1Z5X2ZjsrOEQUEbt_qilhyYQDuwE2oaBRpNEGotfphSL4XSiYM5zKYG8L2ce2Prupm8XZIwamR4fa9m0p',
+  hero:    'https://lh3.googleusercontent.com/aida-public/AB6AXuBgH-b5tMofcESETTPskyBzLwfv0wmn3BssBWy4aqdG8Ssu1OA1zUF2-TkuMacuyuQnoamQ4yvmIXABcP0MXCPutGYk8oB8I0eJm2roL1mIa82SPjNwxdGCBvp-hLaPDfy6vfFwURop7N_5LTua6vyyS1iL9YkdjoWw2iRqqoXdIVu9Zy4-YBB6Tb5xwpsEoL6uinVUhgE1qmtfNs7FvVHc6EPMsF0VGJOSE0BB03Im-Zk1sn3MvqbVGgSt2rNNtIgASlsV6cwbEPIx',
+  salad:   'https://lh3.googleusercontent.com/aida-public/AB6AXuBZH03LnZFjClUcB8auLGFe4iXGTZKPwtoc_7earTpfFLFpyJCZs0HnZvrIO9lRdlin_owGopgjo-eMqf8FxKWEdpRN11FShwLWF9Z7l7FV4qhusFk-YM9Ks3x-rR0l5pwRW6qQw9GcaCIK3IqOd9Nz0uQQzjdk9sAMRsSGOCpGXdvHjngM0ys6JcRfgZOyFuc2oxVMdee-vgSsOXFYq0vfqrhchkpb3dIRU1wD8DmpC7q6DlUQgQqjy4q2ZHuM5uOaqz6FmsWuOjuR',
+};
+
 const TRENDING = [
-  {
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA7rRqrqQB8WlaPGEnNWpyhdP-PJiwWeP9SL--8b8mCFbqKRAp8ySZBcYOpWC_osbofXS3FhMghzEXj1WzAaysflWk79zTtw2OoN2T4ee7Pn11Vz1rp70xvF0DrnMANaRwY0eY_NkDxVjU6sWQZnxB2xST9n-j0F9KjFKd0_F3y0AAb6T6FGtcLSf9_fTcnrVht3s_SleVk3_bbyLHzFFgZfcamgnzB2vShoIxaY7XRlH3T-419ipyigS7bRFKP0kNFoG0G5NrpCN_K',
-    badge: '#1 Trending',
-    name: 'Artisan Pasta Night',
-    price: 'Starting at $14.99',
-  },
-  {
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDRVg4WHeLML4GR_FT_Qw2vnFTiy1T2ux5QaExfnIcN-9F5ma-BjKPAo0Qw7V_C2vQqA3UsAkfzKR5h7oAGr5lT4FN9Nui8lhC2Qal40qJvGanldNT3FvbzyVUMbAkvSOoDmsMfY0QHgkZOjWPpEdWXjwQxDotyzhlPzhpK9rB3i9gL076JH9wnsX5SHq_NS0dEWW7UIs5a4TIM86doVTMv5orv5tGlXzV0OZFq8laVjkiJW3WSdzMBtaCEgOMGTfabbkykSkvUp17R',
-    badge: 'Limited Time',
-    name: 'Truffle Burger Series',
-    price: 'Exclusive menu items',
-  },
+  { img: IMG.pasta,   badge: '#1 Trending',    name: 'Artisan Pasta Night',   price: 'Starting at $14.99' },
+  { img: IMG.grill,   badge: 'Limited Time',    name: 'Truffle Burger Series', price: 'Exclusive menu items' },
+  { img: IMG.sushi,   badge: 'Chef\'s Pick',    name: 'Omakase Experience',    price: 'Starting at $29.99' },
+  { img: IMG.dessert, badge: 'New Arrival',     name: 'Chocolate Lava Dream',  price: 'Starting at $9.99' },
+  { img: IMG.salad,   badge: 'Healthy Choice',  name: 'Mediterranean Bowl',    price: 'Starting at $12.49' },
 ];
 
 const RESTAURANTS = [
   {
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDRVg4WHeLML4GR_FT_Qw2vnFTiy1T2ux5QaExfnIcN-9F5ma-BjKPAo0Qw7V_C2vQqA3UsAkfzKR5h7oAGr5lT4FN9Nui8lhC2Qal40qJvGanldNT3FvbzyVUMbAkvSOoDmsMfY0QHgkZOjWPpEdWXjwQxDotyzhlPzhpK9rB3i9gL076JH9wnsX5SHq_NS0dEWW7UIs5a4TIM86doVTMv5orv5tGlXzV0OZFq8laVjkiJW3WSdzMBtaCEgOMGTfabbkykSkvUp17R',
+    img: IMG.grill,
     name: 'The Luminary Grill',
     cuisine: 'Modern American',
     price: '$$$',
@@ -45,7 +50,7 @@ const RESTAURANTS = [
     offerColor: 'orange',
   },
   {
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA7rRqrqQB8WlaPGEnNWpyhdP-PJiwWeP9SL--8b8mCFbqKRAp8ySZBcYOpWC_osbofXS3FhMghzEXj1WzAaysflWk79zTtw2OoN2T4ee7Pn11Vz1rp70xvF0DrnMANaRwY0eY_NkDxVjU6sWQZnxB2xST9n-j0F9KjFKd0_F3y0AAb6T6FGtcLSf9_fTcnrVht3s_SleVk3_bbyLHzFFgZfcamgnzB2vShoIxaY7XRlH3T-419ipyigS7bRFKP0kNFoG0G5NrpCN_K',
+    img: IMG.pasta,
     name: 'Verona Trattoria',
     cuisine: 'Italian',
     price: '$$',
@@ -55,6 +60,42 @@ const RESTAURANTS = [
     reviews: '800',
     offer: 'FREE DELIVERY',
     offerColor: 'indigo',
+  },
+  {
+    img: IMG.sushi,
+    name: 'Sakura Omakase',
+    cuisine: 'Japanese',
+    price: '$$$$',
+    distance: '3.2 mi',
+    time: '30-40 min',
+    rating: '4.9',
+    reviews: '2.1k',
+    offer: 'CHEF\'S TABLE SPECIAL',
+    offerColor: 'orange',
+  },
+  {
+    img: IMG.burger,
+    name: 'Smokehouse BBQ Co.',
+    cuisine: 'BBQ & Grill',
+    price: '$$',
+    distance: '0.8 mi',
+    time: '20-30 min',
+    rating: '4.7',
+    reviews: '650',
+    offer: 'BUY 1 GET 1 FREE',
+    offerColor: 'indigo',
+  },
+  {
+    img: IMG.salad,
+    name: 'Green & Grain',
+    cuisine: 'Mediterranean',
+    price: '$$',
+    distance: '1.5 mi',
+    time: '15-20 min',
+    rating: '4.8',
+    reviews: '430',
+    offer: 'NEW ON QUICK PLATE',
+    offerColor: 'orange',
   },
 ];
 
@@ -117,7 +158,7 @@ const Home = () => {
           custom={0}
         >
           <div className="home-hero-card">
-            <img src={HERO_IMG} alt="Delicious food" />
+            <img src={IMG.hero} alt="Delicious food" />
             <div className="home-hero-overlay" />
             <div className="home-hero-content">
               <div>
