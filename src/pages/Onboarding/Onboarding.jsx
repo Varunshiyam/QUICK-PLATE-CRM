@@ -30,7 +30,7 @@ const Onboarding = () => {
   const handleSubmit = () => {
     mediumTap();
     // TODO: persist user data to Zustand store / Salesforce
-    navigate('/');
+    navigate('/home');
   };
 
   const handleUseLocation = () => {

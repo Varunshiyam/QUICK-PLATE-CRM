@@ -26,9 +26,9 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.12;
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0) 75%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0) 75%);
+  opacity: 0.3;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0) 80%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0) 80%);
 }
 
 /* ─── Main Content ─── */

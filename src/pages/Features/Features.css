@@ -33,7 +33,7 @@
   height: 420px;
   top: -120px;
   right: -100px;
-  background: radial-gradient(circle, rgba(251,126,24,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(251,126,24,0.08) 0%, transparent 40%);
 }
 
 .feat-hero::after {
@@ -41,7 +41,7 @@
   height: 340px;
   bottom: -60px;
   left: -80px;
-  background: radial-gradient(circle, rgba(251,166,89,0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(251,166,89,0.06) 0%, transparent 40%);
 }
 
 .feat-hero-content {
