@@ -155,7 +155,7 @@ const Onboarding = () => {
 
                   let scale = offset === 1 ? 1 : 0.85;
                   let zIndex = offset === 1 ? 10 : 5;
-                  let translateX = (offset - 1) * 60; // Spread logic
+                  let translateX = (offset - 1) * 105; // Spread logic
                   
                   return (
                     <motion.div
@@ -165,7 +165,7 @@ const Onboarding = () => {
                         scale,
                         x: `${translateX}%`,
                         zIndex,
-                        opacity: offset === 1 ? 1 : 0.6
+                        opacity: offset === 1 ? 1 : 0.5
                       }}
                       transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
                     >

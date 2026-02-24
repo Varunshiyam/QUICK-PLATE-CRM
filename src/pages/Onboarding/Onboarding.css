@@ -207,6 +207,17 @@
   transition: transform 0.15s ease;
 }
 
+.onboard-google-btn img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.onboard-google-btn:active {
+  transform: scale(0.98);
+  background: #F8FAFC;
+}
+
 .onboard-qp-btn {
   width: 100%;
   height: 56px;

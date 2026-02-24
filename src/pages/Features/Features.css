@@ -78,6 +78,7 @@
 .feat-title span {
   background: linear-gradient(135deg, #fb7e18, #EA580C);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
