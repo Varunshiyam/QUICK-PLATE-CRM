@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
 import './Landing.css';
 
@@ -91,15 +92,15 @@ const Landing = () => {
         >
           <div className="landing-logo">QP</div>
           <div className="landing-nav-links">
-            <a href="#" className="landing-nav-link active" onClick={lightTap}>
+            <Link to="/" className="landing-nav-link active" onClick={lightTap}>
               Home
-            </a>
-            <a href="#" className="landing-nav-link" onClick={lightTap}>
+            </Link>
+            <Link to="/features" className="landing-nav-link" onClick={lightTap}>
               Features
-            </a>
-            <a href="#" className="landing-nav-link" onClick={lightTap}>
+            </Link>
+            <Link to="/" className="landing-nav-link" onClick={lightTap}>
               Contact
-            </a>
+            </Link>
           </div>
         </motion.nav>
       </header>

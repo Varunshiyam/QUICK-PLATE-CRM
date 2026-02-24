@@ -5,6 +5,7 @@ import { AnimatePresence } from 'framer-motion';
 
 // Pages
 import Landing from './pages/Landing/Landing';
+import Features from './pages/Features/Features';
 
 // Lazy-loaded pages (will be created as mockups arrive)
 // const Home = lazy(() => import('./pages/Home/Home'));
@@ -74,6 +75,7 @@ function App() {
         <AnimatePresence mode="wait">
           <Routes>
             <Route path="/" element={<Landing />} />
+            <Route path="/features" element={<Features />} />
             {/* More routes will be added as pages are built */}
           </Routes>
         </AnimatePresence>
