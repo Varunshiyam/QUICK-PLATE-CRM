@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
 import './Home.css';
 
@@ -152,6 +152,7 @@ const fadeUp = {
 
 const Home = () => {
   const { lightTap, mediumTap } = useHaptic();
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -226,7 +227,7 @@ const Home = () => {
             </div>
           </div>
           <div className="home-avatar" onClick={() => { lightTap(); setIsProfileModalOpen(!isProfileModalOpen); setIsAddressModalOpen(false); }}>
-            <span className="home-avatar-emoji">😎</span>
+            <img src={USER_IMG} alt="User Avatar" />
           </div>
         </div>
 
@@ -271,18 +272,23 @@ const Home = () => {
               transition={{ duration: 0.2 }}
             >
               <div className="profile-header">
-                <div className="profile-emoji-large">😎</div>
+                <div className="profile-img-large">
+                  <img src={USER_IMG} alt="User" />
+                </div>
                 <div className="profile-info">
                   <h4>Hey, Foodie!</h4>
-                  <p>Your Orders & Settings</p>
+                  <p>Your Orders & Details</p>
                 </div>
               </div>
               <div className="profile-menu">
-                <button onClick={() => { setIsProfileModalOpen(false); lightTap(); }}><span className="material-symbols-outlined">person</span> My Profile</button>
-                <button onClick={() => { setIsProfileModalOpen(false); lightTap(); }}><span className="material-symbols-outlined">favorite</span> Favorites</button>
-                <button onClick={() => { setIsProfileModalOpen(false); lightTap(); }}><span className="material-symbols-outlined">settings</span> Settings</button>
+                <button onClick={() => { setIsProfileModalOpen(false); lightTap(); navigate('/profile'); }}>
+                  <span className="material-symbols-outlined">person</span> My Profile
+                </button>
+                <button onClick={() => { setIsProfileModalOpen(false); lightTap(); navigate('/favorites'); }}>
+                  <span className="material-symbols-outlined">favorite</span> Favorites
+                </button>
                 <div className="dropdown-divider"></div>
-                <button className="logout-btn" onClick={() => { setIsProfileModalOpen(false); mediumTap(); }}>
+                <button className="logout-btn" onClick={() => { setIsProfileModalOpen(false); mediumTap(); navigate('/landing'); }}>
                   <span className="material-symbols-outlined">logout</span> Log Out
                 </button>
               </div>
