@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AnimatePresence } from 'framer-motion';
 
+// Pages
+import Landing from './pages/Landing/Landing';
+
 // Lazy-loaded pages (will be created as mockups arrive)
 // const Home = lazy(() => import('./pages/Home/Home'));
 // const Restaurant = lazy(() => import('./pages/Restaurant/Restaurant'));
@@ -21,19 +24,20 @@ const LoadingScreen = () => (
     justifyContent: 'center',
     height: '100dvh',
     gap: '1rem',
+    background: '#FDFCFB',
   }}>
     <div style={{
       width: 48,
       height: 48,
       border: '3px solid #f1f3f5',
-      borderTopColor: '#FF6B35',
+      borderTopColor: '#fb7e18',
       borderRadius: '50%',
       animation: 'spin 0.8s linear infinite',
     }} />
     <p style={{
-      fontFamily: 'Plus Jakarta Sans, sans-serif',
-      fontWeight: 600,
-      color: '#343A40',
+      fontFamily: 'Epilogue, sans-serif',
+      fontWeight: 700,
+      color: '#2D3134',
       fontSize: '0.875rem',
     }}>
       Loading Quick Plate...
@@ -51,10 +55,10 @@ function App() {
           duration: 3000,
           style: {
             borderRadius: '12px',
-            background: '#2D3436',
+            background: '#2D3134',
             color: '#fff',
             fontSize: '0.875rem',
-            fontFamily: 'Plus Jakarta Sans, sans-serif',
+            fontFamily: 'Outfit, sans-serif',
             fontWeight: 500,
             padding: '12px 20px',
           },
@@ -69,54 +73,8 @@ function App() {
       <Suspense fallback={<LoadingScreen />}>
         <AnimatePresence mode="wait">
           <Routes>
-            {/* Routes will be added as pages are built from mockups */}
-            <Route
-              path="/"
-              element={
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: '100dvh',
-                  textAlign: 'center',
-                  padding: '2rem',
-                  gap: '1rem',
-                }}>
-                  <h1 style={{
-                    fontFamily: 'Plus Jakarta Sans, sans-serif',
-                    fontWeight: 800,
-                    fontSize: '2.25rem',
-                    color: '#FF6B35',
-                  }}>
-                    🍽️ Quick Plate
-                  </h1>
-                  <p style={{
-                    fontFamily: 'Inter, sans-serif',
-                    color: '#868E96',
-                    fontSize: '1rem',
-                    lineHeight: 1.6,
-                  }}>
-                    Project initialized successfully!<br />
-                    Awaiting design mockups to build screens.
-                  </p>
-                  <div style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    padding: '0.75rem 1.5rem',
-                    background: 'linear-gradient(135deg, #FF6B35, #E55A2B)',
-                    color: '#fff',
-                    borderRadius: '999px',
-                    fontWeight: 600,
-                    fontSize: '0.875rem',
-                    fontFamily: 'Plus Jakarta Sans, sans-serif',
-                  }}>
-                    ✅ React + Vite Ready
-                  </div>
-                </div>
-              }
-            />
+            <Route path="/" element={<Landing />} />
+            {/* More routes will be added as pages are built */}
           </Routes>
         </AnimatePresence>
       </Suspense>

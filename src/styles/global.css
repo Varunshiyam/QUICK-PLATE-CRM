@@ -5,37 +5,43 @@
 /* ─── CSS Custom Properties (Design Tokens) ─── */
 :root {
   /* Brand Colors */
-  --color-primary: #ff6b35;
-  --color-primary-light: #ff8f65;
-  --color-primary-dark: #e55a2b;
-  --color-secondary: #2d3436;
-  --color-accent: #00b894;
-  --color-accent-light: #55efc4;
+  --color-primary: #fb7e18;
+  --color-primary-light: #ff9a45;
+  --color-primary-dark: #e06a0a;
+  --color-secondary: #2D3134;
+  --color-accent: #00B894;
+  --color-accent-light: #55EFC4;
+
+  /* Background */
+  --color-bg: #FDFCFB;
 
   /* Neutral Palette */
-  --color-white: #ffffff;
-  --color-gray-50: #f8f9fa;
-  --color-gray-100: #f1f3f5;
-  --color-gray-200: #e9ecef;
-  --color-gray-300: #dee2e6;
-  --color-gray-400: #ced4da;
-  --color-gray-500: #adb5bd;
-  --color-gray-600: #868e96;
+  --color-white: #FFFFFF;
+  --color-gray-50: #F8F9FA;
+  --color-gray-100: #F1F3F5;
+  --color-gray-200: #E9ECEF;
+  --color-gray-300: #DEE2E6;
+  --color-gray-400: #CED4DA;
+  --color-gray-500: #ADB5BD;
+  --color-gray-600: #868E96;
   --color-gray-700: #495057;
-  --color-gray-800: #343a40;
+  --color-gray-800: #343A40;
   --color-gray-900: #212529;
-  --color-black: #000000;
+  --color-slate-400: #94A3B8;
+  --color-slate-500: #64748B;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-900: #0F172A;
 
   /* Semantic Colors */
-  --color-success: #00b894;
-  --color-warning: #fdcb6e;
-  --color-error: #ff7675;
-  --color-info: #74b9ff;
+  --color-success: #00B894;
+  --color-warning: #FDCB6E;
+  --color-error: #FF7675;
+  --color-info: #74B9FF;
 
   /* Typography */
-  --font-primary:
-    "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-secondary: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Epilogue', sans-serif;
+  --font-sans: 'Outfit', sans-serif;
 
   --fw-light: 300;
   --fw-regular: 400;
@@ -44,14 +50,15 @@
   --fw-bold: 700;
   --fw-extrabold: 800;
 
-  --fs-xs: 0.75rem; /* 12px */
-  --fs-sm: 0.875rem; /* 14px */
-  --fs-base: 1rem; /* 16px */
-  --fs-lg: 1.125rem; /* 18px */
-  --fs-xl: 1.25rem; /* 20px */
-  --fs-2xl: 1.5rem; /* 24px */
-  --fs-3xl: 1.875rem; /* 30px */
-  --fs-4xl: 2.25rem; /* 36px */
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.25rem;
+  --fs-2xl: 1.5rem;
+  --fs-3xl: 1.875rem;
+  --fs-4xl: 2.25rem;
+  --fs-5xl: 2.75rem;
 
   /* Spacing */
   --space-1: 0.25rem;
@@ -71,6 +78,7 @@
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
+  --radius-3xl: 1.875rem;
   --radius-full: 9999px;
 
   /* Shadows */
@@ -79,6 +87,8 @@
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.15);
+  --shadow-primary: 0 12px 32px rgba(251, 126, 24, 0.2);
 
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -119,20 +129,21 @@ html {
 }
 
 body {
-  font-family: var(--font-primary);
+  font-family: var(--font-sans);
   font-weight: var(--fw-regular);
-  color: var(--color-gray-900);
-  background-color: var(--color-gray-50);
+  color: var(--color-secondary);
+  background-color: var(--color-bg);
   line-height: 1.5;
   overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
+  min-height: 100dvh;
 }
 
 #root {
   max-width: var(--max-width);
   margin: 0 auto;
   min-height: 100dvh;
-  background-color: var(--color-white);
+  background-color: var(--color-bg);
   position: relative;
 }
 
@@ -164,8 +175,7 @@ select {
   outline: none;
 }
 
-ul,
-ol {
+ul, ol {
   list-style: none;
 }
 
@@ -197,4 +207,9 @@ ol {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+/* ─── Material Symbols ─── */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
