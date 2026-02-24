@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
@@ -31,6 +31,45 @@ const IMG = {
   pastry:  'https://images.unsplash.com/photo-1509365465985-25d11c17e812?q=80&w=2630&auto=format&fit=crop',
   cake:    'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80&w=2536&auto=format&fit=crop',
 };
+
+const BANNERS = [
+  {
+    id: 1,
+    supertitle: 'New Year Offer',
+    title: '30% OFF',
+    subtitle: '16 - 31 Dec',
+    buttonText: 'Get Now',
+    theme: 'green',
+    img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2670&auto=format&fit=crop', // Pizza
+  },
+  {
+    id: 2,
+    supertitle: 'Mid-Day Cravings',
+    title: 'Free Delivery',
+    subtitle: 'For spaghetti',
+    buttonText: 'Order now',
+    theme: 'dark',
+    img: 'https://images.unsplash.com/photo-1626844131082-256783844137?q=80&w=2535&auto=format&fit=crop', // Spaghetti
+  },
+  {
+    id: 3,
+    supertitle: 'Daily Reward',
+    title: 'Claim Your',
+    subtitle: 'Free delivery now!',
+    buttonText: 'Order now',
+    theme: 'primary',
+    img: 'https://images.unsplash.com/photo-1525648199074-cee30ba79a4a?q=80&w=2670&auto=format&fit=crop', // Burger/delivery
+  },
+  {
+    id: 4,
+    supertitle: 'Happy Hours',
+    title: 'Buy 1 Get 1',
+    subtitle: 'On premium sushi platters',
+    buttonText: 'Explore',
+    theme: 'slate',
+    img: sushiPlatter,
+  }
+];
 
 const TRENDING = [
   { img: IMG.dessert, badge: '#1 Trending',    name: 'Chocolate Lava Dream',  price: 'Starting at $9.99' },
@@ -117,6 +156,14 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [activeSort, setActiveSort] = useState('Recommended');
+  const [currentBanner, setCurrentBanner] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentBanner((prev) => (prev + 1) % BANNERS.length);
+    }, 5500); // changes every 5.5s
+    return () => clearInterval(timer);
+  }, []);
 
   // Filter & Sort Logic
   const filteredRestaurants = useMemo(() => {
@@ -193,25 +240,48 @@ const Home = () => {
       </header>
 
       <main>
-        {/* ─── Hero Banner ─── */}
+        {/* ─── Hero Carousel Banner ─── */}
         <motion.section
-          className="home-hero"
+          className="home-hero-carousel"
           variants={fadeUp}
           initial="hidden"
           animate="visible"
           custom={0}
         >
-          <div className="home-hero-card">
-            <img src={IMG.hero} alt="Delicious food" />
-            <div className="home-hero-overlay" />
-            <div className="home-hero-content">
-              <div>
-                <h1 className="home-hero-title">
-                  Delivered hot.<br />Delivered fast.
-                </h1>
-                <p className="home-hero-subtitle">Premium eats from your favorite spots.</p>
-              </div>
-              <button className="home-hero-btn" onClick={lightTap}>Order Now</button>
+          <div className="home-banner-wrapper">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentBanner}
+                className={`home-banner-card theme-${BANNERS[currentBanner].theme}`}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.4 }}
+              >
+                <div className="home-banner-bg-img">
+                   <img src={BANNERS[currentBanner].img} alt="" />
+                </div>
+                <div className="home-banner-content">
+                  <div>
+                    <span className="home-banner-supertitle">{BANNERS[currentBanner].supertitle}</span>
+                    <h1 className="home-banner-title">{BANNERS[currentBanner].title}</h1>
+                    <p className="home-banner-subtitle">{BANNERS[currentBanner].subtitle}</p>
+                  </div>
+                  <button className="home-banner-btn" onClick={lightTap}>
+                    {BANNERS[currentBanner].buttonText}
+                  </button>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+            
+            <div className="home-banner-dots">
+              {BANNERS.map((_, idx) => (
+                <div 
+                  key={idx} 
+                  className={`home-banner-dot ${idx === currentBanner ? 'active' : ''}`} 
+                  onClick={() => { lightTap(); setCurrentBanner(idx); }}
+                />
+              ))}
             </div>
           </div>
         </motion.section>
