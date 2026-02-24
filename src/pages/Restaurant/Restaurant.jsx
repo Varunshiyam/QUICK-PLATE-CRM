@@ -1,84 +1,21 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
 import useAppStore from '../../store/useAppStore';
 import './Restaurant.css';
 
-/* ─── Mock Data ─── */
-const RESTAURANT_INFO = {
+import { getMenuForCuisine, fallbackMenu } from '../../data/mockMenus';
+
+/* ─── Fallback Data ─── */
+const DEFAULT_REST = {
   name: "L'Artisan Bistro",
   rating: '4.8',
   time: '25-35 min',
   price: '$$$',
-  heroImg: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBzYy1O0IhJQ6uGpDIrOekF2Rwvg9RtlU1kT5RQySq78ffXqE8hjUiKalqrZ-CLe7iFY9QTG3PzP9YMiEfB8Tkx-ua7olhZkA-tWcEua7YVGmBK0HvKJqhDCSeghzmUO2-Ke-D60bTmVgECUQqG_zl_UGYmQnh7DYjZG-SbYt7GXjJSXZTVivXl7c_HySy5ud0YpnApwGLBQYUvxr2dT9rMh3WCIBQuFSj1heu7HDBAFihyfmGJLT7B4M049b87iZvhH4AW8iyQutSy',
+  img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBzYy1O0IhJQ6uGpDIrOekF2Rwvg9RtlU1kT5RQySq78ffXqE8hjUiKalqrZ-CLe7iFY9QTG3PzP9YMiEfB8Tkx-ua7olhZkA-tWcEua7YVGmBK0HvKJqhDCSeghzmUO2-Ke-D60bTmVgECUQqG_zl_UGYmQnh7DYjZG-SbYt7GXjJSXZTVivXl7c_HySy5ud0YpnApwGLBQYUvxr2dT9rMh3WCIBQuFSj1heu7HDBAFihyfmGJLT7B4M049b87iZvhH4AW8iyQutSy',
+  cuisine: 'Modern American'
 };
-
-const MENU = [
-  {
-    category: 'Starters',
-    items: [
-      {
-        id: 's1',
-        title: 'Truffle Arancini',
-        desc: 'Crispy risotto balls with black truffle and creamy mozzarella center, served with aioli.',
-        price: '$14.50',
-        badge: 'Best Seller',
-        img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAjwEpPRsX2oywWFqtPNcPKzb1X5iwH24IcDbP7QOa7eClnwxu4C2Kq90vDcauGrPq_3gdrIJ477pGBQToGa7wCIsB5NnftzpbX3_aI7jbmqEFKX1UDDQ4rNlUV4P82TEg69n0MF_z5pCP8iefUzrMYod_pfFQKCFDg-GtrNEl8vqQ1_GenmxgTFL590ChSTobs_XfGQDuWw88yvNd5ZiNrOyqcwC62SboIigM2RVtHcREHcytxe6S80TFHdcX6P9HOoEEgKwJsnf1J'
-      },
-      {
-        id: 's2',
-        title: 'Honey Glazed Burrata',
-        desc: 'Fresh burrata cheese with roasted peaches, wildflower honey, and toasted sourdough slices.',
-        price: '$18.00',
-        img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCFqf3Uw80jTfd-TlsEg6Us_7pcKCgnKcpKJC28r-d-Z1P7M2jA6nwLpV2MG1EhZNl-F37DUeZ7fwIvA5YSNfaQqEuvGDW6odvEWNBpcnyhL_o_NDUJvV7r3UA9dTN3lUkfFlLlry9HLUOQc_ZKWmHq48ZD87ic8Qlg44jApHMgdzTxZL7qSzgLoVGACKc8e1cbDxl3a4daT4JIsGBwSvT0rfVkgHexKkiNcksk_QrS9YfLt7tIWcsgBnRcarr-CYM6GggphJ0Acq1l'
-      },
-    ]
-  },
-  {
-    category: 'Main Course',
-    items: [
-      {
-        id: 'm1',
-        title: 'Pan-Seared Salmon',
-        desc: 'Atlantic salmon with lemon-butter caper sauce, served over garlic smashed potatoes.',
-        price: '$28.50',
-        img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDM49kjtWyF_X6bISKJosRIuEFsDKMlewVMyR-DkAt8dPPSNYFEQf_D52iEp7ZLRmh238M8KzfoPbhDZL_iCXfCppnp7qhsMB6gvqdqdDYSHaI8rXkVEYvULo2ro2YPmQ-4bWzcALfA4hIzF1T_gnfFnij-vAVz4XR2XyViooaMFfucSPKw9xApe7fvhwR7hxmPZR7Z1B9NcWeVcFSXHiX-xumFvx9lZjtrkWAyfg7dl0KFAjTayzvM8aRZ2oe1yuyzpDYm6MOoMQ_U'
-      },
-      {
-        id: 'm2',
-        title: 'Wild Mushroom Risotto',
-        desc: 'Slow-cooked Arborio rice with porcini mushrooms, parmesan, and a drizzle of herb oil.',
-        price: '$22.00',
-        img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCZe0Srfj1Vjs22qtsXtBBYCqCHwGZh35bJnkCoGnPgPtVsJDB4zPht2J_8iHYTUhrDxMkBts5k2m07oGkoefbZ-EXJpDVI6jh9t2hm78pDeeSneMrP89AxiIMkP0sLSdUltCT9ECv6And9ZHTpYSrRKE61VaOmnoIeSWxSHMC4BgE7jGYrG3_PtsS-34YzfwdFXXJsxLLfTaFNr4Y3KaIoquFHjI2B6PZn_fL44LXAsVxWdE3w-TbJBm1IKPvC8AQsa-nBoAs7eqlY'
-      },
-    ]
-  },
-  {
-    category: 'Desserts',
-    items: [
-      {
-        id: 'd1',
-        title: 'Classic Tiramisu',
-        desc: 'Espresso-soaked ladyfingers layered with sweet mascarpone cream and cocoa dust.',
-        price: '$12.00',
-        img: 'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?q=80&w=2574&auto=format&fit=crop'
-      }
-    ]
-  },
-  {
-    category: 'Beverages',
-    items: [
-      {
-        id: 'b1',
-        title: 'Midnight Mojito',
-        desc: 'Signature dark rum blended with fresh mint, lime, and crushed blackberries.',
-        price: '$11.00',
-        img: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2670&auto=format&fit=crop'
-      }
-    ]
-  }
-];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 15 },
@@ -91,7 +28,10 @@ const fadeUp = {
 const Restaurant = () => {
   const { lightTap, mediumTap } = useHaptic();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('Starters');
+  const location = useLocation();
+  const restaurantInfo = location.state?.restaurant || DEFAULT_REST;
+  const MENU = getMenuForCuisine(restaurantInfo.cuisine);
+  const [activeTab, setActiveTab] = useState(MENU[0]?.category || 'Starters');
   
   // Section refs for smooth scrolling calculation mapping
   const sectionRefs = useRef({});
@@ -99,7 +39,6 @@ const Restaurant = () => {
   const scrollToSection = (category) => {
     lightTap();
     setActiveTab(category);
-    // Add real scroll logic ideally here, for now it shifts states visually cleanly.
   };
 
   return (
@@ -108,7 +47,7 @@ const Restaurant = () => {
       <div className="rest-hero">
         <div 
           className="rest-hero-bg"
-          style={{ backgroundImage: `url('${RESTAURANT_INFO.heroImg}')` }}
+          style={{ backgroundImage: `url('${restaurantInfo.img}')` }}
         />
         <div className="rest-hero-overlay" />
         
@@ -136,7 +75,7 @@ const Restaurant = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            {RESTAURANT_INFO.name}
+            {restaurantInfo.name}
           </motion.h1>
           <motion.div 
             className="rest-meta"
@@ -146,9 +85,9 @@ const Restaurant = () => {
           >
             <div className="rest-rating">
               <span className="material-symbols-outlined" style={{ fontSize: '18px', marginRight: '4px' }}>star</span>
-              {RESTAURANT_INFO.rating}
+              {restaurantInfo.rating}
             </div>
-            <span className="rest-meta-text">• {RESTAURANT_INFO.time} • {RESTAURANT_INFO.price}</span>
+            <span className="rest-meta-text">• {restaurantInfo.time} • {restaurantInfo.price}</span>
           </motion.div>
         </div>
       </div>
@@ -169,7 +108,8 @@ const Restaurant = () => {
 
       {/* ─── Menu Items Flow ─── */}
       <div className="rest-content">
-        {MENU.map((section, sectionIdx) => (
+        <AnimatePresence mode="wait">
+          {MENU.filter(section => section.category === activeTab).map((section) => (
           <motion.div 
             key={section.category}
             className="rest-section"
@@ -210,6 +150,7 @@ const Restaurant = () => {
             </div>
           </motion.div>
         ))}
+        </AnimatePresence>
       </div>
 
       {/* ─── Floating View Cart Action ─── */}
