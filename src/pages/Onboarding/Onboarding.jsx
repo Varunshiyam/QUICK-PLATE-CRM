@@ -2,11 +2,8 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
+import bgImage from '../../assets/images/Background.png';
 import './Onboarding.css';
-
-/* Background illustration URLs from mockup */
-const BG_TOP = 'https://lh3.googleusercontent.com/aida-public/AB6AXuBZH03LnZFjClUcB8auLGFe4iXGTZKPwtoc_7earTpfFLFpyJCZs0HnZvrIO9lRdlin_owGopgjo-eMqf8FxKWEdpRN11FShwLWF9Z7l7FV4qhusFk-YM9Ks3x-rR0l5pwRW6qQw9GcaCIK3IqOd9Nz0uQQzjdk9sAMRsSGOCpGXdvHjngM0ys6JcRfgZOyFuc2oxVMdee-vgSsOXFYq0vfqrhchkpb3dIRU1wD8DmpC7q6DlUQgQqjy4q2ZHuM5uOaqz6FmsWuOjuR';
-const BG_BOTTOM = 'https://lh3.googleusercontent.com/aida-public/AB6AXuABfYDnL5_zoCyX-QN5ZP7bYuUCNQL4SYtiKb06PsU9R6p4pfJVtYja3L37HRT7xobQqj3H0PMcBKsD2H0-sBuurWe27O553ZPlDzXi0NvwQo6L7lt3eKj7OeXFpfZ1ndvAWQp9W2sNmMdzTDj9k0NY5uLmrK7V3UqWaXKupYuxKMRreLNqs8gQ7kH0wUItqSrl5DRvI46qqXtJQKGvtX-q35cjsNZkOr9AJHCfRyVLwRpePfVP8bwDsvw214qtxAC_RXyob2uQqWVH';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -50,12 +47,9 @@ const Onboarding = () => {
 
   return (
     <div className="onboarding-page">
-      {/* Background illustrations — increased opacity for visibility */}
-      <div className="onboard-bg-top">
-        <img src={BG_TOP} alt="Fresh salad bowl" />
-      </div>
-      <div className="onboard-bg-bottom">
-        <img src={BG_BOTTOM} alt="Fresh ingredients" />
+      {/* Background image — partially visible */}
+      <div className="onboard-bg">
+        <img src={bgImage} alt="" />
       </div>
 
       {/* Content */}
