@@ -288,7 +288,7 @@ const Home = () => {
                   <span className="material-symbols-outlined">favorite</span> Favorites
                 </button>
                 <div className="dropdown-divider"></div>
-                <button className="logout-btn" onClick={() => { setIsProfileModalOpen(false); mediumTap(); navigate('/landing'); }}>
+                <button className="logout-btn" onClick={() => { setIsProfileModalOpen(false); mediumTap(); navigate('/'); }}>
                   <span className="material-symbols-outlined">logout</span> Log Out
                 </button>
               </div>
