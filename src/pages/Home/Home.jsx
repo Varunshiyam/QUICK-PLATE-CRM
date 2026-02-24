@@ -27,14 +27,17 @@ const IMG = {
   hero:    'https://lh3.googleusercontent.com/aida-public/AB6AXuBgH-b5tMofcESETTPskyBzLwfv0wmn3BssBWy4aqdG8Ssu1OA1zUF2-TkuMacuyuQnoamQ4yvmIXABcP0MXCPutGYk8oB8I0eJm2roL1mIa82SPjNwxdGCBvp-hLaPDfy6vfFwURop7N_5LTua6vyyS1iL9YkdjoWw2iRqqoXdIVu9Zy4-YBB6Tb5xwpsEoL6uinVUhgE1qmtfNs7FvVHc6EPMsF0VGJOSE0BB03Im-Zk1sn3MvqbVGgSt2rNNtIgASlsV6cwbEPIx',
   salad:   'https://lh3.googleusercontent.com/aida-public/AB6AXuBZH03LnZFjClUcB8auLGFe4iXGTZKPwtoc_7earTpfFLFpyJCZs0HnZvrIO9lRdlin_owGopgjo-eMqf8FxKWEdpRN11FShwLWF9Z7l7FV4qhusFk-YM9Ks3x-rR0l5pwRW6qQw9GcaCIK3IqOd9Nz0uQQzjdk9sAMRsSGOCpGXdvHjngM0ys6JcRfgZOyFuc2oxVMdee-vgSsOXFYq0vfqrhchkpb3dIRU1wD8DmpC7q6DlUQgQqjy4q2ZHuM5uOaqz6FmsWuOjuR',
   masala:  'https://images.unsplash.com/photo-1565557623262-b51c2513a641?q=80&w=2571&auto=format&fit=crop',
+  tart:    'https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=2574&auto=format&fit=crop',
+  pastry:  'https://images.unsplash.com/photo-1509365465985-25d11c17e812?q=80&w=2630&auto=format&fit=crop',
+  cake:    'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80&w=2536&auto=format&fit=crop',
 };
 
 const TRENDING = [
-  { img: IMG.pasta,   badge: '#1 Trending',    name: 'Artisan Pasta Night',   price: 'Starting at $14.99' },
-  { img: IMG.grill,   badge: 'Limited Time',    name: 'Truffle Burger Series', price: 'Exclusive menu items' },
-  { img: IMG.sushi,   badge: 'Chef\'s Pick',    name: 'Omakase Experience',    price: 'Starting at $29.99' },
-  { img: IMG.dessert, badge: 'New Arrival',     name: 'Chocolate Lava Dream',  price: 'Starting at $9.99' },
-  { img: IMG.salad,   badge: 'Healthy Choice',  name: 'Mediterranean Bowl',    price: 'Starting at $12.49' },
+  { img: IMG.dessert, badge: '#1 Trending',    name: 'Chocolate Lava Dream',  price: 'Starting at $9.99' },
+  { img: IMG.pastry,  badge: 'Fresh Baked',    name: 'Glazed Berry Danish',   price: 'Starting at $5.99' },
+  { img: IMG.tart,    badge: 'Delightful',     name: 'Summer Fruit Tart',     price: 'Starting at $12.99' },
+  { img: IMG.cake,    badge: 'Limited Time',   name: 'Red Velvet Supreme',    price: 'Starting at $8.99' },
+  { img: IMG.grill,   badge: 'Hot Seller',     name: 'Truffle Burger Series', price: 'Exclusive menu items' },
 ];
 
 const RESTAURANTS = [
