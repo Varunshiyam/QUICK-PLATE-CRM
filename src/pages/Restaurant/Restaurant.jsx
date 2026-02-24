@@ -5,17 +5,7 @@ import useHaptic from '../../hooks/useHaptic';
 import useAppStore from '../../store/useAppStore';
 import './Restaurant.css';
 
-import { getMenuForCuisine, fallbackMenu } from '../../data/mockMenus';
-
-/* ─── Fallback Data ─── */
-const DEFAULT_REST = {
-  name: "L'Artisan Bistro",
-  rating: '4.8',
-  time: '25-35 min',
-  price: '$$$',
-  img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBzYy1O0IhJQ6uGpDIrOekF2Rwvg9RtlU1kT5RQySq78ffXqE8hjUiKalqrZ-CLe7iFY9QTG3PzP9YMiEfB8Tkx-ua7olhZkA-tWcEua7YVGmBK0HvKJqhDCSeghzmUO2-Ke-D60bTmVgECUQqG_zl_UGYmQnh7DYjZG-SbYt7GXjJSXZTVivXl7c_HySy5ud0YpnApwGLBQYUvxr2dT9rMh3WCIBQuFSj1heu7HDBAFihyfmGJLT7B4M049b87iZvhH4AW8iyQutSy',
-  cuisine: 'Modern American'
-};
+import { getRestaurantMenu } from '../../data/mockMenus';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 15 },
@@ -29,8 +19,18 @@ const Restaurant = () => {
   const { lightTap, mediumTap } = useHaptic();
   const navigate = useNavigate();
   const location = useLocation();
-  const restaurantInfo = location.state?.restaurant || DEFAULT_REST;
-  const MENU = getMenuForCuisine(restaurantInfo.cuisine);
+  const restaurantData = location.state?.restaurant || {
+    name: "L'Artisan Bistro",
+    rating: '4.8',
+    time: '25-35 min',
+    price: '$$$',
+    cuisine: 'Modern American',
+    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBzYy1O0IhJQ6uGpDIrOekF2Rwvg9RtlU1kT5RQySq78ffXqE8hjUiKalqrZ-CLe7iFY9QTG3PzP9YMiEfB8Tkx-ua7olhZkA-tWcEua7YVGmBK0HvKJqhDCSeghzmUO2-Ke-D60bTmVgECUQqG_zl_UGYmQnh7DYjZG-SbYt7GXjJSXZTVivXl7c_HySy5ud0YpnApwGLBQYUvxr2dT9rMh3WCIBQuFSj1heu7HDBAFihyfmGJLT7B4M049b87iZvhH4AW8iyQutSy'
+  };
+
+  const { menu: MENU, heroBg: heroImg, restaurantBanners } = getRestaurantMenu(restaurantData);
+  const RESTAURANT_INFO = { ...restaurantData, heroImg };
+
   const [activeTab, setActiveTab] = useState(MENU[0]?.category || 'Starters');
   
   // Section refs for smooth scrolling calculation mapping
@@ -39,6 +39,7 @@ const Restaurant = () => {
   const scrollToSection = (category) => {
     lightTap();
     setActiveTab(category);
+    // Add real scroll logic ideally here, for now it shifts states visually cleanly.
   };
 
   return (
@@ -47,7 +48,7 @@ const Restaurant = () => {
       <div className="rest-hero">
         <div 
           className="rest-hero-bg"
-          style={{ backgroundImage: `url('${restaurantInfo.img}')` }}
+          style={{ backgroundImage: `url('${RESTAURANT_INFO.heroImg}')` }}
         />
         <div className="rest-hero-overlay" />
         
@@ -75,7 +76,7 @@ const Restaurant = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            {restaurantInfo.name}
+            {RESTAURANT_INFO.name}
           </motion.h1>
           <motion.div 
             className="rest-meta"
@@ -85,12 +86,35 @@ const Restaurant = () => {
           >
             <div className="rest-rating">
               <span className="material-symbols-outlined" style={{ fontSize: '18px', marginRight: '4px' }}>star</span>
-              {restaurantInfo.rating}
+              {RESTAURANT_INFO.rating}
             </div>
-            <span className="rest-meta-text">• {restaurantInfo.time} • {restaurantInfo.price}</span>
+            <span className="rest-meta-text">• {RESTAURANT_INFO.time} • {RESTAURANT_INFO.price}</span>
           </motion.div>
         </div>
       </div>
+
+      {/* ─── Restaurant Banner ─── */}
+      {restaurantBanners && restaurantBanners.length > 0 && (
+        <div className="rest-banner-section">
+          {restaurantBanners.map((banner) => (
+            <div key={banner.id} className={`rest-banner-card theme-${banner.theme}`}>
+              <div className="rest-banner-bg-img">
+                 <img src={banner.img} alt="" />
+              </div>
+              <div className="rest-banner-content">
+                <div>
+                  <span className="rest-banner-supertitle">{banner.supertitle}</span>
+                  <h1 className="rest-banner-title">{banner.title}</h1>
+                  <p className="rest-banner-subtitle">{banner.subtitle}</p>
+                </div>
+                <button className="rest-banner-btn" onClick={lightTap}>
+                  {banner.buttonText}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* ─── Sticky Tab Bar ─── */}
       <div className="rest-tabs">
@@ -108,8 +132,7 @@ const Restaurant = () => {
 
       {/* ─── Menu Items Flow ─── */}
       <div className="rest-content">
-        <AnimatePresence mode="wait">
-          {MENU.filter(section => section.category === activeTab).map((section) => (
+        {MENU.map((section, sectionIdx) => (
           <motion.div 
             key={section.category}
             className="rest-section"
@@ -150,7 +173,6 @@ const Restaurant = () => {
             </div>
           </motion.div>
         ))}
-        </AnimatePresence>
       </div>
 
       {/* ─── Floating View Cart Action ─── */}

@@ -107,6 +107,113 @@
   font-size: 0.875rem;
 }
 
+/* ─── Banners ─── */
+.rest-banner-section {
+  padding: 1rem;
+}
+
+.rest-banner-card {
+  position: relative;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  height: 140px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.rest-banner-bg-img {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.rest-banner-bg-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rest-banner-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.85) 10%, rgba(0,0,0,0) 100%);
+  z-index: 2;
+}
+
+.rest-banner-card.theme-dark::after {
+  background: linear-gradient(to right, rgba(30,41,59,0.95) 10%, rgba(30,41,59,0) 100%);
+}
+.rest-banner-card.theme-green::after {
+  background: linear-gradient(to right, rgba(16,185,129,0.95) 10%, rgba(16,185,129,0) 100%);
+}
+.rest-banner-card.theme-primary::after {
+  background: linear-gradient(to right, rgba(251,126,24,0.95) 10%, rgba(251,126,24,0) 100%);
+}
+.rest-banner-card.theme-orange::after {
+  background: linear-gradient(to right, rgba(249,115,22,0.95) 10%, rgba(249,115,22,0) 100%);
+}
+.rest-banner-card.theme-indigo::after {
+  background: linear-gradient(to right, rgba(79,70,229,0.95) 10%, rgba(79,70,229,0) 100%);
+}
+.rest-banner-card.theme-slate::after {
+  background: linear-gradient(to right, rgba(71,85,105,0.95) 10%, rgba(71,85,105,0) 100%);
+}
+
+.rest-banner-content {
+  position: relative;
+  z-index: 3;
+  padding: 1.25rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rest-banner-supertitle {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  opacity: 0.9;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.rest-banner-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0.25rem 0;
+  line-height: 1.1;
+}
+
+.rest-banner-subtitle {
+  font-size: 0.8rem;
+  color: #fff;
+  opacity: 0.85;
+}
+
+.rest-banner-btn {
+  background: #fff;
+  color: #0F172A;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.15s;
+}
+
+.rest-banner-btn:active {
+  transform: scale(0.95);
+}
+
 /* ─── Sticky Tabs ─── */
 .rest-tabs {
   position: sticky;
