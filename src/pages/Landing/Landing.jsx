@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
 import './Landing.css';
 
@@ -65,6 +65,7 @@ const floatAnimation = {
 
 const Landing = () => {
   const { lightTap, mediumTap } = useHaptic();
+  const navigate = useNavigate();
   const heroRef = useRef(null);
   const featureRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true, margin: '-50px' });
@@ -72,7 +73,7 @@ const Landing = () => {
 
   const handleGetStarted = () => {
     mediumTap();
-    // Will navigate to home/onboarding when ready
+    navigate('/onboarding');
   };
 
   const handleDownload = () => {
