@@ -216,21 +216,23 @@ const Cart = () => {
       <nav className="home-bottom-nav glass-nav-override" style={{ zIndex: 40, borderTop: 'none' }}>
         <div className="home-bottom-nav-inner">
           <Link to="/home" className="home-nav-item" onClick={lightTap}>
-            <span className="material-symbols-outlined" style={{ color: '#94A3B8' }}>home</span>
-            <span style={{ color: '#94A3B8' }}>Home</span>
+            <span className="material-symbols-outlined">home</span>
+            <span className="home-nav-label">Home</span>
           </Link>
           <div className="home-nav-item" onClick={() => { lightTap(); navigate('/restaurant'); }}>
-            <span className="material-symbols-outlined" style={{ color: '#94A3B8' }}>explore</span>
-            <span style={{ color: '#94A3B8' }}>Discover</span>
+            <span className="material-symbols-outlined">explore</span>
+            <span className="home-nav-label">Discover</span>
           </div>
-          <div className="home-nav-item" style={{ marginTop: '-4px' }}>
-            <div className="nav-active-dot" style={{ backgroundColor: 'var(--color-primary)', marginBottom: '4px', width: '4px', height: '4px', borderRadius: '50%' }} />
-            <span className="material-symbols-outlined nav-active fill-1" style={{ color: 'var(--color-primary)' }}>receipt_long</span>
-            <span style={{ color: 'var(--color-primary)', fontWeight: 'bold' }}>Orders</span>
+          <div className="home-nav-item active">
+            <div style={{ position: 'relative' }}>
+              <span className="material-symbols-outlined">receipt_long</span>
+              <span className="home-nav-badge" />
+            </div>
+            <span className="home-nav-label">Orders</span>
           </div>
           <Link to="/profile" className="home-nav-item" onClick={lightTap}>
-            <span className="material-symbols-outlined" style={{ color: '#94A3B8' }}>person</span>
-            <span style={{ color: '#94A3B8' }}>Profile</span>
+            <span className="material-symbols-outlined">person</span>
+            <span className="home-nav-label">Profile</span>
           </Link>
         </div>
       </nav>
