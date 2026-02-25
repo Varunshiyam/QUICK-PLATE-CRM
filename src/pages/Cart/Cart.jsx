@@ -31,8 +31,18 @@ const Cart = () => {
     heavyTap();
   };
 
-  const handleAddAddon = () => {
+  const handleAddAddon = (addon) => {
     lightTap();
+    addToCart(
+      {
+        id: addon.id,
+        title: addon.name,
+        price: parseFloat(addon.price.replace(/[^0-9.]/g, '')),
+        img: addon.img,
+        quantity: 1
+      },
+      "L'Artisan Bistro"
+    );
   };
 
   return (
@@ -201,7 +211,7 @@ const Cart = () => {
 
       {/* ─── Bottom Navigation ─── */}
       <nav className="home-bottom-nav glass-nav-override" style={{ zIndex: 40, borderTop: 'none' }}>
-        <div className="home-nav-inner">
+        <div className="home-bottom-nav-inner">
           <Link to="/home" className="home-nav-item" onClick={lightTap}>
             <span className="material-symbols-outlined" style={{ color: '#94A3B8' }}>home</span>
             <span style={{ color: '#94A3B8' }}>Home</span>

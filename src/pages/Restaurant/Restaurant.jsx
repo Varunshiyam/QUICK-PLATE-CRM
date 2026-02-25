@@ -195,16 +195,15 @@ const Restaurant = () => {
       <AnimatePresence>
         {showAddedToast && (
           <motion.div
-            initial={{ opacity: 0, y: 50, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            initial={{ opacity: 0, y: 50, x: "-50%", scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, x: "-50%", scale: 1 }}
+            exit={{ opacity: 0, y: 20, x: "-50%", scale: 0.95 }}
             transition={{ type: 'spring', bounce: 0.4 }}
             className="rest-added-toast"
             style={{
               position: 'fixed',
               bottom: totalItemCount > 0 ? '7.5rem' : '5rem',
               left: '50%',
-              transform: 'translateX(-50%)',
               background: '#0f172a',
               color: 'white',
               padding: '0.75rem 1.25rem',
@@ -214,8 +213,7 @@ const Restaurant = () => {
               gap: '1rem',
               zIndex: 100,
               boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
-              width: 'max-content',
-              marginLeft: '-50%' // React style centering fix for fixed transform translation overlay
+              width: 'max-content'
             }}
           >
             <span className="material-symbols-outlined" style={{ color: '#22c55e', fontSize: '20px' }}>check_circle</span>
@@ -235,9 +233,9 @@ const Restaurant = () => {
         {totalItemCount > 0 && cartRestaurantId === RESTAURANT_INFO.name && (
           <motion.div 
             className="rest-floating-cart"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 50, x: "-50%" }}
+            animate={{ opacity: 1, y: 0, x: "-50%" }}
+            exit={{ opacity: 0, y: 50, x: "-50%" }}
             transition={{ type: 'spring', bounce: 0.3 }}
           >
             <button className="rest-cart-btn" onClick={() => { mediumTap(); navigate('/cart'); }}>
