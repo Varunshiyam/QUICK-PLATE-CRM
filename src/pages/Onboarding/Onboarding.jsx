@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import useHaptic from '../../hooks/useHaptic';
 import useAppStore from '../../store/useAppStore';
-import { signInWithGoogle } from '../../services/firebase';
+import { signInWithGoogleAndSync } from '../../services/firebase';
 import './Onboarding.css';
 
 /* ─── Mock Food Images for Carousel ─── */
@@ -54,12 +54,13 @@ const Onboarding = () => {
   const handleGoogleLogin = async () => {
     mediumTap();
     try {
-      const user = await signInWithGoogle();
+      const dbUser = await signInWithGoogleAndSync();
       setUser({
-        uid: user.uid,
-        displayName: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
+        uid: dbUser.firebaseUid,
+        customerId: dbUser.customerId,
+        displayName: dbUser.name,
+        email: dbUser.email,
+        photoURL: dbUser.photoURL,
         method: 'google',
       });
       toast.success('Successfully logged in with Google!');

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
 import useAppStore from '../../store/useAppStore';
+import { logoutUser } from '../../services/firebase';
 import './Home.css';
 
 /* ─── Mock Data ─── */
@@ -263,6 +264,21 @@ const Home = () => {
 
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  
+  const { logout, user } = useAppStore();
+
+  const handleLogoutDropdown = async () => {
+    setIsProfileModalOpen(false);
+    mediumTap();
+    try {
+      await logoutUser();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      logout();
+      navigate('/');
+    }
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -398,10 +414,10 @@ const Home = () => {
             >
               <div className="profile-header">
                 <div className="profile-img-large">
-                  <img src={USER_IMG} alt="User" />
+                  <img src={user?.photoURL || USER_IMG} alt="User" />
                 </div>
                 <div className="profile-info">
-                  <h4>Hey, Foodie!</h4>
+                  <h4>Hey, {user?.displayName?.split(' ')[0] || "Foodie"}!</h4>
                   <p>Your Orders & Details</p>
                 </div>
               </div>
@@ -413,7 +429,7 @@ const Home = () => {
                   <span className="material-symbols-outlined">favorite</span> Favorites
                 </button>
                 <div className="dropdown-divider"></div>
-                <button className="logout-btn" onClick={() => { setIsProfileModalOpen(false); mediumTap(); navigate('/'); }}>
+                <button className="logout-btn" onClick={handleLogoutDropdown}>
                   <span className="material-symbols-outlined">logout</span> Log Out
                 </button>
               </div>

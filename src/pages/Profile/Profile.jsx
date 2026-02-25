@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
+import useAppStore from '../../store/useAppStore';
+import { logoutUser } from '../../services/firebase';
 import './Profile.css';
 
 /* ─── Mock Data ─── */
@@ -75,6 +77,21 @@ const fadeUp = {
 const Profile = () => {
   const { lightTap, mediumTap } = useHaptic();
   const navigate = useNavigate();
+  const { user, logout } = useAppStore();
+
+  const handleLogout = async () => {
+    mediumTap();
+    try {
+      await logoutUser();
+      logout();
+      navigate('/');
+    } catch (error) {
+      console.error('Logout failed', error);
+      // still navigate away as fallback
+      logout();
+      navigate('/');
+    }
+  };
 
   return (
     <div className="profile-page">
@@ -99,10 +116,10 @@ const Profile = () => {
           custom={0}
         >
           <div className="profile-avatar-large">
-            <img src={USER_IMG} alt="User Avatar" />
+            <img src={user?.photoURL || USER_IMG} alt="User Avatar" />
           </div>
-          <h2 className="profile-user-name">Foodie Lover</h2>
-          <p className="profile-user-phone">+1 (555) 123-4567 • foodie@quickplate.com</p>
+          <h2 className="profile-user-name">{user?.displayName || "Foodie Lover"}</h2>
+          <p className="profile-user-phone">{user?.email || "foodie@quickplate.com"}</p>
           
           <div className="profile-stats">
             {STATS.map((stat, i) => (
@@ -199,7 +216,7 @@ const Profile = () => {
             <span className="material-symbols-outlined text-slate-300">chevron_right</span>
           </button>
           
-          <button className="profile-action-row glass-card logout-row" onClick={() => { mediumTap(); navigate('/'); }}>
+          <button className="profile-action-row glass-card logout-row" onClick={handleLogout}>
             <div className="action-row-left">
               <span className="material-symbols-outlined">logout</span>
               <span>Log Out</span>
