@@ -33,21 +33,17 @@ const Restaurant = () => {
 
   const [activeTab, setActiveTab] = useState(MENU[0]?.category || 'Starters');
   
-  const { addToCart, getCartItemCount, getCartTotal, cartRestaurantId } = useAppStore();
-  const [showAddedToast, setShowAddedToast] = useState(false);
-  const toastTimerRef = useRef(null);
+  const { addToCart, getCartItemCount, getCartTotal, cartRestaurantId, cartRestaurant } = useAppStore();
 
   const handleAddToCart = (item) => {
     mediumTap();
-    addToCart(item, RESTAURANT_INFO.name);
-    
-    setShowAddedToast(true);
-    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
-    toastTimerRef.current = setTimeout(() => setShowAddedToast(false), 3000);
+    addToCart(item, RESTAURANT_INFO);
   };
   
   const totalItemCount = getCartItemCount();
   const totalCartPrice = getCartTotal();
+  // Safe extraction for ID logic below mapped to our whole object 
+  const currentCartRestId = cartRestaurant?.name || cartRestaurantId;
 
   // Section refs for smooth scrolling calculation mapping
   const sectionRefs = useRef({});
@@ -191,46 +187,9 @@ const Restaurant = () => {
         ))}
       </div>
 
-      {/* ─── Added to Cart Popup ─── */}
-      <AnimatePresence>
-        {showAddedToast && (
-          <motion.div
-            initial={{ opacity: 0, y: 50, x: "-50%", scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, x: "-50%", scale: 1 }}
-            exit={{ opacity: 0, y: 20, x: "-50%", scale: 0.95 }}
-            transition={{ type: 'spring', bounce: 0.4 }}
-            className="rest-added-toast"
-            style={{
-              position: 'fixed',
-              bottom: totalItemCount > 0 ? '7.5rem' : '5rem',
-              left: '50%',
-              background: '#0f172a',
-              color: 'white',
-              padding: '0.75rem 1.25rem',
-              borderRadius: '2rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem',
-              zIndex: 100,
-              boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
-              width: 'max-content'
-            }}
-          >
-            <span className="material-symbols-outlined" style={{ color: '#22c55e', fontSize: '20px' }}>check_circle</span>
-            <span style={{ fontSize: '0.875rem', fontWeight: 600 }}>Added to Cart</span>
-            <button 
-              onClick={() => { lightTap(); navigate('/cart'); }} 
-              style={{ background: 'var(--color-primary)', color: 'white', border: 'none', borderRadius: '1rem', padding: '0.25rem 0.75rem', fontSize: '0.75rem', fontWeight: 'bold', cursor: 'pointer', marginLeft: '0.5rem' }}
-            >
-              View Cart
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* ─── Floating View Cart Action ─── */}
       <AnimatePresence>
-        {totalItemCount > 0 && cartRestaurantId === RESTAURANT_INFO.name && (
+        {totalItemCount > 0 && currentCartRestId === RESTAURANT_INFO.name && (
           <motion.div 
             className="rest-floating-cart"
             initial={{ opacity: 0, y: 50, x: "-50%" }}

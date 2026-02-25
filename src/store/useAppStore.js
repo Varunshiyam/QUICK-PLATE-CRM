@@ -17,13 +17,21 @@ const useAppStore = create(
   // ─── Cart State ───
   cart: [],
   cartRestaurantId: null,
+  cartRestaurant: null,
 
-  addToCart: (item, restaurantId) => {
+  addToCart: (item, restaurantPayload) => {
     const { cart, cartRestaurantId } = get();
-
+    // Handle both string fallback mapping and new full object payload models 
+    const isObj = typeof restaurantPayload === 'object';
+    const restId = isObj ? restaurantPayload.name : restaurantPayload;
+    
     // If adding from a different restaurant, clear cart first
-    if (cartRestaurantId && cartRestaurantId !== restaurantId) {
-      set({ cart: [{ ...item, quantity: 1 }], cartRestaurantId: restaurantId });
+    if (cartRestaurantId && cartRestaurantId !== restId) {
+      set({ 
+        cart: [{ ...item, quantity: 1 }], 
+        cartRestaurantId: restId,
+        cartRestaurant: isObj ? restaurantPayload : null
+      });
       return;
     }
 
@@ -36,7 +44,11 @@ const useAppStore = create(
       };
       set({ cart: updated });
     } else {
-      set({ cart: [...cart, { ...item, quantity: 1 }], cartRestaurantId: restaurantId });
+      set({ 
+        cart: [...cart, { ...item, quantity: 1 }], 
+        cartRestaurantId: restId,
+        ...(isObj && { cartRestaurant: restaurantPayload })
+      });
     }
   },
 
@@ -57,7 +69,7 @@ const useAppStore = create(
     }
   },
 
-  clearCart: () => set({ cart: [], cartRestaurantId: null }),
+  clearCart: () => set({ cart: [], cartRestaurantId: null, cartRestaurant: null }),
 
   getCartTotal: () => {
     const { cart } = get();
@@ -86,7 +98,8 @@ const useAppStore = create(
         user: state.user, 
         isAuthenticated: state.isAuthenticated, 
         cart: state.cart, 
-        cartRestaurantId: state.cartRestaurantId 
+        cartRestaurantId: state.cartRestaurantId,
+        cartRestaurant: state.cartRestaurant
       }),
     }
   )

@@ -5,19 +5,23 @@ import useAppStore from '../../store/useAppStore';
 import useHaptic from '../../hooks/useHaptic';
 import './Cart.css';
 import { menuAssets } from '../../assets/images/menu-items';
-
-// Mock add-on data
-const ADDONS = [
-  { id: 'a1', name: 'Extra Honey Burrata', price: '$18.00', img: menuAssets.home_burrata },
-  { id: 'a2', name: 'Mushroom Risotto', price: '$22.00', img: menuAssets.home_risotto },
-  { id: 'a3', name: 'Pinot Noir', price: '$12.00', img: null },
-];
+import { getRestaurantMenu } from '../../data/mockMenus';
 
 const Cart = () => {
-  const { cart, removeFromCart, addToCart, getCartTotal } = useAppStore();
+  const { cart, removeFromCart, addToCart, getCartTotal, cartRestaurant, cartRestaurantId } = useAppStore();
   const { lightTap, mediumTap, heavyTap } = useHaptic();
   const navigate = useNavigate();
   const [useWallet, setUseWallet] = useState(true);
+
+  // Dynamic Addons from Current Restaurant Mapping Context 
+  const restData = cartRestaurant || { name: cartRestaurantId || "L'Artisan Bistro" };
+  const { menu } = getRestaurantMenu(restData);
+  const _allRestItems = menu.flatMap(cat => cat.items);
+  const availableAddons = _allRestItems.filter(
+    item => !cart.some(cItem => cItem.id === item.id)
+  );
+  // Pick the top 4 remaining ones 
+  const ADDONS = availableAddons.slice(0, 4);
 
   // Computed totals
   const subtotal = getCartTotal();
@@ -36,12 +40,12 @@ const Cart = () => {
     addToCart(
       {
         id: addon.id,
-        title: addon.name,
+        title: addon.title,
         price: parseFloat(addon.price.replace(/[^0-9.]/g, '')),
         img: addon.img,
         quantity: 1
       },
-      "L'Artisan Bistro"
+      restData
     );
   };
 
@@ -134,13 +138,13 @@ const Cart = () => {
                 {ADDONS.map(addon => (
                   <div key={addon.id} className="addon-card">
                     {addon.img ? (
-                      <img src={addon.img} alt={addon.name} className="addon-img" />
+                      <img src={addon.img} alt={addon.title} className="addon-img" />
                     ) : (
                       <div className="addon-placeholder">
                         <span className="material-symbols-outlined">local_bar</span>
                       </div>
                     )}
-                    <h5 className="addon-name">{addon.name}</h5>
+                    <h5 className="addon-name">{addon.title}</h5>
                     <div className="addon-bottom">
                       <span className="addon-price">{addon.price}</span>
                       <button className="addon-add-btn" onClick={() => handleAddAddon(addon)}>
