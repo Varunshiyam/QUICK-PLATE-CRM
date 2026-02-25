@@ -41,7 +41,7 @@ const Cart = () => {
       {
         id: addon.id,
         title: addon.title,
-        price: parseFloat(addon.price.replace(/[^0-9.]/g, '')),
+        price: addon.price,
         img: addon.img,
         quantity: 1
       },
@@ -60,7 +60,7 @@ const Cart = () => {
           <div className="cart-header-title">
             <h1>Your Cart</h1>
             <p className="cart-header-subtitle">
-              L'Artisan Bistro <span className="material-symbols-outlined" style={{ fontSize: '12px', fontVariationSettings: '"FILL" 1' }}>verified</span>
+              {restData.name} <span className="material-symbols-outlined" style={{ fontSize: '12px', fontVariationSettings: '"FILL" 1' }}>verified</span>
             </p>
           </div>
           <button className="cart-icon-btn">
@@ -199,16 +199,14 @@ const Cart = () => {
             </div>
           </div>
 
-          <div className="cart-fixed-bottom">
-            <div>
-              <button className="checkout-btn" onClick={handleCheckout}>
-                <span>Proceed to Checkout</span>
-                <div className="checkout-btn-right">
-                  <div className="checkout-divider" />
-                  <span>${Math.max(0, totalPay).toFixed(2)}</span>
-                </div>
-              </button>
-            </div>
+          <div className="cart-checkout-wrapper" style={{ padding: '0 1.5rem 2rem 1.5rem' }}>
+            <button className="checkout-btn" onClick={handleCheckout}>
+              <span>Proceed to Checkout</span>
+              <div className="checkout-btn-right">
+                <div className="checkout-divider" />
+                <span>${Math.max(0, totalPay).toFixed(2)}</span>
+              </div>
+            </button>
           </div>
         </>
       )}
