@@ -61,7 +61,11 @@ const useAppStore = create(
 
   getCartTotal: () => {
     const { cart } = get();
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    return cart.reduce((total, item) => {
+      // Ensure we extract the numerical value even if price comes formatted with $ 
+      const priceVal = typeof item.price === 'string' ? parseFloat(item.price.replace(/[^0-9.]/g, '')) : item.price;
+      return total + (priceVal * item.quantity);
+    }, 0);
   },
 
   getCartItemCount: () => {

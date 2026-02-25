@@ -11,7 +11,7 @@ import Onboarding from './pages/Onboarding/Onboarding';
 // Lazy-loaded pages (will be created as mockups arrive)
 const Home = lazy(() => import('./pages/Home/Home'));
 const Restaurant = lazy(() => import('./pages/Restaurant/Restaurant'));
-// const Cart = lazy(() => import('./pages/Cart/Cart'));
+const Cart = lazy(() => import('./pages/Cart/Cart'));
 // const Orders = lazy(() => import('./pages/Orders/Orders'));
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 // const Search = lazy(() => import('./pages/Search/Search'));
@@ -80,6 +80,7 @@ function App() {
             <Route path="/onboarding" element={<Onboarding />} />
             <Route path="/home" element={<Home />} />
             <Route path="/restaurant" element={<Restaurant />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="/profile" element={<Profile />} />
             {/* More routes will be added as pages are built */}
           </Routes>

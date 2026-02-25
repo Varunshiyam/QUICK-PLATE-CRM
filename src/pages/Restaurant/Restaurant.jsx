@@ -33,6 +33,22 @@ const Restaurant = () => {
 
   const [activeTab, setActiveTab] = useState(MENU[0]?.category || 'Starters');
   
+  const { addToCart, getCartItemCount, getCartTotal, cartRestaurantId } = useAppStore();
+  const [showAddedToast, setShowAddedToast] = useState(false);
+  const toastTimerRef = useRef(null);
+
+  const handleAddToCart = (item) => {
+    mediumTap();
+    addToCart(item, RESTAURANT_INFO.name);
+    
+    setShowAddedToast(true);
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    toastTimerRef.current = setTimeout(() => setShowAddedToast(false), 3000);
+  };
+  
+  const totalItemCount = getCartItemCount();
+  const totalCartPrice = getCartTotal();
+
   // Section refs for smooth scrolling calculation mapping
   const sectionRefs = useRef({});
 
@@ -163,7 +179,7 @@ const Restaurant = () => {
 
                   <div className="rest-menu-img-wrap">
                     <img src={item.img} alt={item.title} />
-                    <button className="rest-add-btn" onClick={mediumTap}>
+                    <button className="rest-add-btn" onClick={() => handleAddToCart(item)}>
                       ADD <span className="material-symbols-outlined">add</span>
                     </button>
                   </div>
@@ -175,21 +191,65 @@ const Restaurant = () => {
         ))}
       </div>
 
+      {/* ─── Added to Cart Popup ─── */}
+      <AnimatePresence>
+        {showAddedToast && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ type: 'spring', bounce: 0.4 }}
+            className="rest-added-toast"
+            style={{
+              position: 'fixed',
+              bottom: totalItemCount > 0 ? '7.5rem' : '5rem',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              background: '#0f172a',
+              color: 'white',
+              padding: '0.75rem 1.25rem',
+              borderRadius: '2rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1rem',
+              zIndex: 100,
+              boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
+              width: 'max-content',
+              marginLeft: '-50%' // React style centering fix for fixed transform translation overlay
+            }}
+          >
+            <span className="material-symbols-outlined" style={{ color: '#22c55e', fontSize: '20px' }}>check_circle</span>
+            <span style={{ fontSize: '0.875rem', fontWeight: 600 }}>Added to Cart</span>
+            <button 
+              onClick={() => { lightTap(); navigate('/cart'); }} 
+              style={{ background: 'var(--color-primary)', color: 'white', border: 'none', borderRadius: '1rem', padding: '0.25rem 0.75rem', fontSize: '0.75rem', fontWeight: 'bold', cursor: 'pointer', marginLeft: '0.5rem' }}
+            >
+              View Cart
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* ─── Floating View Cart Action ─── */}
-      <motion.div 
-        className="rest-floating-cart"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.5, type: 'spring', bounce: 0.3 }}
-      >
-        <button className="rest-cart-btn" onClick={() => mediumTap()}>
-          <div className="rest-cart-left">
-            <span className="rest-cart-badge">2 Items</span>
-            <span className="rest-cart-action">• View Cart</span>
-          </div>
-          <span className="rest-cart-price">$32.50</span>
-        </button>
-      </motion.div>
+      <AnimatePresence>
+        {totalItemCount > 0 && cartRestaurantId === RESTAURANT_INFO.name && (
+          <motion.div 
+            className="rest-floating-cart"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ type: 'spring', bounce: 0.3 }}
+          >
+            <button className="rest-cart-btn" onClick={() => { mediumTap(); navigate('/cart'); }}>
+              <div className="rest-cart-left">
+                <span className="rest-cart-badge">{totalItemCount} {totalItemCount === 1 ? 'Item' : 'Items'}</span>
+                <span className="rest-cart-action">• View Cart</span>
+              </div>
+              <span className="rest-cart-price">${totalCartPrice.toFixed(2)}</span>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ─── Sticky Bottom Navigation ─── */ }
       <nav className="rest-bottom-nav glass-nav-override">

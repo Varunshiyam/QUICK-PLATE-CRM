@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
+import useAppStore from '../../store/useAppStore';
 import './Home.css';
 
 /* ─── Mock Data ─── */
@@ -253,6 +254,9 @@ const Home = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  
+  const { getCartItemCount } = useAppStore();
+  const cartItemCount = getCartItemCount();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [activeSort, setActiveSort] = useState('Recommended');
   const [currentBanner, setCurrentBanner] = useState(0);
@@ -324,8 +328,31 @@ const Home = () => {
               </h2>
             </div>
           </div>
-          <div className="home-avatar" onClick={() => { lightTap(); setIsProfileModalOpen(!isProfileModalOpen); setIsAddressModalOpen(false); }}>
-            <img src={USER_IMG} alt="User Avatar" />
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <div 
+              className="home-cart-icon" 
+              onClick={() => { lightTap(); navigate('/cart'); }}
+              style={{
+                position: 'relative', width: 44, height: 44, borderRadius: '50%',
+                background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                boxShadow: '0 4px 15px rgba(0,0,0,0.05)', color: '#0f172a', cursor: 'pointer'
+              }}
+            >
+              <span className="material-symbols-outlined">shopping_basket</span>
+              {cartItemCount > 0 && (
+                <span style={{
+                  position: 'absolute', top: '-2px', right: '-2px', background: 'var(--color-primary)',
+                  color: 'white', fontSize: '10px', fontWeight: 'bold', width: '20px', height: '20px',
+                  borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  boxShadow: '0 2px 5px rgba(251,126,24,0.4)'
+                }}>
+                  {cartItemCount}
+                </span>
+              )}
+            </div>
+            <div className="home-avatar" onClick={() => { lightTap(); setIsProfileModalOpen(!isProfileModalOpen); setIsAddressModalOpen(false); }}>
+              <img src={USER_IMG} alt="User Avatar" />
+            </div>
           </div>
         </div>
 
