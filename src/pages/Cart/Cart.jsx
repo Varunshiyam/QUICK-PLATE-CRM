@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import useAppStore from '../../store/useAppStore';
 import useHaptic from '../../hooks/useHaptic';
 import './Cart.css';
+import '../Home/Home.css'; // Required for shared bottom nav classes during hard-reloads
 import { menuAssets } from '../../assets/images/menu-items';
 import { getRestaurantMenu } from '../../data/mockMenus';
 
