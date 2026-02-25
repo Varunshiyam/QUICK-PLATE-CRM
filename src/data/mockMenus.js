@@ -1,207 +1,202 @@
-import burgerImg from '../assets/images/burger_item_1771950423045.png';
-import bbqImg from '../assets/images/bbq_dish_1771950630791.png';
-import medImg from '../assets/images/mediterranean_dish_1771950819956.png';
-import bakeryImg from '../assets/images/bakery_dish_1771951017962.png';
-import pizzaImg from '../assets/images/pizza_dish_1771951189743.png';
+import { menuAssets } from '../assets/images/menu-items/index.js';
 
-// Fallbacks for cuisines that didn't have generated images
-import sushiImg from '../assets/images/sushi-platter.png';
-const indianImg = 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?q=80&w=2571&auto=format&fit=crop';
-const dessertImg = 'https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=2574&auto=format&fit=crop';
+export const mockMenus = {
+  // Bakery
+  'bakery & pastry': [
+    {
+      category: 'Starters',
+      items: [
+        { id: 'bks1', title: 'Warm Cinnamon Pecan Roll', desc: 'Fresh out the oven, coated in sweet cream cheese glaze and toasted pecans.', price: '$5.50', badge: 'Best Seller', img: menuAssets.bks1_cinnamon_roll },
+        { id: 'bks2', title: 'Blueberry Scones', desc: 'Buttery, flakey, loaded with wild blueberries.', price: '$4.00', img: menuAssets.bks2_scones },
+      ]
+    },
+    {
+      category: 'Main Course',
+      items: [
+        { id: 'bkm1', title: 'Artisan Croissant Sandwich', desc: 'Turkey, melted gruyere, spinach, and dijonnaise housed in a golden croissant.', price: '$12.00', badge: 'Hot Seller', img: menuAssets.bkm1_croissant },
+      ]
+    },
+    {
+      category: 'Desserts',
+      items: [
+        { id: 'bkd1', title: 'Triple Chocolate Brownie', desc: 'Fudgy center packed with dark chocolate chunks.', price: '$6.50', img: menuAssets.bkd1_brownie },
+        { id: 'bkd2', title: 'Fruit Tartlet', desc: 'Creamy vanilla custard topped with fresh berries.', price: '$7.00', img: menuAssets.bkd2_tartlet }
+      ]
+    },
+    {
+      category: 'Beverages',
+      items: [
+        { id: 'bkv1', title: 'Matcha Latte', desc: 'Hot, frothy milk blended with stone-ground Japanese matcha.', price: '$5.50', img: menuAssets.bkv1_matcha },
+      ]
+    }
+  ],
+  'desserts & cakes': [
+    {
+      category: 'Starters',
+      items: [
+        { id: 'dcs1', title: 'Macaron Tasting Box', desc: 'A selection of 6 vibrant, delicate French macarons in assorted flavors.', price: '$18.00', badge: 'Best Seller', img: menuAssets.dcs1_macaron }
+      ]
+    },
+    {
+      category: 'Main Course',
+      items: [
+        { id: 'dcm1', title: 'Red Velvet Supreme Cake', desc: 'A towering slice of rich ruby cake slathered in premium cream cheese frosting.', price: '$11.00', badge: 'Signature', img: menuAssets.dcm1_red_velvet },
+        { id: 'dcm2', title: 'Dark Cacao Lava Cake', desc: 'Decadent chocolate cake with a molten truffle core, served warm.', price: '$14.00', img: menuAssets.dcm2_lava_cake },
+      ]
+    },
+    {
+      category: 'Desserts',
+      items: [
+        { id: 'dcd1', title: 'Vanilla Bean Gelato', desc: 'Locally churned authentic Italian style gelato.', price: '$6.00', img: menuAssets.dcd1_gelato }
+      ]
+    },
+    {
+      category: 'Beverages',
+      items: [
+        { id: 'dcb1', title: 'Salted Caramel Frappe', desc: 'Ice-blended coffee beverage topped with whipped cream and caramel drizzle.', price: '$8.50', img: menuAssets.dcb1_frappe }
+      ]
+    }
+  ],
 
-// Common Unsplash links used for starters, drinks, and desserts
-const drinksMap = {
-  general: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2670&auto=format&fit=crop', // Mojito
-  coffee: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2574&auto=format&fit=crop',
-  soda: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=2670&auto=format&fit=crop',
-  tea: 'https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?q=80&w=2670&auto=format&fit=crop'
+  // Pizza
+  'pizza': [
+    {
+      category: 'Starters',
+      items: [
+        { id: 'pz1', title: 'Garlic Butter Knots', desc: 'Twisted pizza dough baked to perfection, drenched in rich garlic butter and parmesan.', price: '$6.50', badge: 'Fan Favorite', img: menuAssets.pz1_garlic_knots },
+        { id: 'pz2', title: 'Caprese Salad Bites', desc: 'Cherry tomatoes, fresh burrata, and basil leaves drizzled with balsamic reduction.', price: '$11.00', img: menuAssets.pz2_caprese }
+      ]
+    },
+    {
+      category: 'Main Course',
+      items: [
+        { id: 'pm1', title: 'Margherita Woodfire', desc: 'Crushed San Marzano tomatoes, fresh mozzarella, and basil on a blistered crust.', price: '$16.50', badge: 'Classic', img: menuAssets.pm1_margherita },
+        { id: 'pm2', title: 'Spicy Pepperoni Honey', desc: 'Cupped pepperoni layered with mozzarella and drizzled with hot honey.', price: '$19.00', img: menuAssets.pm2_pepperoni },
+      ]
+    },
+    {
+      category: 'Desserts',
+      items: [
+        { id: 'pd1', title: 'Nutella Pizza Slice', desc: 'Warm dough folded with rich hazelnut spread and dusted with powdered sugar.', price: '$8.00', img: menuAssets.pd1_nutella_pizza }
+      ]
+    },
+    {
+      category: 'Beverages',
+      items: [
+        { id: 'pb1', title: 'Draft IPA', desc: 'Locally sourced crisp pale ale.', price: '$7.50', img: menuAssets.pb1_beer }
+      ]
+    }
+  ],
+  'italian pizza': 'pizza',
+
+  // Sushi
+  'japanese': [
+    {
+      category: 'Starters',
+      items: [
+        { id: 'jp1', title: 'Edamame Sea Salt', desc: 'Steamed young soybeans seasoned with flaky sea salt.', price: '$5.50', img: menuAssets.jp1_edamame },
+        { id: 'jp2', title: 'Spicy Tuna Crispy Rice', desc: 'Pan-fried sushi rice topped with spicy tuna and jalapeño.', price: '$14.00', badge: 'Signature', img: menuAssets.jp2_spicy_tuna },
+      ]
+    },
+    {
+      category: 'Main Course',
+      items: [
+        { id: 'jm1', title: 'Dragon Roll', desc: 'Eel and cucumber topped with sliced avocado and sweet unagi sauce.', price: '$16.00', badge: 'Best Seller', img: menuAssets.jm1_dragon_roll },
+        { id: 'jm2', title: 'Omakase Platter', desc: 'Chef’s selection of 12 premium sashimi and nigiri pieces.', price: '$45.00', img: menuAssets.jm2_omakase },
+      ]
+    },
+    {
+      category: 'Desserts',
+      items: [
+        { id: 'jd1', title: 'Mochi Ice Cream Trio', desc: 'Mango, Green Tea, and Strawberry encased in sweet rice dough.', price: '$8.50', img: menuAssets.jd1_mochi }
+      ]
+    },
+    {
+      category: 'Beverages',
+      items: [
+        { id: 'jb1', title: 'Premium Hot Sake', desc: 'Warm carafe of smooth, aromatic rice wine.', price: '$12.00', img: menuAssets.jb1_sake }
+      ]
+    }
+  ],
+  'japanese sushi': 'japanese',
+
+  // Burgers
+  'american burgers': [
+    {
+      category: 'Starters',
+      items: [
+        { id: 'as1', title: 'Loaded Truffle Fries', desc: 'Crispy potato fries tossed in truffle oil, parmesan, and parsley.', price: '$8.50', badge: 'Best Seller', img: menuAssets.as1_truffle_fries },
+        { id: 'as2', title: 'Onion Ring Tower', desc: 'Thick-cut beer-battered onion rings served with spicy ranch.', price: '$10.00', img: menuAssets.as2_onion_rings },
+      ]
+    },
+    {
+      category: 'Main Course',
+      items: [
+        { id: 'am1', title: 'The Smash Double stack', desc: 'Two deeply seared beef patties with melty american cheese, pickles, and smash sauce.', price: '$15.00', badge: 'Iconic', img: menuAssets.am1_smash_burger },
+        { id: 'am2', title: 'Crispy Chicken Sandwich', desc: 'Buttermilk fried chicken breast, spicy slaw, and honey mustard on a brioche bun.', price: '$14.00', img: menuAssets.am2_chicken_sandwich },
+      ]
+    },
+    {
+      category: 'Desserts',
+      items: [
+        { id: 'ad1', title: 'Oreo Milkshake', desc: 'Thick vanilla bean ice cream spun with crushed oreos and topped with whipped cream.', price: '$7.50', img: menuAssets.ad1_oreo_shake }
+      ]
+    },
+    {
+      category: 'Beverages',
+      items: [
+        { id: 'ab1', title: 'Craft Cola', desc: 'Ice-cold artisanal soda made with real cane sugar.', price: '$3.50', img: menuAssets.ab1_coca_cola }
+      ]
+    }
+  ],
+  'modern american': 'american burgers',
+  'american bbq': 'american burgers',
+  'bbq & grill': 'american burgers',
 };
 
-const defaultDessert = 'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?q=80&w=2574&auto=format&fit=crop';
-
-export const getRestaurantMenu = (restaurant) => {
-  const cuisine = restaurant.cuisine.toLowerCase();
-
-  let heroBg = restaurant.img; // use the restaurant image as hero background
-  let bannerOffer = restaurant.offer; 
-  let starDish = '';
-
-  let menu = [];
-
-  if (cuisine.includes('burger') || cuisine.includes('modern american')) {
-    starDish = burgerImg;
-    menu = [
-      {
-        category: 'Starters',
-        items: [{ id: 'b_s1', title: 'Crispy Onion Rings', desc: 'Golden beer-battered onion rings with spicy ranch.', price: '$6.50', img: 'https://images.unsplash.com/photo-1639024471283-03518883512d?q=80&w=2574&auto=format&fit=crop' }]
-      },
-      {
-        category: 'Main Course',
-        items: [{ id: 'b_m1', title: 'Artisan Smash Burger', desc: 'Double smash patty, melted cheese, secret sauce on toasted brioche.', price: '$14.00', badge: 'Signature', img: burgerImg }]
-      },
-      {
-        category: 'Desserts',
-        items: [{ id: 'b_d1', title: 'Vanilla Bean Shake', desc: 'Thick hand-spun milkshake topped with whipped cream.', price: '$5.50', img: defaultDessert }]
-      },
-      {
-        category: 'Beverages',
-        items: [{ id: 'b_b1', title: 'Craft Cola', desc: 'Refreshing fountain cola with real cane sugar.', price: '$3.00', img: drinksMap.soda }]
-      }
-    ];
-  } else if (cuisine.includes('pizza') || cuisine.includes('italian')) {
-    starDish = pizzaImg;
-    menu = [
-      {
-        category: 'Starters',
-        items: [{ id: 'p_s1', title: 'Garlic Knots', desc: 'Oven-baked knots tossed in garlic butter and parmesan.', price: '$5.00', img: 'https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?q=80&w=2670&auto=format&fit=crop' }]
-      },
-      {
-        category: 'Main Course',
-        items: [{ id: 'p_m1', title: 'Rustic Woodfired Margherita', desc: 'Fresh basil, melted mozzarella, signature tomato sauce.', price: '$18.00', badge: 'Best Seller', img: pizzaImg }]
-      },
-      {
-        category: 'Desserts',
-        items: [{ id: 'p_d1', title: 'Classic Tiramisu', desc: 'Espresso-soaked ladyfingers layered with sweet mascarpone.', price: '$8.00', img: defaultDessert }]
-      },
-      {
-        category: 'Beverages',
-        items: [{ id: 'p_b1', title: 'Italian Sparkling Water', desc: 'Crisp and refreshing mineral water.', price: '$4.00', img: drinksMap.soda }]
-      }
-    ];
-  } else if (cuisine.includes('sushi') || cuisine.includes('japanese')) {
-    starDish = sushiImg;
-    menu = [
-      {
-        category: 'Starters',
-        items: [{ id: 's_s1', title: 'Edamame', desc: 'Steamed soybeans sprinkled with coarse sea salt.', price: '$4.50', img: 'https://images.unsplash.com/photo-1590054359853-df93fb3efb21?q=80&w=2574&auto=format&fit=crop' }]
-      },
-      {
-        category: 'Main Course',
-        items: [{ id: 's_m1', title: 'Premium Omakase Platter', desc: 'Chef’s selection of supreme nigiri and rolls.', price: '$35.00', badge: 'Chef\'s Choice', img: sushiImg }]
-      },
-      {
-        category: 'Desserts',
-        items: [{ id: 's_d1', title: 'Mochi Ice Cream', desc: 'Soft and chewy mochi filled with green tea ice cream.', price: '$6.00', img: defaultDessert }]
-      },
-      {
-        category: 'Beverages',
-        items: [{ id: 's_b1', title: 'Matcha Green Tea', desc: 'Traditional warm matcha imported from Kyoto.', price: '$3.50', img: drinksMap.tea }]
-      }
-    ];
-  } else if (cuisine.includes('bbq') || cuisine.includes('grill')) {
-    starDish = bbqImg;
-    menu = [
-      {
-        category: 'Starters',
-        items: [{ id: 'q_s1', title: 'Smoked Jalapeno Poppers', desc: 'Bacon-wrapped poppers stuffed with cream cheese.', price: '$8.00', img: 'https://images.unsplash.com/photo-1627308595229-7830f5c9c66e?q=80&w=2574&auto=format&fit=crop' }]
-      },
-      {
-        category: 'Main Course',
-        items: [{ id: 'q_m1', title: 'Smoked BBQ Pork Ribs', desc: 'Slow-smoked baby back ribs with a sticky glaze.', price: '$24.00', badge: 'Signature', img: bbqImg }]
-      },
-      {
-        category: 'Desserts',
-        items: [{ id: 'q_d1', title: 'Pecan Pie', desc: 'Warm slice of homemade southern pecan pie.', price: '$7.00', img: defaultDessert }]
-      },
-      {
-        category: 'Beverages',
-        items: [{ id: 'q_b1', title: 'Sweet Iced Tea', desc: 'Classic southern sweet tea brewed fresh daily.', price: '$3.00', img: drinksMap.tea }]
-      }
-    ];
-  } else if (cuisine.includes('mediterranean')) {
-    starDish = medImg;
-    menu = [
-      {
-        category: 'Starters',
-        items: [{ id: 'm_s1', title: 'Classic Hummus & Pita', desc: 'Creamy homemade hummus served with warm pita.', price: '$6.50', img: 'https://images.unsplash.com/photo-1585238341210-9430c6819eb7?q=80&w=2670&auto=format&fit=crop' }]
-      },
-      {
-        category: 'Main Course',
-        items: [{ id: 'm_m1', title: 'Fresh Grain Salad', desc: 'Quinoa, falafel, cherry tomatoes, and tahini dressing.', price: '$15.00', badge: 'Healthy', img: medImg }]
-      },
-      {
-        category: 'Desserts',
-        items: [{ id: 'm_d1', title: 'Baklava', desc: 'Layers of phyllo pastry filled with chopped nuts and honey.', price: '$5.50', img: defaultDessert }]
-      },
-      {
-        category: 'Beverages',
-        items: [{ id: 'm_b1', title: 'Mint Lemonade', desc: 'Refreshing crushed lemonade with fresh mint leaves.', price: '$4.50', img: drinksMap.general }]
-      }
-    ];
-  } else if (cuisine.includes('bakery') || cuisine.includes('dessert')) {
-    starDish = bakeryImg;
-    menu = [
-      {
-        category: 'Starters',
-        items: [{ id: 'bk_s1', title: 'Cheese Danish', desc: 'Flaky pastry filled with sweet cream cheese.', price: '$4.50', img: 'https://images.unsplash.com/photo-1509365465985-25d11c17e812?q=80&w=2630&auto=format&fit=crop' }]
-      },
-      {
-        category: 'Main Course',
-        items: [{ id: 'bk_m1', title: 'Chocolate Croissant', desc: 'Buttery, flaky croissant loaded with rich dark chocolate.', price: '$5.50', badge: 'Fresh Baked', img: bakeryImg }]
-      },
-      {
-        category: 'Desserts',
-        items: [{ id: 'bk_d1', title: 'Macaron Box', desc: 'Assortment of 6 delicately flavored French macarons.', price: '$12.00', img: dessertImg }]
-      },
-      {
-        category: 'Beverages',
-        items: [{ id: 'bk_b1', title: 'Artisan Latte', desc: 'Smooth espresso cut with perfectly steamed milk.', price: '$4.50', img: drinksMap.coffee }]
-      }
-    ];
-  } else if (cuisine.includes('indian')) {
-    starDish = indianImg;
-    menu = [
-      {
-        category: 'Starters',
-        items: [{ id: 'i_s1', title: 'Vegetable Samosas', desc: 'Crispy pastry shells stuffed with spiced potatoes and peas.', price: '$5.00', img: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=2671&auto=format&fit=crop' }]
-      },
-      {
-        category: 'Main Course',
-        items: [{ id: 'i_m1', title: 'Butter Chicken Masala', desc: 'Rich, creamy curry with tender chicken pieces, served with Naan.', price: '$16.50', badge: 'Spicy', img: indianImg }]
-      },
-      {
-        category: 'Desserts',
-        items: [{ id: 'i_d1', title: 'Gulab Jamun', desc: 'Sweet milk dumplings soaked in rose-cardamom syrup.', price: '$4.50', img: defaultDessert }]
-      },
-      {
-        category: 'Beverages',
-        items: [{ id: 'i_b1', title: 'Mango Lassi', desc: 'Creamy yogurt-based drink blended with ripe mangoes.', price: '$4.00', img: drinksMap.general }]
-      }
-    ];
-  } else {
-    // Default fallback
-    menu = [
-      {
-        category: 'Starters',
-        items: [{ id: 'df_s1', title: 'House Salad', desc: 'Fresh greens with a light vinaigrette.', price: '$7.00', img: medImg }]
-      },
-      {
-        category: 'Main Course',
-        items: [{ id: 'df_m1', title: 'Chef Special', desc: 'The signature main event crafted by our head chef.', price: '$22.00', badge: 'Popular', img: restaurant.img }]
-      },
-      {
-        category: 'Desserts',
-        items: [{ id: 'df_d1', title: 'Seasonal Tart', desc: 'Fresh fruit on a buttery short crust base.', price: '$8.50', img: dessertImg }]
-      },
-      {
-        category: 'Beverages',
-        items: [{ id: 'df_b1', title: 'Signature Cocktail', desc: 'A complex, refreshing blend of premium spirits.', price: '$11.00', img: drinksMap.general }]
-      }
-    ];
+// Generic fallback menu for anything else
+export const fallbackMenu = [
+  {
+    category: 'Starters',
+    items: [
+      { id: 'f1', title: 'Truffle Arancini', desc: 'Crispy risotto balls with black truffle and creamy mozzarella center.', price: '$14.50', badge: 'Best Seller', img: menuAssets.home_arancini },
+      { id: 'f2', title: 'Honey Glazed Burrata', desc: 'Fresh burrata cheese with roasted peaches and wildflower honey.', price: '$18.00', img: menuAssets.home_burrata },
+    ]
+  },
+  {
+    category: 'Main Course',
+    items: [
+      { id: 'f3', title: 'Pan-Seared Salmon', desc: 'Atlantic salmon with lemon-butter caper sauce, served over garlic potatoes.', price: '$28.50', img: menuAssets.home_salmon },
+      { id: 'f4', title: 'Wild Mushroom Risotto', desc: 'Slow-cooked Arborio rice with porcini mushrooms, parmesan, and herb oil.', price: '$22.00', img: menuAssets.home_risotto },
+    ]
+  },
+  {
+    category: 'Desserts',
+    items: [
+      { id: 'f5', title: 'Classic Tiramisu', desc: 'Espresso-soaked ladyfingers layered with sweet mascarpone cream.', price: '$12.00', img: menuAssets.home_tiramisu }
+    ]
+  },
+  {
+    category: 'Beverages',
+    items: [
+      { id: 'f6', title: 'Midnight Mojito', desc: 'Signature dark rum blended with fresh mint and crushed blackberries.', price: '$11.00', img: menuAssets.home_mojito }
+    ]
   }
+];
 
-  // Generate banners based on restaurant data
-  const restaurantBanners = [
-    {
-      id: 1,
-      supertitle: 'Exclusive Offer',
-      title: bannerOffer || '10% OFF',
-      subtitle: 'For a limited time',
-      buttonText: 'Claim Now',
-      theme: restaurant.offerColor || 'dark',
-      img: starDish || restaurant.img
-    }
-  ];
+export const getMenuForCuisine = (cuisineName) => {
+  if (!cuisineName) return fallbackMenu;
+  const key = cuisineName.toLowerCase();
+  const found = mockMenus[key];
+  if (!found) return fallbackMenu;
+  if (typeof found === 'string') return mockMenus[found] || fallbackMenu;
+  return found;
+};
 
-  return { menu, heroBg, restaurantBanners };
+export const getRestaurantMenu = (restaurantData) => {
+  return {
+    menu: getMenuForCuisine(restaurantData?.cuisine),
+    heroBg: restaurantData?.img || menuAssets.rest_bistro,
+    restaurantBanners: []
+  };
 };
