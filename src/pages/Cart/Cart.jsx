@@ -34,6 +34,7 @@ const Cart = () => {
 
   const handleCheckout = () => {
     heavyTap();
+    navigate('/checkout');
   };
 
   const handleAddAddon = (addon) => {
