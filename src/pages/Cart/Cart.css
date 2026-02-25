@@ -398,6 +398,13 @@
   margin: 0 auto;
 }
 
+.cart-checkout-wrapper {
+  max-width: var(--max-width, 600px);
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
 .checkout-btn {
   width: 100%;
   background: var(--color-primary);
