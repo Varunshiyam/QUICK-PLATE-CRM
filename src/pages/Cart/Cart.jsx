@@ -113,7 +113,7 @@ const Cart = () => {
                           <span className="cart-stepper-count">{item.quantity}</span>
                           <button 
                             className="cart-stepper-btn add" 
-                            onClick={() => { lightTap(); addToCart(item, 'mock_restaurant'); }}
+                            onClick={() => { lightTap(); addToCart(item, restData); }}
                           >
                             <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>add</span>
                           </button>

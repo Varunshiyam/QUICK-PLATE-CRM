@@ -28,28 +28,15 @@ const Onboarding = () => {
   const navigate = useNavigate();
   const setUser = useAppStore((state) => state.setUser);
   
-  const [authMode, setAuthMode] = useState('initial'); // 'initial' or 'form'
   const [activeSlide, setActiveSlide] = useState(0);
 
   // Auto-slide carousel every 4 seconds
   useEffect(() => {
-    if (authMode !== 'initial') return; // Stop sliding when filling form
-    
     const interval = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % FOOD_IMAGES.length);
     }, 4000);
     return () => clearInterval(interval);
-  }, [authMode]);
-
-  const [form, setForm] = useState({
-    fullName: '',
-    phone: '',
-    email: '',
-  });
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  }, []);
 
   const handleGoogleLogin = async () => {
     mediumTap();
@@ -64,39 +51,9 @@ const Onboarding = () => {
         method: 'google',
       });
       toast.success('Successfully logged in with Google!');
-      navigate('/home');
+      navigate('/onboarding-details');
     } catch (err) {
       toast.error('Google verification failed. Please try again.');
-    }
-  };
-
-  const handleSubmit = () => {
-    mediumTap();
-    if (!form.fullName || !form.email) {
-      toast.error('Please enter your name and email.');
-      return;
-    }
-    // Persist via Zustand
-
-    setUser({
-      displayName: form.fullName,
-      email: form.email,
-      phone: form.phone,
-      method: 'form',
-    });
-    toast.success('Profile completed successfully!');
-    navigate('/home');
-  };
-
-  const handleUseLocation = () => {
-    lightTap();
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          console.log('Location:', pos.coords.latitude, pos.coords.longitude);
-        },
-        (err) => console.warn('Geolocation error:', err)
-      );
     }
   };
 
@@ -120,177 +77,68 @@ const Onboarding = () => {
           animate="visible"
           custom={0}
         >
-          {authMode === 'form' && (
-            <button className="onboard-back-btn" onClick={() => { lightTap(); setAuthMode('initial'); }}>
-              <span className="material-symbols-outlined">arrow_back</span>
-            </button>
-          )}
           <h1 className="onboard-title-elegant">
-            Where Cravings Meet<br />Their Perfect <span className="title-emoji">🍔</span>
+            Welcome to<br />Quick Plate
           </h1>
           <p className="onboard-desc-elegant">
-            {authMode === 'initial' 
-              ? 'Discover bold flavors and unforgettable dishes in a place where every craving is satisfied with the perfect bite, crafted just for you.' 
-              : "Let's get your profile ready for seamless delivery."}
+            Your favorite meals, delivered fast.
           </p>
         </motion.div>
 
         <AnimatePresence mode="wait">
-          {authMode === 'initial' ? (
-            /* ─── Carousel & Selection Screen ─── */
-            <motion.div
-              key="auth-selection"
-              className="onboard-carousel-container"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
-            >
-              {/* Dynamic Image Carousel */}
-              <div className="carousel-track">
-                {FOOD_IMAGES.map((imgUrl, index) => {
-                  let offset = index - activeSlide;
-                  // Handle wrap-around math to make infinite loop feel smoother
-                  if (offset < 0) offset += FOOD_IMAGES.length;
-                  if (offset > 2) offset -= FOOD_IMAGES.length;
+          <motion.div
+            key="auth-selection"
+            className="onboard-carousel-container"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            {/* Dynamic Image Carousel */}
+            <div className="carousel-track">
+              {FOOD_IMAGES.map((imgUrl, index) => {
+                let offset = index - activeSlide;
+                // Handle wrap-around math to make infinite loop feel smoother
+                if (offset < 0) offset += FOOD_IMAGES.length;
+                if (offset > 2) offset -= FOOD_IMAGES.length;
 
-                  let scale = offset === 1 ? 1 : 0.85;
-                  let zIndex = offset === 1 ? 10 : 5;
-                  let translateX = (offset - 1) * 105; // Spread logic
-                  
-                  return (
-                    <motion.div
-                      key={index}
-                      className="carousel-card"
-                      animate={{
-                        scale,
-                        x: `${translateX}%`,
-                        zIndex,
-                        opacity: offset === 1 ? 1 : 0.5
-                      }}
-                      transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    >
-                      <img src={imgUrl} alt={`Food ${index}`} />
-                    </motion.div>
-                  );
-                })}
-              </div>
-
-              {/* Dots */}
-              <div className="carousel-dots">
-                {FOOD_IMAGES.map((_, i) => (
-                  <div key={i} className={`carousel-dot ${i === activeSlide ? 'active' : ''}`} />
-                ))}
-              </div>
-
-              {/* Action Buttons Block */}
-              <div className="onboard-auth-block">
-                <button className="onboard-google-btn" onClick={handleGoogleLogin}>
-                  <img src="https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9z_hELisAlapwE9LUPh6fcXIfb5vwpbMl4xl9H9TRFPc5NOO8Sb3VSgIBrfRYvW6cUA" alt="Google" />
-                  Sign In with Google
-                </button>
+                let scale = offset === 1 ? 1 : 0.85;
+                let zIndex = offset === 1 ? 10 : 5;
+                let translateX = (offset - 1) * 105; // Spread logic
                 
-                <button className="onboard-qp-btn" onClick={() => { mediumTap(); setAuthMode('form'); }}>
-                  Create Quick Plate Account
-                </button>
-              </div>
-            </motion.div>
-          ) : (
-            /* ─── Form Screen ─── */
-            <motion.div
-              key="auth-form"
-              className="onboard-form"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.3 }}
-            >
-              {/* Full Name */}
-              <div className="onboard-field">
-                <label className="onboard-label">Full Name</label>
-                <div className="onboard-input-wrap">
-                  <span className="material-symbols-outlined">person</span>
-                  <input
-                    className="onboard-input"
-                    type="text"
-                    name="fullName"
-                    placeholder="John Doe"
-                    value={form.fullName}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
+                return (
+                  <motion.div
+                    key={index}
+                    className="carousel-card"
+                    animate={{
+                      scale,
+                      x: `${translateX}%`,
+                      zIndex,
+                      opacity: offset === 1 ? 1 : 0.5
+                    }}
+                    transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  >
+                    <img src={imgUrl} alt={`Food ${index}`} />
+                  </motion.div>
+                );
+              })}
+            </div>
 
-              {/* Phone */}
-              <div className="onboard-field">
-                <label className="onboard-label">Phone Number</label>
-                <div className="onboard-input-wrap">
-                  <span className="material-symbols-outlined">phone_iphone</span>
-                  <input
-                    className="onboard-input"
-                    type="tel"
-                    name="phone"
-                    placeholder="+1 (555) 000-0000"
-                    value={form.phone}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
+            {/* Dots */}
+            <div className="carousel-dots">
+              {FOOD_IMAGES.map((_, i) => (
+                <div key={i} className={`carousel-dot ${i === activeSlide ? 'active' : ''}`} />
+              ))}
+            </div>
 
-              {/* Email */}
-              <div className="onboard-field">
-                <label className="onboard-label">Email Address</label>
-                <div className="onboard-input-wrap">
-                  <span className="material-symbols-outlined">mail</span>
-                  <input
-                    className="onboard-input"
-                    type="email"
-                    name="email"
-                    placeholder="name@example.com"
-                    value={form.email}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-
-              {/* Delivery Address */}
-              <motion.div
-                className="onboard-address-section"
-                variants={fadeUp}
-                initial="hidden"
-                animate="visible"
-                custom={0.2}
-              >
-                <h2 className="onboard-address-title">Set Delivery Address</h2>
-
-                <button className="onboard-location-btn" onClick={handleUseLocation}>
-                  <div className="onboard-location-btn-left">
-                    <span className="material-symbols-outlined">my_location</span>
-                    <span>Use Current Location</span>
-                  </div>
-                  <span className="material-symbols-outlined">chevron_right</span>
-                </button>
-              </motion.div>
-
-              {/* Bottom CTA */}
-              <motion.div
-                className="onboard-bottom"
-                variants={fadeUp}
-                initial="hidden"
-                animate="visible"
-                custom={0.3}
-              >
-                <motion.button
-                  className="onboard-cta"
-                  onClick={handleSubmit}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Confirm Details
-                  <span className="material-symbols-outlined">arrow_forward</span>
-                </motion.button>
-              </motion.div>
-            </motion.div>
-          )}
+            {/* Action Buttons Block */}
+            <div className="onboard-auth-block">
+              <button className="onboard-google-btn" onClick={handleGoogleLogin}>
+                <img src="https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9z_hELisAlapwE9LUPh6fcXIfb5vwpbMl4xl9H9TRFPc5NOO8Sb3VSgIBrfRYvW6cUA" alt="Google" />
+                Sign In with Google
+              </button>
+            </div>
+          </motion.div>
         </AnimatePresence>
       </div>
     </div>

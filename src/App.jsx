@@ -13,6 +13,7 @@ const Home = lazy(() => import('./pages/Home/Home'));
 const Restaurant = lazy(() => import('./pages/Restaurant/Restaurant'));
 const Cart = lazy(() => import('./pages/Cart/Cart'));
 const Checkout = lazy(() => import('./pages/Checkout/Checkout'));
+const OnboardingDetails = lazy(() => import('./pages/OnboardingDetails/OnboardingDetails'));
 // const Orders = lazy(() => import('./pages/Orders/Orders'));
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 // const Search = lazy(() => import('./pages/Search/Search'));
@@ -79,6 +80,7 @@ function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/features" element={<Features />} />
             <Route path="/onboarding" element={<Onboarding />} />
+            <Route path="/onboarding-details" element={<OnboardingDetails />} />
             <Route path="/home" element={<Home />} />
             <Route path="/restaurant" element={<Restaurant />} />
             <Route path="/cart" element={<Cart />} />
