@@ -238,7 +238,7 @@ const Home = () => {
     }
     
     return result;
-  }, [searchQuery, activeCategory, activeSort]);
+  }, [restaurants, searchQuery, activeCategory, activeSort]);
 
   const filteredTrending = useMemo(() => {
     if (!searchQuery) return TRENDING;
