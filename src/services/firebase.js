@@ -36,6 +36,10 @@ googleProvider.setCustomParameters({
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, '');
 
+if (!API_BASE_URL) {
+  console.warn('⚠️ Missing VITE_API_BASE_URL in environment variables.');
+}
+
 // ─────────────────────────────────────────────
 // Utility: Clean Error Message
 // ─────────────────────────────────────────────
@@ -44,7 +48,9 @@ const formatError = (error) => {
   if (error?.response?.data) {
     return typeof error.response.data === 'string'
       ? error.response.data
-      : error.response.data.message || JSON.stringify(error.response.data);
+      : error.response.data.message ||
+        error.response.data.error ||
+        JSON.stringify(error.response.data);
   }
 
   return error.message || 'Authentication failed.';
@@ -57,12 +63,12 @@ const formatError = (error) => {
 export const signInWithGoogleAndSync = async () => {
   try {
     if (!API_BASE_URL) {
-      throw new Error('Missing VITE_API_BASE_URL.');
+      throw new Error('API base URL not configured.');
     }
 
     // 1️⃣ Firebase Login
     const result = await signInWithPopup(auth, googleProvider);
-    const user = result.user;
+    const user = result?.user;
 
     if (!user) {
       throw new Error('Firebase login failed.');
@@ -70,6 +76,10 @@ export const signInWithGoogleAndSync = async () => {
 
     // 2️⃣ Get Firebase ID Token
     const idToken = await user.getIdToken(true);
+
+    if (!idToken) {
+      throw new Error('Failed to retrieve Firebase ID token.');
+    }
 
     // 3️⃣ Send token to Salesforce Public Site
     const response = await axios.post(
@@ -83,28 +93,31 @@ export const signInWithGoogleAndSync = async () => {
       }
     );
 
-    if (!response.data || !response.data.customerId) {
-      throw new Error('Salesforce authentication failed.');
+    const data = response?.data;
+
+    if (!data || !data.success || !data.customerId) {
+      throw new Error(
+        data?.message || 'Salesforce authentication failed.'
+      );
     }
 
-    // 4️⃣ Store minimal session info (optional)
-    localStorage.setItem(
-      'quickplate_user',
-      JSON.stringify({
-        customerId: response.data.customerId,
-        name: response.data.name,
-        email: response.data.email
-      })
-    );
-
-    // 5️⃣ Return normalized user object
-    return {
-      customerId: response.data.customerId,
-      name: response.data.name,
-      email: response.data.email,
+    // 4️⃣ Build normalized user session object
+    const sessionUser = {
+      customerId: data.customerId,
+      name: data.name,
+      email: data.email,
+      profileComplete: data.profileComplete,
       firebaseUid: user.uid,
       photoURL: user.photoURL
     };
+
+    // 5️⃣ Store in localStorage
+    localStorage.setItem(
+      'quickplate_user',
+      JSON.stringify(sessionUser)
+    );
+
+    return sessionUser;
 
   } catch (error) {
     console.error('Login & Sync Error:', error);
@@ -123,5 +136,18 @@ export const logoutUser = async () => {
   } catch (error) {
     console.error('Logout Error:', error);
     throw error;
+  }
+};
+
+// ─────────────────────────────────────────────
+// Get Current Stored User
+// ─────────────────────────────────────────────
+
+export const getStoredUser = () => {
+  try {
+    const raw = localStorage.getItem('quickplate_user');
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
   }
 };

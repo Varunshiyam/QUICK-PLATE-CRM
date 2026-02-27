@@ -102,6 +102,14 @@ const OnboardingDetails = () => {
         address: address
       });
 
+      const storedRaw = localStorage.getItem('quickplate_user');
+      if (storedRaw) {
+        const storedObj = JSON.parse(storedRaw);
+        storedObj.address = address;
+        storedObj.profileComplete = true;
+        localStorage.setItem('quickplate_user', JSON.stringify(storedObj));
+      }
+
       heavyTap();
       toast.success('Profile created successfully!');
       navigate('/home');

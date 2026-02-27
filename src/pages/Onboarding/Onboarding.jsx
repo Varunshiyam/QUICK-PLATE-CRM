@@ -49,9 +49,15 @@ const Onboarding = () => {
         email: dbUser.email,
         photoURL: dbUser.photoURL,
         method: 'google',
+        profileComplete: dbUser.profileComplete,
       });
       toast.success('Successfully logged in with Google!');
-      navigate('/onboarding-details');
+      
+      if (dbUser.profileComplete) {
+        navigate('/home');
+      } else {
+        navigate('/onboarding-details');
+      }
     } catch (err) {
       toast.error('Google verification failed. Please try again.');
     }

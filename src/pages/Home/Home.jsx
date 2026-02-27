@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
 import useAppStore from '../../store/useAppStore';
-import { logoutUser } from '../../services/firebase';
+import { logoutUser, getStoredUser } from '../../services/firebase';
 import './Home.css';
 
 /* ─── Mock Data ─── */
@@ -266,6 +266,9 @@ const Home = () => {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   
   const { logout, user } = useAppStore();
+  
+  const storedUser = getStoredUser();
+  const deliveryAddress = storedUser?.address || 'San Francisco, CA';
 
   const handleLogoutDropdown = async () => {
     setIsProfileModalOpen(false);
@@ -334,7 +337,7 @@ const Home = () => {
             <div>
               <span className="home-location-label">Deliver to</span>
               <h2 className="home-location-city">
-                San Francisco, CA
+                {deliveryAddress.length > 25 ? `${deliveryAddress.substring(0, 25)}...` : deliveryAddress}
                 <motion.span 
                   className="material-symbols-outlined"
                   animate={{ rotate: isAddressModalOpen ? 180 : 0 }}
@@ -386,7 +389,7 @@ const Home = () => {
                 <div className="address-icon"><span className="material-symbols-outlined">home</span></div>
                 <div className="address-details">
                   <h4>Home (Default)</h4>
-                  <p>123 Silicon Valley, SF, CA</p>
+                  <p>{deliveryAddress.length > 35 ? `${deliveryAddress.substring(0, 35)}...` : deliveryAddress}</p>
                 </div>
                 <span className="material-symbols-outlined check">check_circle</span>
               </div>

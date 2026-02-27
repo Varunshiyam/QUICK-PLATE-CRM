@@ -3,16 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import useAppStore from '../../store/useAppStore';
 import useHaptic from '../../hooks/useHaptic';
+import { getStoredUser } from '../../services/firebase';
 import './Checkout.css';
 
 // ─── Environment & Configuration ───
-// Only use Stripe publishable key in frontend
-const STRIPE_PK = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_mock_key';
-const stripePromise = loadStripe(STRIPE_PK);
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 const isMockMode = !API_BASE_URL;
 
@@ -24,21 +20,21 @@ const UI_STATES = {
   FAILED: 'PAYMENT_FAILED',
 };
 
-// ─── Child Form Component containing Stripe Hooks ───
+// ─── Checkout Form Component ───
 const CheckoutForm = () => {
-  const stripe = useStripe();
-  const elements = useElements();
   const navigate = useNavigate();
-  const { lightTap, heavyTap, successTap, errorTap } = useHaptic();
+  const { lightTap, heavyTap, successTap, errorTap, mediumTap } = useHaptic();
   
-  // App State
-  const { cart, getCartTotal, clearCart, cartRestaurant } = useAppStore();
+  const { cart, getCartTotal, clearCart } = useAppStore();
+  
+  const storedUser = getStoredUser();
+  const deliveryAddress = storedUser?.address || '452 West 19th Street, Apt 4B\nChelsea, New York, NY 10011';
 
-  // Component State
   const [uiState, setUiState] = useState(UI_STATES.READY);
   const [errorMessage, setErrorMessage] = useState('');
-  const [isCardComplete, setIsCardComplete] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
+  
+  // Payment Method Selection (Only capturing mode now)
+  const [paymentMethod, setPaymentMethod] = useState('card'); // 'card', 'upi', 'cod'
   
   // Calculated Totals
   const subtotal = getCartTotal();
@@ -48,7 +44,6 @@ const CheckoutForm = () => {
   const totalPayStr = Math.max(0, subtotal > 0 ? subtotal + deliveryFee + taxes - walletApplied : 0).toFixed(2);
   const totalPayCents = Math.round(parseFloat(totalPayStr) * 100);
 
-  // Poll Ref to avoid memory leaks
   const pollingTimerRef = useRef(null);
 
   useEffect(() => {
@@ -60,7 +55,7 @@ const CheckoutForm = () => {
   const startBackendPolling = async (orderId) => {
     setUiState(UI_STATES.WAITING);
     let attempts = 0;
-    const maxAttempts = 10; // e.g. poll for 30-50 seconds max
+    const maxAttempts = 10;
 
     const poll = async () => {
       attempts++;
@@ -68,11 +63,9 @@ const CheckoutForm = () => {
         let isPaid = false;
         
         if (isMockMode) {
-          // Mocking Salesforce backend confirmation
           await new Promise(r => setTimeout(r, 2000));
           isPaid = true;
         } else {
-          // Real backend poll GET /orders/{orderId}
           const response = await axios.get(`${API_BASE_URL}/orders/${orderId}`);
           if (response.data.Order_Status === 'PAID') isPaid = true;
         }
@@ -81,9 +74,7 @@ const CheckoutForm = () => {
           clearInterval(pollingTimerRef.current);
           successTap();
           setUiState(UI_STATES.SUCCESS);
-          toast.success('Payment Successful', { icon: '🎉', style: { borderRadius: '2rem', background: '#333', color: '#fff' }});
           
-          // Clear cart and redirect automatically after a moment
           setTimeout(() => {
             clearCart();
             navigate('/home', { replace: true });
@@ -99,79 +90,33 @@ const CheckoutForm = () => {
       }
     };
 
-    // Poll every 3 seconds
     pollingTimerRef.current = setInterval(poll, 3000);
-    // Instant first poll trigger
     poll();
   };
 
   const handlePaySubmit = async () => {
-    if (!stripe || !elements || !isCardComplete) return;
     heavyTap();
     setUiState(UI_STATES.PROCESSING);
     setErrorMessage('');
 
     try {
-      const orderId = `ORD-${Date.now()}`; // Generate or fetch order ID from context
+      const orderId = `ORD-${Date.now()}`;
 
-      // STEP 1: Create Payment Intent
-      let clientSecret = '';
+      // Unified Generic Payment Submission
       if (isMockMode) {
-        await new Promise(r => setTimeout(r, 1200)); // Simulate API delay
-        clientSecret = 'pi_mock_sdk_bypass_123';
+        await new Promise(r => setTimeout(r, 1500));
       } else {
-        const intentRes = await axios.post(`${API_BASE_URL}/create-payment-intent`, {
-          orderId,
-          amount: totalPayCents
-        });
-        clientSecret = intentRes.data.client_secret;
+        await axios.post(`${API_BASE_URL}/create-payment-intent`, {
+           orderId, amount: totalPayCents, method: paymentMethod
+        }).catch(() => {});
       }
-
-      // STEP 2: Confirm Payment in Stripe Browser SDK
-      const cardElement = elements.getElement(CardElement);
-      let paymentResult;
       
-      if (isMockMode) {
-        await new Promise(r => setTimeout(r, 1500)); // Simulate SDK auth processing
-        paymentResult = { paymentIntent: { status: 'succeeded' } };
-      } else {
-        paymentResult = await stripe.confirmCardPayment(clientSecret, {
-          payment_method: { card: cardElement }
-        });
-      }
-
-      // STEP 3: Handle Result and Poll Backend
-      if (paymentResult.error) {
-        throw new Error(paymentResult.error.message || "Payment attempt failed.");
-      } else if (paymentResult.paymentIntent && paymentResult.paymentIntent.status === 'succeeded') {
-        startBackendPolling(orderId);
-      } else {
-        throw new Error('Payment status unknown.');
-      }
-
+      startBackendPolling(orderId);
     } catch (err) {
       errorTap();
-      setErrorMessage(err.message || 'An unexpected error occurred processing your payment.');
+      setErrorMessage(err.message || 'An unexpected error occurred processing your order.');
       setUiState(UI_STATES.FAILED);
     }
-  };
-
-  // Stripe Card Formatting 
-  const cardElementOptions = {
-    style: {
-      base: {
-        fontSize: '16px',
-        color: '#0f172a',
-        fontFamily: 'Inter, sans-serif',
-        '::placeholder': { color: '#94a3b8' },
-        iconColor: '#fb7e18',
-      },
-      invalid: {
-        color: '#ef4444',
-        iconColor: '#ef4444',
-      },
-    },
-    hidePostalCode: true,
   };
 
   return (
@@ -189,7 +134,7 @@ const CheckoutForm = () => {
             {uiState === UI_STATES.WAITING && (
               <>
                 <div className="spinner dark state-icon-large pulsing" style={{ borderTopColor: 'var(--color-primary)', width: '60px', height: '60px' }} />
-                <h3 className="checkout-state-title">Confirming your payment...</h3>
+                <h3 className="checkout-state-title">Confirming your order...</h3>
                 <p className="checkout-state-desc">Please don't close this screen while we verify the order securely.</p>
               </>
             )}
@@ -204,15 +149,15 @@ const CheckoutForm = () => {
                 >
                   task_alt
                 </motion.span>
-                <h3 className="checkout-state-title">Payment Successful!</h3>
-                <p className="checkout-state-desc">Your order is confirmed and sent to the kitchen. Redirecting...</p>
+                <h3 className="checkout-state-title">Order Confirmed!</h3>
+                <p className="checkout-state-desc">Your order has been sent to the kitchen. Redirecting...</p>
               </>
             )}
 
             {uiState === UI_STATES.FAILED && (
               <>
                 <span className="material-symbols-outlined state-icon-large error">error</span>
-                <h3 className="checkout-state-title">Payment Failed</h3>
+                <h3 className="checkout-state-title">Transaction Failed</h3>
                 <p className="checkout-state-desc">{errorMessage}</p>
                 <button 
                   className="retry-btn" 
@@ -226,7 +171,6 @@ const CheckoutForm = () => {
         )}
       </AnimatePresence>
 
-      {/* ─── Form Content Layout ─── */}
       <AnimatePresence mode="wait">
         {(uiState === UI_STATES.READY || uiState === UI_STATES.PROCESSING) && (
           <motion.div 
@@ -234,84 +178,110 @@ const CheckoutForm = () => {
             animate={{ opacity: 1, y: 0 }} 
             exit={{ opacity: 0 }}
             key="checkout-flow"
-            style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingBottom: '2rem' }}
           >
-            {/* 1. Order Summary Section */}
-            <section>
-              <h2 className="checkout-section-title">Order Summary</h2>
-              <div className="checkout-card">
-                <div className="summary-restaurant">
-                  {cartRestaurant?.name || "L'Artisan Bistro"}
+            {/* ─── Section: Delivering To ─── */}
+            <div className="co-section">
+              <h2 className="co-section-title">Delivering To</h2>
+              <div className="co-address-card">
+                <div className="co-address-icon">
+                  <span className="material-symbols-outlined">home</span>
                 </div>
-                <div className="summary-items-list">
-                  {cart.map(item => (
-                    <div key={item.id} className="summary-item-row">
-                      <span className="summary-item-name">{item.quantity}x {item.title || item.name}</span>
-                      <span className="summary-item-price">${((item.price) || 0).toFixed(2)}</span>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="bill-details">
-                  <div className="bill-row">
-                    <span>Subtotal</span>
-                    <span>${subtotal.toFixed(2)}</span>
+                <div className="co-address-details">
+                  <div className="co-address-header">
+                    <h3 className="co-address-title">Residence</h3>
+                    <button className="co-edit-btn" onClick={lightTap}>Edit</button>
                   </div>
-                  <div className="bill-row">
-                    <span>Delivery Fee</span>
-                    <span style={{ color: '#22c55e', fontWeight: 500 }}>FREE</span>
-                  </div>
-                  <div className="bill-row">
-                    <span>Taxes & Charges</span>
-                    <span>${taxes.toFixed(2)}</span>
-                  </div>
-                  <div className="bill-row" style={{ color: 'var(--color-primary)' }}>
-                    <span>Wallet Applied</span>
-                    <span>- ${walletApplied.toFixed(2)}</span>
-                  </div>
-                  <div className="bill-row total">
-                    <span>Final Payable</span>
-                    <span className="highlighted-amount">${totalPayStr}</span>
-                  </div>
+                  <p className="co-address-text">{deliveryAddress}</p>
                 </div>
               </div>
-            </section>
+            </div>
 
-            {/* 2 & 3. Payment Method Section & Stripe Card */}
-            <section>
-              <h2 className="checkout-section-title">Payment Method</h2>
-              <div className="checkout-card" style={{ padding: '1.5rem' }}>
-                <div className="stripe-secure-badge">
-                  <span className="material-symbols-outlined">lock</span>
-                  <span>Payments secured by Stripe</span>
+            {/* ─── Section: Amount To Pay ─── */}
+            <div className="co-section">
+              <div className="co-pay-card">
+                <div className="co-pay-left">
+                  <div className="amount-label">Amount to Pay</div>
+                  <div className="amount-value">${totalPayStr}</div>
                 </div>
-                
-                <div className={`stripe-card-wrapper ${isFocused ? 'focus' : ''} ${errorMessage ? 'invalid' : ''}`}>
-                  <CardElement 
-                    options={cardElementOptions} 
-                    onChange={(e) => {
-                      setIsCardComplete(e.complete);
-                      if (e.error) setErrorMessage(e.error.message);
-                      else setErrorMessage('');
-                    }}
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={() => setIsFocused(false)}
-                  />
+                <div className="co-pay-icon">
+                  <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>receipt_long</span>
                 </div>
-                
-                {errorMessage && (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="stripe-error-message">
-                    <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>info</span>
-                    <span>{errorMessage}</span>
-                  </motion.div>
+              </div>
+            </div>
+
+            {/* ─── Section: Payment Method ─── */}
+            <div className="co-section">
+              <h2 className="co-section-title">Payment Method</h2>
+
+              {/* Card Option */}
+              <div 
+                className={`co-method-row ${paymentMethod === 'card' ? 'selected' : ''}`}
+                onClick={() => { mediumTap(); setPaymentMethod('card'); }}
+              >
+                <div className="co-method-icon">
+                  <span className="material-symbols-outlined">credit_card</span>
+                </div>
+                <div className="co-method-info">
+                  <h4 className="co-method-title">Credit / Debit Card</h4>
+                  <p className="co-method-sub">Visa, Mastercard, Amex</p>
+                </div>
+                {paymentMethod === 'card' && (
+                  <span className="material-symbols-outlined co-check-icon">check_circle</span>
                 )}
               </div>
-            </section>
+
+              {/* UPI Option */}
+              <div 
+                className={`co-method-row ${paymentMethod === 'upi' ? 'selected' : ''}`}
+                onClick={() => { mediumTap(); setPaymentMethod('upi'); setErrorMessage(''); }}
+              >
+                <div className="co-method-icon">
+                  <span className="material-symbols-outlined">qr_code_scanner</span>
+                </div>
+                <div className="co-method-info">
+                  <h4 className="co-method-title">UPI / QR Scanner</h4>
+                  <p className="co-method-sub">Instant app-to-app payment</p>
+                </div>
+                {paymentMethod === 'upi' && (
+                  <span className="material-symbols-outlined co-check-icon">check_circle</span>
+                )}
+              </div>
+
+              {/* COD Option */}
+              <div 
+                className={`co-method-row ${paymentMethod === 'cod' ? 'selected' : ''}`}
+                onClick={() => { mediumTap(); setPaymentMethod('cod'); setErrorMessage(''); }}
+              >
+                <div className="co-method-icon">
+                  <span className="material-symbols-outlined">payments</span>
+                </div>
+                <div className="co-method-info">
+                  <h4 className="co-method-title">Cash on Delivery</h4>
+                  <p className="co-method-sub">Pay when your food arrives</p>
+                </div>
+                {paymentMethod === 'cod' && (
+                  <span className="material-symbols-outlined co-check-icon">check_circle</span>
+                )}
+              </div>
+            </div>
+
+            {/* ─── Trust Badges ─── */}
+            <div className="co-trust">
+              <div className="co-trust-title">
+                <span className="material-symbols-outlined">verified_user</span>
+                <span>Secure Encrypted Checkout</span>
+              </div>
+              <div className="co-trust-badges">
+                <div className="co-badge-cube"><span className="material-symbols-outlined">credit_score</span></div>
+                <div className="co-badge-cube"><span className="material-symbols-outlined">lock</span></div>
+                <div className="co-badge-cube"><span className="material-symbols-outlined">security</span></div>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* 4. Pay Button Fixed Overlay */}
+      {/* ─── Fixed Bottom Pay Button ─── */}
       <AnimatePresence>
         {(uiState === UI_STATES.READY || uiState === UI_STATES.PROCESSING) && (
           <motion.div 
@@ -322,16 +292,16 @@ const CheckoutForm = () => {
           >
             <div>
               <button 
-                className="place-order-btn" 
+                className="confirm-pay-btn" 
                 onClick={handlePaySubmit}
-                disabled={!isCardComplete || uiState === UI_STATES.PROCESSING}
+                disabled={uiState === UI_STATES.PROCESSING}
               >
                 {uiState === UI_STATES.PROCESSING ? (
                   <div className="spinner" />
                 ) : (
                   <>
-                    <span className="material-symbols-outlined">lock</span>
-                    <span>Pay ${totalPayStr}</span>
+                    <span>Confirm & Pay</span>
+                    <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>arrow_forward</span>
                   </>
                 )}
               </button>
@@ -343,28 +313,26 @@ const CheckoutForm = () => {
   );
 };
 
-// ─── Main Export Wrapping Elements Provider ───
+// ─── Main Component Header ───
 const Checkout = () => {
   const navigate = useNavigate();
-  const { mediumTap } = useHaptic();
+  const { lightTap } = useHaptic();
 
   return (
     <div className="checkout-page">
       <header className="checkout-header">
         <div className="checkout-header-inner">
-          <button className="cart-icon-btn" onClick={() => { mediumTap(); navigate(-1); }}>
+          <button className="header-back-btn" onClick={() => { lightTap(); navigate(-1); }}>
             <span className="material-symbols-outlined">arrow_back_ios_new</span>
           </button>
           <div className="checkout-header-title">
-            <h1>Secure Checkout</h1>
+            <h1>Checkout</h1>
           </div>
           <div style={{ width: 40 }} /> {/* Spacer */}
         </div>
       </header>
 
-      <Elements stripe={stripePromise}>
-        <CheckoutForm />
-      </Elements>
+      <CheckoutForm />
     </div>
   );
 };
