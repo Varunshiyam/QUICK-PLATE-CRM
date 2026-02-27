@@ -4,11 +4,21 @@ import { Link, useNavigate } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
 import useAppStore from '../../store/useAppStore';
 import { logoutUser, getStoredUser } from '../../services/firebase';
+import { fetchRestaurants } from '../../services/restaurantService';
 import './Home.css';
 
 /* ─── Mock Data ─── */
 import userEmoji from '../../assets/images/Emoji.avif';
 const USER_IMG = userEmoji;
+
+import imgMorningBliss from '../../assets/images/MissMatched_Pics/Morning Bliss Bakery.avif';
+import imgNapoliWoodfired from '../../assets/images/MissMatched_Pics/Napoli Woodfired Pizza.avif';
+import imgSliceStone from '../../assets/images/MissMatched_Pics/Slice & Stone.avif';
+import imgSmashStack from '../../assets/images/MissMatched_Pics/Smash & Stack Burgers.avif';
+import imgSweetTooth from '../../assets/images/MissMatched_Pics/Sweet Tooth Confections.avif';
+import imgMeltdownGrill from '../../assets/images/MissMatched_Pics/The Meltdown Grill.avif';
+import imgTokyoNights from '../../assets/images/MissMatched_Pics/Tokyo Nights Rollhous.avif';
+import imgZenSushi from '../../assets/images/MissMatched_Pics/Zen Sushi Lounge.avif';
 
 const CATEGORIES = [
   { icon: 'restaurant', label: 'All', active: true },
@@ -82,165 +92,24 @@ const TRENDING = [
   { img: IMG.grill,   badge: 'Hot Seller',     name: 'Truffle Burger Series', price: 'Exclusive menu items' },
 ];
 
-const RESTAURANTS = [
-  {
-    img: IMG.grill,
-    name: 'The Luminary Grill',
-    cuisine: 'Modern American',
-    price: '$$$',
-    distance: '2.4 mi',
-    time: '25-35 min',
-    rating: '4.8',
-    reviews: '1.2k',
-    offer: '20% OFF YOUR ORDER',
-    offerColor: 'orange',
-  },
-  {
-    img: IMG.masala,
-    name: 'Masala Tango',
-    cuisine: 'Indian Fusion',
-    price: '$$',
-    distance: '1.1 mi',
-    time: '15-25 min',
-    rating: '4.9',
-    reviews: '800',
-    offer: 'JUICY & SPICY SPECIAL',
-    offerColor: 'orange',
-  },
-  {
-    img: IMG.sushi,
-    name: 'Sakura Omakase',
-    cuisine: 'Japanese',
-    price: '$$$$',
-    distance: '3.2 mi',
-    time: '30-40 min',
-    rating: '4.9',
-    reviews: '2.1k',
-    offer: 'CHEF\'S TABLE SPECIAL',
-    offerColor: 'orange',
-  },
-  {
-    img: IMG.burger,
-    name: 'Smokehouse BBQ Co.',
-    cuisine: 'BBQ & Grill',
-    price: '$$',
-    distance: '0.8 mi',
-    time: '20-30 min',
-    rating: '4.7',
-    reviews: '650',
-    offer: 'BUY 1 GET 1 FREE',
-    offerColor: 'indigo',
-  },
-  {
-    img: IMG.salad,
-    name: 'Green & Grain',
-    cuisine: 'Mediterranean',
-    price: '$$',
-    distance: '1.5 mi',
-    time: '15-20 min',
-    rating: '4.8',
-    reviews: '430',
-    offer: 'NEW ON QUICK PLATE',
-    offerColor: 'orange',
-  },
-  // --- NEW ADDITIONS FOR FILTER TESTING ---
-  {
-    img: 'https://images.unsplash.com/photo-1542826438-bd32f43d626f?q=80&w=2792&auto=format&fit=crop',
-    name: 'Morning Bliss Bakery',
-    cuisine: 'Bakery & Pastry',
-    price: '$$',
-    distance: '0.9 mi',
-    time: '15-25 min',
-    rating: '4.9',
-    reviews: '1.5k',
-    offer: 'FRESH OUT THE OVEN',
-    offerColor: 'orange',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=2589&auto=format&fit=crop',
-    name: 'Sweet Tooth Confections',
-    cuisine: 'Desserts & Cakes',
-    price: '$$$',
-    distance: '1.2 mi',
-    time: '20-30 min',
-    rating: '4.8',
-    reviews: '950',
-    offer: 'BUY 1 GET 1 HALF OFF',
-    offerColor: 'indigo',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=2681&auto=format&fit=crop',
-    name: 'Napoli Woodfired Pizza',
-    cuisine: 'Italian Pizza',
-    price: '$$',
-    distance: '1.8 mi',
-    time: '25-40 min',
-    rating: '4.7',
-    reviews: '3.2k',
-    offer: 'FREE GARLIC KNOTS',
-    offerColor: 'orange',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2670&auto=format&fit=crop',
-    name: 'Slice & Stone',
-    cuisine: 'Pizza',
-    price: '$$$',
-    distance: '2.1 mi',
-    time: '30-45 min',
-    rating: '4.9',
-    reviews: '2.8k',
-    offer: '20% OFF PREMIUM',
-    offerColor: 'indigo',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=2525&auto=format&fit=crop',
-    name: 'Zen Sushi Lounge',
-    cuisine: 'Japanese Sushi',
-    price: '$$$$',
-    distance: '3.5 mi',
-    time: '35-50 min',
-    rating: '4.9',
-    reviews: '1.1k',
-    offer: 'COMPLIMENTARY MISO',
-    offerColor: 'orange',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=2670&auto=format&fit=crop',
-    name: 'Tokyo Nights Rollhouse',
-    cuisine: 'Japanese',
-    price: '$$$',
-    distance: '1.4 mi',
-    time: '20-35 min',
-    rating: '4.8',
-    reviews: '890',
-    offer: 'LATE NIGHT DEALS',
-    offerColor: 'indigo',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=2499&auto=format&fit=crop',
-    name: 'Smash & Stack Burgers',
-    cuisine: 'American Burgers',
-    price: '$$',
-    distance: '0.6 mi',
-    time: '15-20 min',
-    rating: '4.6',
-    reviews: '4.5k',
-    offer: 'FREE FRIES W/ COMBO',
-    offerColor: 'orange',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1586816001966-79b736744398?q=80&w=2670&auto=format&fit=crop',
-    name: 'The Meltdown Grill',
-    cuisine: 'American BBQ',
-    price: '$$$',
-    distance: '1.9 mi',
-    time: '25-30 min',
-    rating: '4.8',
-    reviews: '750',
-    offer: 'DOUBLE CHEESE FREE',
-    offerColor: 'indigo',
-  }
-];
+// RESTAURANTS fetched dynamically
+
+const RESTAURANT_METADATA = {
+  'The Luminary Grill': { cuisine: 'Modern American', price: '$$$', distance: '2.4 mi', time: '25-35 min', rating: '4.8', reviews: '1.2k', offer: '20% OFF YOUR ORDER', offerColor: 'orange' },
+  'Masala Tango': { cuisine: 'Indian Fusion', price: '$$', distance: '1.1 mi', time: '15-25 min', rating: '4.9', reviews: '800', offer: 'JUICY & SPICY SPECIAL', offerColor: 'orange' },
+  'Sakura Omakase': { cuisine: 'Japanese', price: '$$$$', distance: '3.2 mi', time: '30-40 min', rating: '4.9', reviews: '2.1k', offer: "CHEF'S TABLE SPECIAL", offerColor: 'orange' },
+  'Smokehouse BBQ Co.': { cuisine: 'BBQ & Grill', price: '$$', distance: '0.8 mi', time: '20-30 min', rating: '4.7', reviews: '650', offer: 'BUY 1 GET 1 FREE', offerColor: 'indigo' },
+  'Green & Grain': { cuisine: 'Mediterranean', price: '$$', distance: '1.5 mi', time: '15-20 min', rating: '4.8', reviews: '430', offer: 'NEW ON QUICK PLATE', offerColor: 'orange' },
+  'Morning Bliss Bakery': { cuisine: 'Bakery & Pastry', price: '$$', distance: '0.9 mi', time: '15-25 min', rating: '4.9', reviews: '1.5k', offer: 'FRESH OUT THE OVEN', offerColor: 'orange' },
+  'Sweet Tooth Confections': { cuisine: 'Desserts & Cakes', price: '$$$', distance: '1.2 mi', time: '20-30 min', rating: '4.8', reviews: '950', offer: 'BUY 1 GET 1 HALF OFF', offerColor: 'indigo' },
+  'Napoli Woodfired Pizza': { cuisine: 'Italian Pizza', price: '$$', distance: '1.8 mi', time: '25-40 min', rating: '4.7', reviews: '3.2k', offer: 'FREE GARLIC KNOTS', offerColor: 'orange' },
+  'Slice & Stone': { cuisine: 'Pizza', price: '$$$', distance: '2.1 mi', time: '30-45 min', rating: '4.9', reviews: '2.8k', offer: '20% OFF PREMIUM', offerColor: 'indigo' },
+  'Zen Sushi Lounge': { cuisine: 'Japanese Sushi', price: '$$$$', distance: '3.5 mi', time: '35-50 min', rating: '4.9', reviews: '1.1k', offer: 'COMPLIMENTARY MISO', offerColor: 'orange' },
+  'Tokyo Nights Rollhous': { cuisine: 'Japanese', price: '$$$', distance: '1.4 mi', time: '20-35 min', rating: '4.8', reviews: '890', offer: 'LATE NIGHT DEALS', offerColor: 'indigo' },
+  'Tokyo Nights Rollhouse': { cuisine: 'Japanese', price: '$$$', distance: '1.4 mi', time: '20-35 min', rating: '4.8', reviews: '890', offer: 'LATE NIGHT DEALS', offerColor: 'indigo' },
+  'Smash & Stack Burgers': { cuisine: 'American Burgers', price: '$$', distance: '0.6 mi', time: '15-20 min', rating: '4.6', reviews: '4.5k', offer: 'FREE FRIES W/ COMBO', offerColor: 'orange' },
+  'The Meltdown Grill': { cuisine: 'American BBQ', price: '$$$', distance: '1.9 mi', time: '25-30 min', rating: '4.8', reviews: '750', offer: 'DOUBLE CHEESE FREE', offerColor: 'indigo' }
+};
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -255,6 +124,58 @@ const Home = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  
+  const [restaurants, setRestaurants] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch from Salesforce on mount
+  useEffect(() => {
+    const loadRestaurants = async () => {
+      try {
+        const data = await fetchRestaurants();
+        const formatted = data.map((r, i) => {
+          let mappedImg = [IMG.grill, IMG.sushi, IMG.masala, IMG.burger, IMG.salad, IMG.pasta, IMG.tart, IMG.cake][i % 8] || IMG.grill;
+          
+          if (r.name.includes("Morning Bliss")) mappedImg = imgMorningBliss;
+          else if (r.name.includes("Napoli Woodfired")) mappedImg = imgNapoliWoodfired;
+          else if (r.name.includes("Slice & Stone")) mappedImg = imgSliceStone;
+          else if (r.name.includes("Smash & Stack")) mappedImg = imgSmashStack;
+          else if (r.name.includes("Sweet Tooth")) mappedImg = imgSweetTooth;
+          else if (r.name.includes("Meltdown Grill")) mappedImg = imgMeltdownGrill;
+          else if (r.name.includes("Tokyo Nights")) mappedImg = imgTokyoNights;
+          else if (r.name.includes("Zen Sushi")) mappedImg = imgZenSushi;
+          else if (r.name.includes("Grill")) mappedImg = IMG.grill;
+          else if (r.name.includes("Masala")) mappedImg = IMG.masala;
+          else if (r.name.includes("Sakura") || r.name.includes("Omakase")) mappedImg = IMG.sushi;
+          else if (r.name.includes("Smokehouse")) mappedImg = IMG.burger;
+          else if (r.name.includes("Green & Grain")) mappedImg = IMG.salad;
+
+          const matchKey = Object.keys(RESTAURANT_METADATA).find(key => r.name.includes(key) || key.includes(r.name));
+          const meta = matchKey ? RESTAURANT_METADATA[matchKey] : {};
+
+          return {
+            id: r.id,
+            name: r.name,
+            img: mappedImg,
+            cuisine: meta.cuisine || r.city || 'Local',
+            price: meta.price || '$$',
+            distance: meta.distance || '1.5 mi',
+            time: meta.time || (r.avgPrepTime ? `${r.avgPrepTime} min` : '20-30 min'),
+            rating: meta.rating || '4.8',
+            reviews: meta.reviews || '500+',
+            offer: meta.offer || 'FRESH SPECIAL',
+            offerColor: meta.offerColor || (i % 2 === 0 ? 'orange' : 'indigo')
+          };
+        });
+        setRestaurants(formatted);
+      } catch (err) {
+        console.error('Failed to load restaurants:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadRestaurants();
+  }, []);
   
   const { getCartItemCount } = useAppStore();
   const cartItemCount = getCartItemCount();
@@ -292,7 +213,7 @@ const Home = () => {
 
   // Filter & Sort Logic
   const filteredRestaurants = useMemo(() => {
-    let result = RESTAURANTS;
+    let result = restaurants;
     
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
@@ -585,7 +506,18 @@ const Home = () => {
 
           <motion.div className="home-premium-list" layout>
             <AnimatePresence>
-              {filteredRestaurants.length > 0 ? (
+              {isLoading ? (
+                <motion.div 
+                  key="loading"
+                  className="home-empty-state"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <span className="material-symbols-outlined">restaurant</span>
+                  <h3>Loading Restaurants...</h3>
+                </motion.div>
+              ) : filteredRestaurants.length > 0 ? (
                 filteredRestaurants.map((r) => (
                   <motion.div
                     key={r.name}
@@ -628,9 +560,11 @@ const Home = () => {
                 ))
               ) : (
                 <motion.div 
+                  key="empty"
                   className="home-empty-state"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
                 >
                   <span className="material-symbols-outlined">search_off</span>
                   <h3>No matches found</h3>
