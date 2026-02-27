@@ -4,7 +4,6 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import useAppStore from '../../store/useAppStore';
 import useHaptic from '../../hooks/useHaptic';
-import './PaymentSuccess.css'; // Optional CSS if we need styling overrides
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, '');
 const isMockMode = !API_BASE_URL;
