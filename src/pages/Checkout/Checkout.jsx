@@ -107,16 +107,34 @@ const CheckoutForm = () => {
         throw new Error('Order tracking ID is missing. Please initiate from the cart.');
       }
 
-      // Unified Generic Payment Submission
-      if (isMockMode) {
-        await new Promise(r => setTimeout(r, 1500));
+      if (paymentMethod === 'card') {
+        const response = await axios.post(
+          `${API_BASE_URL}/services/apexrest/checkout/create-session`,
+          { orderId },
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        );
+
+        if (!response.data?.success) {
+          throw new Error(response.data?.message || 'Session failed.');
+        }
+
+        window.location.href = response.data.checkoutUrl;
       } else {
-        await axios.post(`${API_BASE_URL}/create-payment-intent`, {
-           orderId, amount: totalPayCents, method: paymentMethod
-        }).catch(() => {});
+        // Unified Generic Payment Submission for other methods (mock)
+        if (isMockMode) {
+          await new Promise(r => setTimeout(r, 1500));
+        } else {
+          await axios.post(`${API_BASE_URL}/create-payment-intent`, {
+             orderId, amount: totalPayCents, method: paymentMethod
+          }).catch(() => {});
+        }
+        
+        startBackendPolling(orderId);
       }
-      
-      startBackendPolling(orderId);
     } catch (err) {
       errorTap();
       setErrorMessage(err.message || 'An unexpected error occurred processing your order.');

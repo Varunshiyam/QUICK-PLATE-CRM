@@ -16,6 +16,7 @@ const Checkout = lazy(() => import('./pages/Checkout/Checkout'));
 const OnboardingDetails = lazy(() => import('./pages/OnboardingDetails/OnboardingDetails'));
 // const Orders = lazy(() => import('./pages/Orders/Orders'));
 const Profile = lazy(() => import('./pages/Profile/Profile'));
+const PaymentSuccess = lazy(() => import('./pages/PaymentSuccess/PaymentSuccess'));
 // const Search = lazy(() => import('./pages/Search/Search'));
 // const Tracking = lazy(() => import('./pages/Tracking/Tracking'));
 
@@ -85,6 +86,7 @@ function App() {
             <Route path="/restaurant" element={<Restaurant />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/profile" element={<Profile />} />
             {/* More routes will be added as pages are built */}
           </Routes>
