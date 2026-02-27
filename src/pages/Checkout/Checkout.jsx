@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import useAppStore from '../../store/useAppStore';
@@ -23,6 +23,7 @@ const UI_STATES = {
 // ─── Checkout Form Component ───
 const CheckoutForm = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { lightTap, heavyTap, successTap, errorTap, mediumTap } = useHaptic();
   
   const { cart, getCartTotal, clearCart } = useAppStore();
@@ -100,7 +101,11 @@ const CheckoutForm = () => {
     setErrorMessage('');
 
     try {
-      const orderId = `ORD-${Date.now()}`;
+      const orderId = location.state?.orderId;
+      
+      if (!orderId) {
+        throw new Error('Order tracking ID is missing. Please initiate from the cart.');
+      }
 
       // Unified Generic Payment Submission
       if (isMockMode) {

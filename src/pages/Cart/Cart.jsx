@@ -1,18 +1,23 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 import useAppStore from '../../store/useAppStore';
 import useHaptic from '../../hooks/useHaptic';
+import { getStoredUser } from '../../services/firebase';
 import './Cart.css';
 import '../Home/Home.css'; // Required for shared bottom nav classes during hard-reloads
 import { menuAssets } from '../../assets/images/menu-items';
 import { getRestaurantMenu } from '../../data/mockMenus';
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, '');
 
 const Cart = () => {
   const { cart, removeFromCart, addToCart, getCartTotal, cartRestaurant, cartRestaurantId } = useAppStore();
   const { lightTap, mediumTap, heavyTap } = useHaptic();
   const navigate = useNavigate();
   const [useWallet, setUseWallet] = useState(true);
+  const [isLoading, setLoading] = useState(false);
 
   // Dynamic Addons from Current Restaurant Mapping Context 
   const restData = cartRestaurant || { name: cartRestaurantId || "L'Artisan Bistro" };
@@ -32,9 +37,62 @@ const Cart = () => {
   
   const totalPay = subtotal + deliveryFee + taxes - walletApplied;
 
-  const handleCheckout = () => {
-    heavyTap();
-    navigate('/checkout');
+  const handleCheckout = async () => {
+    try {
+      heavyTap();
+      setLoading(true);
+
+      const storedUser = getStoredUser();
+
+      if (!storedUser?.customerId) {
+        throw new Error('User session expired. Please login again.');
+      }
+
+      if (!restData?.id) {
+        throw new Error('Please select a restaurant. Missing Reference ID.');
+      }
+
+      const cartTotal = totalPay;
+      if (!cartTotal || Number(cartTotal) <= 0) {
+        throw new Error('Cart total is invalid.');
+      }
+
+      console.log('Creating Order With:');
+      console.log('Customer ID:', storedUser.customerId);
+      console.log('Restaurant ID:', restData.id);
+      console.log('Order Total:', cartTotal);
+
+      // Create Order at Salesforce Back-End
+      const response = await axios.post(
+        `${API_BASE_URL}/services/apexrest/order/create`,
+        {
+          customerId: storedUser.customerId,
+          restaurantId: restData.id, 
+          orderTotal: Number(cartTotal)
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          timeout: 15000
+        }
+      );
+
+      if (!response.data?.success) {
+        throw new Error(response.data?.message || 'Order creation failed.');
+      }
+
+      const orderId = response.data.orderId;
+      console.log('Order Created Successfully:', orderId);
+
+      navigate('/checkout', { state: { orderId } });
+
+    } catch (error) {
+      console.error('Order Creation Error:', error);
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleAddAddon = (addon) => {
@@ -202,12 +260,18 @@ const Cart = () => {
           </div>
 
           <div className="cart-checkout-wrapper" style={{ padding: '0 1.5rem 2rem 1.5rem' }}>
-            <button className="checkout-btn" onClick={handleCheckout}>
-              <span>Proceed to Checkout</span>
-              <div className="checkout-btn-right">
-                <div className="checkout-divider" />
-                <span>${Math.max(0, totalPay).toFixed(2)}</span>
-              </div>
+            <button className="checkout-btn" onClick={handleCheckout} disabled={isLoading}>
+              {isLoading ? (
+                <div className="spinner" style={{ width: '20px', height: '20px', borderTopColor: '#fff', margin: '0 auto' }} />
+              ) : (
+                <>
+                  <span>Proceed to Checkout</span>
+                  <div className="checkout-btn-right">
+                    <div className="checkout-divider" />
+                    <span>${Math.max(0, totalPay).toFixed(2)}</span>
+                  </div>
+                </>
+              )}
             </button>
           </div>
         </>
