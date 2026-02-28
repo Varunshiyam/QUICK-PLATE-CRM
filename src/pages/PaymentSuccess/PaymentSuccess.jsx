@@ -55,10 +55,10 @@ const PaymentSuccess = () => {
           
           setTimeout(() => {
             clearCart();
-            navigate('/home', { replace: true });
+            navigate(`/tracking/${orderId}`, { replace: true });
           }, 3500);
         } else if (attempts >= maxAttempts) {
-          throw new Error('Verification timeout. Please contact support.');
+           throw new Error('Verification timeout. Please contact support.');
         }
       } catch (err) {
         if (pollingTimerRef.current) clearInterval(pollingTimerRef.current);
@@ -123,7 +123,7 @@ const PaymentSuccess = () => {
              Yay! Your order has been successfully sent to the kitchen.
            </p>
            <p style={{ marginTop: '0.25rem', fontSize: '0.85rem', color: '#94a3b8' }}>
-             Redirecting you to the home page...
+             Redirecting you to the tracking page...
            </p>
          </motion.div>
        )}
