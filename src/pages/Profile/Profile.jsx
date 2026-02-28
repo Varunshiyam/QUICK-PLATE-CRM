@@ -235,11 +235,11 @@ const Profile = () => {
             <span className="material-symbols-outlined">home</span>
             <span className="home-nav-label">Home</span>
           </Link>
-          <Link to="/home" className="home-nav-item" onClick={lightTap}>
+          <Link to="/discover" className="home-nav-item" onClick={lightTap}>
             <span className="material-symbols-outlined">explore</span>
             <span className="home-nav-label">Discover</span>
           </Link>
-          <Link to="/home" className="home-nav-item" onClick={lightTap}>
+          <Link to="/orders" className="home-nav-item" onClick={lightTap}>
             <div style={{ position: 'relative' }}>
               <span className="material-symbols-outlined">receipt_long</span>
               <span className="home-nav-badge" />

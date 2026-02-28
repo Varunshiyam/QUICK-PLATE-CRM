@@ -225,20 +225,20 @@ const Tracking = () => {
 
       {/* ─── Bottom Navigation ─── */}
       <nav className="track-bottom-nav">
-        <a href="/home" className="nav-item">
+        <a href="/home" className="nav-item" onClick={(e) => { e.preventDefault(); navigate('/home'); }}>
           <div className="nav-icon"><span className="material-symbols-outlined">home</span></div>
           <span>HOME</span>
         </a>
-        <a href="#" className="nav-item">
+        <a href="/discover" className="nav-item" onClick={(e) => { e.preventDefault(); navigate('/discover'); }}>
           <div className="nav-icon"><span className="material-symbols-outlined">explore</span></div>
           <span>DISCOVER</span>
         </a>
-        <a href="#" className="nav-item active">
+        <a href="/orders" className="nav-item active" onClick={(e) => { e.preventDefault(); navigate('/orders'); }}>
           <div className="nav-dot" />
           <div className="nav-icon"><span className="material-symbols-outlined filled-icon">receipt_long</span></div>
           <span>ORDERS</span>
         </a>
-        <a href="/profile" className="nav-item">
+        <a href="/profile" className="nav-item" onClick={(e) => { e.preventDefault(); navigate('/profile'); }}>
           <div className="nav-icon"><span className="material-symbols-outlined">person</span></div>
           <span>PROFILE</span>
         </a>
