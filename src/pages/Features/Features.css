@@ -1,0 +1,260 @@
+/* ═══════════════════════════════════════════════════════════════
+   Quick Plate — Features Page (Premium White + Layers)
+   ═══════════════════════════════════════════════════════════════ */
+
+.features-page {
+  min-height: 100dvh;
+  background: #FDFCFB;
+  color: #1E293B;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* ─── Hero ─── */
+.feat-hero {
+  position: relative;
+  text-align: center;
+  padding: 7.5rem 1.5rem 5rem;
+  overflow: hidden;
+  background: linear-gradient(180deg, #FFF7ED 0%, #FDFCFB 100%);
+}
+
+/* Soft layered circles behind hero */
+.feat-hero::before,
+.feat-hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.feat-hero::before {
+  width: 420px;
+  height: 420px;
+  top: -120px;
+  right: -100px;
+  background: radial-gradient(circle, rgba(251,126,24,0.08) 0%, transparent 40%);
+}
+
+.feat-hero::after {
+  width: 340px;
+  height: 340px;
+  bottom: -60px;
+  left: -80px;
+  background: radial-gradient(circle, rgba(251,166,89,0.06) 0%, transparent 40%);
+}
+
+.feat-hero-content {
+  position: relative;
+  z-index: 10;
+}
+
+.feat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #FFF7ED;
+  border: 1px solid #FED7AA;
+  color: #EA580C;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.feat-title {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: #0F172A;
+  margin-bottom: 0.75rem;
+}
+
+.feat-title span {
+  background: linear-gradient(135deg, #fb7e18, #EA580C);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.feat-subtitle {
+  font-size: 0.9rem;
+  color: #64748B;
+  max-width: 340px;
+  margin: 0 auto;
+  line-height: 1.55;
+}
+
+/* ─── Layered wave divider ─── */
+.feat-wave {
+  position: relative;
+  height: 60px;
+  overflow: hidden;
+  margin-top: -1px;
+}
+
+.feat-wave svg {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ─── Grid Section ─── */
+.feat-section {
+  padding: 3rem 1rem 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.feat-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 600px) {
+  .feat-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 1024px) {
+  .feat-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+}
+
+/* ─── Layered Card ─── */
+.feat-card {
+  background: #FFFFFF;
+  border: 1px solid #F1F5F9;
+  border-radius: 20px;
+  padding: 1.5rem 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+/* Layered depth effect — stacked panels behind each card */
+.feat-card::before {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 8px;
+  right: 8px;
+  height: 100%;
+  background: #F8FAFC;
+  border-radius: 20px;
+  border: 1px solid #F1F5F9;
+  z-index: -1;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.feat-card::after {
+  content: '';
+  position: absolute;
+  bottom: -11px;
+  left: 16px;
+  right: 16px;
+  height: 100%;
+  background: #F1F5F9;
+  border-radius: 20px;
+  border: 1px solid #E2E8F0;
+  z-index: -2;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.feat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(251, 126, 24, 0.1), 0 2px 8px rgba(0,0,0,0.04);
+  border-color: #FDBA74;
+}
+
+.feat-card:hover::before {
+  transform: translateY(2px);
+}
+
+.feat-card:hover::after {
+  transform: translateY(4px);
+}
+
+/* Icon */
+.feat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.feat-card:hover .feat-icon {
+  transform: scale(1.08);
+}
+
+/* Icon color themes */
+.feat-icon.orange  { background: #FFF7ED; color: #EA580C; }
+.feat-icon.blue    { background: #EFF6FF; color: #2563EB; }
+.feat-icon.green   { background: #ECFDF5; color: #059669; }
+.feat-icon.purple  { background: #F5F3FF; color: #7C3AED; }
+.feat-icon.pink    { background: #FFF1F2; color: #E11D48; }
+.feat-icon.cyan    { background: #ECFEFF; color: #0891B2; }
+.feat-icon.amber   { background: #FFFBEB; color: #D97706; }
+.feat-icon.lime    { background: #F7FEE7; color: #65A30D; }
+.feat-icon.rose    { background: #FFF1F2; color: #BE123C; }
+.feat-icon.sky     { background: #F0F9FF; color: #0284C7; }
+.feat-icon.teal    { background: #F0FDFA; color: #0D9488; }
+.feat-icon.indigo  { background: #EEF2FF; color: #4F46E5; }
+
+/* Content */
+.feat-card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: #0F172A;
+  line-height: 1.3;
+}
+
+.feat-card p {
+  font-size: 0.8125rem;
+  color: #64748B;
+  line-height: 1.5;
+}
+
+/* ─── Bottom CTA ─── */
+.feat-bottom {
+  text-align: center;
+  padding: 1.5rem 1.5rem 4rem;
+}
+
+.feat-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFF7ED;
+  border: 1px solid #FED7AA;
+  color: #EA580C;
+  padding: 11px 26px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.feat-back-btn:hover {
+  background: #fb7e18;
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 6px 20px rgba(251,126,24,0.25);
+}
