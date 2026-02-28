@@ -78,7 +78,7 @@ const CheckoutForm = () => {
           
           setTimeout(() => {
             clearCart();
-            navigate('/home', { replace: true });
+            navigate(`/tracking/${orderId}`, { replace: true });
           }, 2000);
         } else if (attempts >= maxAttempts) {
           throw new Error('Verification timeout. Please contact support.');

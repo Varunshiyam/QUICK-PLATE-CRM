@@ -18,7 +18,7 @@ const OnboardingDetails = lazy(() => import('./pages/OnboardingDetails/Onboardin
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 const PaymentSuccess = lazy(() => import('./pages/PaymentSuccess/PaymentSuccess'));
 // const Search = lazy(() => import('./pages/Search/Search'));
-// const Tracking = lazy(() => import('./pages/Tracking/Tracking'));
+const Tracking = lazy(() => import('./pages/Tracking/Tracking'));
 
 /** Loading fallback */
 const LoadingScreen = () => (
@@ -88,6 +88,7 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/tracking/:orderId" element={<Tracking />} />
             {/* More routes will be added as pages are built */}
           </Routes>
         </AnimatePresence>

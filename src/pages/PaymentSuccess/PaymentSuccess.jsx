@@ -13,8 +13,7 @@ const PaymentSuccess = () => {
   const orderId = searchParams.get('orderId');
   const navigate = useNavigate();
   const { clearCart } = useAppStore();
-  const { successTap, errorTap } = useHaptic();
-  
+  const { success, error } = useHaptic();  
   const [status, setStatus] = useState('VERIFYING'); // VERIFYING, SUCCESS, FAILED
   const [errorMessage, setErrorMessage] = useState('');
   const pollingTimerRef = useRef(null);
@@ -23,7 +22,7 @@ const PaymentSuccess = () => {
     if (!orderId) {
        setStatus('FAILED');
        setErrorMessage('No Order ID found in URL. Are you sure you completed the payment?');
-       errorTap();
+       error?.();
        return;
     }
 
@@ -51,7 +50,7 @@ const PaymentSuccess = () => {
 
         if (isPaid) {
           if (pollingTimerRef.current) clearInterval(pollingTimerRef.current);
-          successTap();
+          success?.();
           setStatus('SUCCESS');
           
           setTimeout(() => {
@@ -63,7 +62,7 @@ const PaymentSuccess = () => {
         }
       } catch (err) {
         if (pollingTimerRef.current) clearInterval(pollingTimerRef.current);
-        errorTap();
+        error?.();
         setStatus('FAILED');
         setErrorMessage(err.message || 'Error communicating with backend to verify payment.');
       }
@@ -75,7 +74,7 @@ const PaymentSuccess = () => {
     return () => {
       if (pollingTimerRef.current) clearInterval(pollingTimerRef.current);
     };
-  }, [orderId, clearCart, navigate, successTap, errorTap]);
+  }, [orderId, clearCart, navigate, success, error]);
 
   return (
     <div className="payment-success-page" style={{ 

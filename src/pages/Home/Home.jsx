@@ -189,7 +189,7 @@ const Home = () => {
   const { logout, user } = useAppStore();
   
   const storedUser = getStoredUser();
-  const deliveryAddress = storedUser?.address || 'San Francisco, CA';
+  const deliveryAddress = storedUser?.address || 'KCE, Coimbatore';
 
   const handleLogoutDropdown = async () => {
     setIsProfileModalOpen(false);
