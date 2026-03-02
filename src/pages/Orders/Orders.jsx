@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import useHaptic from '../../hooks/useHaptic';
+import '../Home/Home.css';
 import './Orders.css';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
@@ -65,13 +66,22 @@ const Orders = () => {
           try {
             const res = await axios.get(`${API_BASE_URL}/orders`);
             if (res.data && res.data.length > 0) {
-              setOrders(res.data);
+              const mappedData = res.data.map(item => ({
+                id: item.Id || item.id || 'N/A',
+                restaurantName: item.Restaurant_Name__c || item.restaurantName || 'Quick Plate Order',
+                date: item.CreatedDate ? new Date(item.CreatedDate).toLocaleDateString() : item.date || 'Today',
+                total: item.Total_Amount__c || item.total || 0,
+                status: item.Order_Status__c || item.status || 'PLACED',
+                paymentStatus: item.Payment_Status__c || item.paymentStatus || '',
+                image: item.image || MOCK_ORDERS[0].image
+              }));
+              setOrders(mappedData);
             } else {
-              setOrders(MOCK_ORDERS);
+              setOrders([]);
             }
           } catch(e) {
-            console.warn("Backend fetch failed, using mock data", e);
-            setOrders(MOCK_ORDERS);
+            console.warn("Backend fetch failed", e);
+            setOrders([]);
           }
         }
       } catch (err) {
@@ -131,8 +141,8 @@ const Orders = () => {
           <div className="orders-list">
             {orders.map((order) => {
               
-              /* Active Order State (e.g. Placed / On the Way) */
-              if (order.status === 'ON_THE_WAY' || order.status === 'PLACED') {
+              /* Active Order State (e.g. Payment Succeeded / Placed / On the Way) */
+              if (order.status === 'ON_THE_WAY' || order.status === 'PLACED' || order.status === 'Payment Succeeded' || order.paymentStatus === 'Payment Succeeded') {
                 return (
                   <div key={order.id} className="order-card p-4">
                     <div className="order-flex-row gap-4">
@@ -140,13 +150,13 @@ const Orders = () => {
                       <div className="flex-1">
                         <div className="order-flex-between items-start">
                           <h3 className="font-bold">{order.restaurantName}</h3>
-                          <span className="text-sm font-bold">${order.total.toFixed(2)}</span>
+                          <span className="text-sm font-bold">${typeof order.total === 'number' ? order.total.toFixed(2) : order.total}</span>
                         </div>
                         <p className="text-xs text-slate-500 mt-1">Order #{order.id} • {order.date}</p>
                         
                         <div className="mt-2 inline-flex items-center gap-1_5 px-2_5 py-0_5 rounded-full bg-green-100 text-green-700 text-10 font-bold uppercase tracking-wider">
                           <span className="material-symbols-outlined text-14 filled-icon">moped</span>
-                          On the way
+                          {order.status === 'Payment Succeeded' || order.paymentStatus === 'Payment Succeeded' ? 'Payment Succeeded' : 'On the way'}
                         </div>
 
                         <div className="mt-3 flex gap-2">
@@ -164,7 +174,7 @@ const Orders = () => {
               }
 
               /* Refund Processing Ticket */
-              if (order.status === 'REFUND_PROCESSING') {
+              if (order.status === 'REFUND_PROCESSING' || order.status === 'Refund Processing') {
                 return (
                   <div key={order.id} className="order-card p-5">
                     <div className="order-flex-between items-start mb-4">
@@ -179,7 +189,7 @@ const Orders = () => {
                           </div>
                         </div>
                       </div>
-                      <span className="font-bold text-primary">${order.total.toFixed(2)}</span>
+                      <span className="font-bold text-primary">${typeof order.total === 'number' ? order.total.toFixed(2) : order.total}</span>
                     </div>
 
                     {order.ticket && (
@@ -214,7 +224,7 @@ const Orders = () => {
               }
 
               /* Standard Delivered Order */
-              if (order.status === 'DELIVERED') {
+              if (order.status === 'DELIVERED' || order.status === 'Delivered') {
                 return (
                   <div key={order.id} className="order-card p-4">
                     <div className="order-flex-row gap-4">
@@ -222,7 +232,7 @@ const Orders = () => {
                       <div className="flex-1">
                         <div className="order-flex-between items-start">
                           <h3 className="font-bold">{order.restaurantName}</h3>
-                          <span className="text-sm font-bold">${order.total.toFixed(2)}</span>
+                          <span className="text-sm font-bold">${typeof order.total === 'number' ? order.total.toFixed(2) : order.total}</span>
                         </div>
                         <p className="text-slate-500 text-xs mt-1">{order.date}</p>
                         <div className="mt-3 flex gap-2">
@@ -270,24 +280,28 @@ const Orders = () => {
       </main>
 
       {/* ─── Bottom Navigation ─── */}
-      <nav className="orders-bottom-nav">
-        <a href="/home" className="nav-item text-slate-400" onClick={(e) => { e.preventDefault(); navigate('/home'); }}>
-          <span className="material-symbols-outlined text-28">home</span>
-          <span className="nav-item-text">Home</span>
-        </a>
-        <a href="/discover" className="nav-item text-slate-400" onClick={(e) => e.preventDefault()}>
-          <span className="material-symbols-outlined text-28">explore</span>
-          <span className="nav-item-text">Discover</span>
-        </a>
-        <a href="/orders" className="nav-item text-primary relative" onClick={(e) => e.preventDefault()}>
-          <div className="nav-active-dot"></div>
-          <span className="material-symbols-outlined text-28 filled-icon">receipt_long</span>
-          <span className="nav-item-text">Orders</span>
-        </a>
-        <a href="/profile" className="nav-item text-slate-400" onClick={(e) => { e.preventDefault(); navigate('/profile'); }}>
-          <span className="material-symbols-outlined text-28">person</span>
-          <span className="nav-item-text">Profile</span>
-        </a>
+      <nav className="home-bottom-nav">
+        <div className="home-bottom-nav-inner">
+          <Link to="/home" className="home-nav-item" onClick={lightTap}>
+            <span className="material-symbols-outlined">home</span>
+            <span className="home-nav-label">Home</span>
+          </Link>
+          <Link to="/discover" className="home-nav-item" onClick={lightTap}>
+            <span className="material-symbols-outlined">explore</span>
+            <span className="home-nav-label">Discover</span>
+          </Link>
+          <Link to="/orders" className="home-nav-item active" onClick={lightTap}>
+            <div style={{ position: 'relative' }}>
+              <span className="material-symbols-outlined">receipt_long</span>
+              <span className="home-nav-badge" />
+            </div>
+            <span className="home-nav-label">Orders</span>
+          </Link>
+          <Link to="/profile" className="home-nav-item" onClick={lightTap}>
+            <span className="material-symbols-outlined">person</span>
+            <span className="home-nav-label">Profile</span>
+          </Link>
+        </div>
       </nav>
     </div>
   );

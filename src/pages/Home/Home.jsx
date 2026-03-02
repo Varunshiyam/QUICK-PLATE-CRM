@@ -352,6 +352,9 @@ const Home = () => {
                 <button onClick={() => { setIsProfileModalOpen(false); lightTap(); navigate('/favorites'); }}>
                   <span className="material-symbols-outlined">favorite</span> Favorites
                 </button>
+                <button onClick={() => { setIsProfileModalOpen(false); lightTap(); navigate('/support'); }}>
+                  <span className="material-symbols-outlined">support_agent</span> Help & Support
+                </button>
                 <div className="dropdown-divider"></div>
                 <button className="logout-btn" onClick={handleLogoutDropdown}>
                   <span className="material-symbols-outlined">logout</span> Log Out

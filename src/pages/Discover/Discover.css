@@ -1,0 +1,301 @@
+.discover-page {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--color-background-alt, #f8f7f5);
+  color: var(--color-text-dark, #23180f);
+  min-height: 100dvh;
+  position: relative;
+  padding-bottom: 7rem;
+}
+
+/* Header Action Buttons */
+.discover-icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  color: #0f172a;
+  cursor: pointer;
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: var(--color-primary, #f97f1a);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(251, 126, 24, 0.4);
+}
+
+/* Main Container */
+.discover-main {
+  padding: 0 1rem;
+}
+
+/* Categories */
+.discover-categories {
+  position: sticky;
+  top: 72px; /* typical header height */
+  z-index: 40;
+  background: rgba(248, 247, 245, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 1rem 0;
+  margin: 0 -1rem;
+  padding-left: 1rem;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.discover-categories-inner {
+  display: inline-flex;
+  gap: 0.75rem;
+  padding-right: 1rem;
+}
+.discover-cat-btn {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0 1.25rem;
+  border: 1px solid #e2e8f0;
+  background: white;
+  color: #334155;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.discover-cat-btn.active {
+  background: var(--color-primary, #f97f1a);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(249, 127, 26, 0.2);
+  font-weight: 700;
+}
+.discover-cat-btn span {
+  font-size: 1.125rem;
+}
+
+/* Section Common */
+.discover-section {
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+.discover-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.discover-section-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.discover-section-action {
+  color: var(--color-primary, #f97f1a);
+  font-size: 0.875rem;
+  font-weight: 700;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Offers Carousel */
+.discover-offers-scroll {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  margin: 0 -1rem;
+  padding-left: 1rem;
+}
+.discover-offer-card {
+  position: relative;
+  min-width: 320px;
+  height: 192px;
+  border-radius: 1rem;
+  overflow: hidden;
+  scroll-snap-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  flex-shrink: 0;
+}
+.discover-offer-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease;
+}
+.discover-offer-card:hover .discover-offer-bg {
+  transform: scale(1.1);
+}
+.discover-offer-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2) 50%, transparent);
+}
+.discover-offer-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: 0.05em;
+}
+.discover-offer-content {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  color: white;
+  padding-right: 1rem;
+}
+.discover-offer-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin: 0 0 0.25rem 0;
+}
+.discover-offer-subtitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+/* Newly Launched Grid */
+.discover-new-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.discover-new-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+.discover-new-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.discover-new-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+.discover-new-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--color-primary, #f97f1a);
+  color: white;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+.discover-new-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+}
+.discover-new-meta {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.discover-new-pill {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 9999px;
+  padding: 0.25rem 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.discover-new-pill span.material-symbols-outlined {
+  font-size: 12px;
+}
+.discover-new-pill span {
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+}
+.discover-new-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.discover-new-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+  color: #0f172a;
+}
+.discover-new-cuisine {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  margin: 0;
+}
+.discover-new-fav {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  color: #94a3b8;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

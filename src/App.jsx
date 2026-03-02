@@ -19,6 +19,11 @@ const Profile = lazy(() => import('./pages/Profile/Profile'));
 const PaymentSuccess = lazy(() => import('./pages/PaymentSuccess/PaymentSuccess'));
 // const Search = lazy(() => import('./pages/Search/Search'));
 const Tracking = lazy(() => import('./pages/Tracking/Tracking'));
+const Discover = lazy(() => import('./pages/Discover/Discover'));
+const Support = lazy(() => import('./pages/Support/Support'));
+const RaiseRefund = lazy(() => import('./pages/RaiseRefund/RaiseRefund'));
+const PaymentIssue = lazy(() => import('./pages/PaymentIssue/PaymentIssue'));
+const OrderIssue = lazy(() => import('./pages/OrderIssue/OrderIssue'));
 
 /** Loading fallback */
 const LoadingScreen = () => (
@@ -89,7 +94,12 @@ function App() {
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/discover" element={<Discover />} />
             <Route path="/tracking/:orderId" element={<Tracking />} />
+            <Route path="/support" element={<Support />} />
+            <Route path="/raise-refund" element={<RaiseRefund />} />
+            <Route path="/payment-issue" element={<PaymentIssue />} />
+            <Route path="/order-issue" element={<OrderIssue />} />
             {/* More routes will be added as pages are built */}
           </Routes>
         </AnimatePresence>

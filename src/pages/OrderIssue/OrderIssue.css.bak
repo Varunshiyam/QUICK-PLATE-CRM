@@ -1,0 +1,322 @@
+.order-issue-container {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  margin: 0 auto;
+  max-width: 440px;
+  background-color: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  font-family: 'Manrope', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dark mode removed for container to keep it white */
+
+.order-issue-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Dark mode removed for header */
+
+.order-issue-back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  transition: background-color 0.2s;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.order-issue-back-btn:hover {
+  background-color: #f1f5f9;
+}
+
+@media (prefers-color-scheme: dark) {
+  .order-issue-back-btn:hover {
+      background-color: #27272a;
+  }
+}
+
+.order-issue-title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  text-align: center;
+  flex: 1;
+  margin: 0;
+}
+
+.order-issue-main {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 8rem;
+}
+
+.order-issue-section {
+  padding-top: 1.5rem;
+}
+
+.order-issue-step-wrap {
+  padding: 0 1.5rem;
+}
+
+.order-issue-step-badge {
+  display: inline-block;
+  padding: 0.125rem 0.625rem;
+  margin-bottom: 0.75rem;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background-color: rgba(249, 127, 26, 0.1);
+  color: #f97f1a;
+  border-radius: 0.375rem;
+}
+
+.order-issue-orders-scroll {
+  display: flex;
+  gap: 1rem;
+  padding: 0 1.5rem 0.5rem 1.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.order-issue-orders-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.order-issue-order-card {
+  flex: none;
+  width: 12rem;
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.order-issue-order-img-wrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 1rem;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+  border: 4px solid transparent;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.2s;
+}
+
+@media (prefers-color-scheme: dark) {
+  .order-issue-order-img-wrap {
+      background-color: #27272a;
+  }
+}
+
+.order-issue-order-card:not(.selected):hover .order-issue-order-img-wrap {
+  border-color: #e2e8f0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .order-issue-order-card:not(.selected):hover .order-issue-order-img-wrap {
+      border-color: #3f3f46;
+  }
+}
+
+.order-issue-order-card.selected .order-issue-order-img-wrap {
+  border-color: #f97f1a;
+  box-shadow: 0 0 0 2px rgba(249, 127, 26, 0.2), 0 10px 15px -3px rgba(249, 127, 26, 0.1);
+}
+
+.order-issue-order-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.order-issue-order-card:hover .order-issue-order-img,
+.order-issue-order-card.selected .order-issue-order-img {
+  opacity: 1;
+}
+
+.order-issue-check-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: #f97f1a;
+  color: white;
+  border-radius: 9999px;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.order-issue-order-name {
+  font-weight: 700;
+  font-size: 0.875rem;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s;
+}
+
+.order-issue-order-card.selected .order-issue-order-name {
+  color: #0f172a;
+}
+
+@media (prefers-color-scheme: dark) {
+  .order-issue-order-card.selected .order-issue-order-name {
+      color: #ffffff;
+  }
+}
+
+.order-issue-order-meta {
+  font-size: 11px;
+  color: #64748b;
+  margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .order-issue-order-meta {
+      color: #71717a;
+  }
+}
+
+.order-issue-categories {
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.order-issue-category-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  text-align: left;
+  transition: all 0.2s;
+  cursor: pointer;
+  position: relative;
+}
+
+@media (prefers-color-scheme: dark) {
+  .order-issue-category-card {
+      border-color: #27272a;
+      background-color: rgba(24, 24, 27, 0.5);
+  }
+}
+
+.order-issue-category-card:not(.selected):hover {
+  border-color: rgba(249, 127, 26, 0.5);
+}
+
+.order-issue-category-card:active {
+  transform: scale(0.98);
+}
+
+.order-issue-category-card.selected {
+  border: 2px solid #f97f1a;
+  background-color: rgba(249, 127, 26, 0.05);
+}
+
+.order-issue-category-icon-wrap {
+  display: flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background-color: rgba(249, 127, 26, 0.1);
+  color: #f97f1a;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.order-issue-category-card:not(.selected):hover .order-issue-category-icon-wrap,
+.order-issue-category-icon-wrap.selected {
+  background-color: #f97f1a;
+  color: #ffffff;
+}
+
+.order-issue-selected-badge {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  background-color: #f97f1a;
+  color: white;
+  border-radius: 9999px;
+  padding: 0.125rem;
+}
+
+.order-issue-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid #f1f5f9;
+  padding: 1rem 1.5rem 2.5rem 1.5rem;
+}
+
+/* Dark mode removed for footer */
+
+.order-issue-submit-btn {
+  width: 100%;
+  background-color: #f97f1a;
+  color: white;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(249, 127, 26, 0.2), 0 8px 10px -6px rgba(249, 127, 26, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.order-issue-submit-btn:active {
+  transform: scale(0.98);
+}
+
+.order-issue-footer-text {
+  text-align: center;
+  font-size: 9px;
+  color: #94a3b8;
+  margin-top: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+@media (prefers-color-scheme: dark) {
+  .order-issue-footer-text {
+      color: #71717a;
+  }
+}

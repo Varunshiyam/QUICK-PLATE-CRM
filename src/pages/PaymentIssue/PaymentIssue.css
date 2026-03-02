@@ -1,0 +1,328 @@
+.payment-issue-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  width: 100%;
+  max-width: 448px;
+  margin: 0 auto;
+  background-color: var(--background-light, #f8f7f5);
+  font-family: 'Outfit', sans-serif;
+  position: relative;
+  overflow-x: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Header */
+.payment-issue-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  padding-bottom: 0.5rem;
+  position: sticky;
+  top: 0;
+  background-color: rgba(248, 247, 245, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 10;
+}
+
+.payment-issue-back {
+  display: flex;
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  color: #0f172a;
+}
+
+.payment-issue-back .material-symbols-outlined {
+  font-size: 1.5rem;
+}
+
+.payment-issue-title {
+  color: #0f172a;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  flex: 1 1 0%;
+  text-align: center;
+  padding-right: 3rem; /* Balance back button */
+}
+
+/* Content */
+.payment-issue-content {
+  padding: 0.5rem 1rem 2rem 1rem;
+}
+
+.support-ticket-header-small {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.support-ticket-text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--primary, #f97f1a);
+}
+
+.support-ticket-divider {
+  height: 1px;
+  flex: 1 1 0%;
+  background-color: #e2e8f0;
+}
+
+.section-heading {
+  color: #0f172a;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+/* Order Selection Card */
+.order-selection-card {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 1rem;
+  border-radius: 0.75rem;
+  background-color: #ffffff;
+  padding: 1rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid #f1f5f9;
+  margin-bottom: 1.5rem;
+}
+
+.order-selection-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1 1 0%;
+}
+
+.order-selection-name {
+  color: #0f172a;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.order-selection-id {
+  color: #64748b;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+.order-selection-price {
+  color: var(--primary, #f97f1a);
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.order-selection-image {
+  width: 6rem;
+  height: 6rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* Payment Problem Category */
+.issue-category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  --radio-dot-svg: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23f97f1a' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+}
+
+.issue-category-label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  padding: 1rem;
+  flex-direction: row-reverse;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.issue-category-label:hover {
+  border-color: rgba(249, 127, 26, 0.5);
+}
+
+.issue-category-label.selected {
+  border-color: rgba(249, 127, 26, 0.5);
+}
+
+.issue-category-radio {
+  appearance: none;
+  height: 1.25rem;
+  width: 1.25rem;
+  border: 2px solid #cbd5e1;
+  border-radius: 50%;
+  background-color: transparent;
+  color: transparent;
+  transition: all 0.2s ease;
+  margin: 0;
+  outline: none;
+}
+
+.issue-category-radio:checked {
+  border-color: var(--primary, #f97f1a);
+  background-image: var(--radio-dot-svg);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.issue-category-text {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.issue-category-title {
+  color: #0f172a;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.issue-category-desc {
+  color: #64748b;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+/* Upload Screenshot */
+.upload-section {
+  margin-bottom: 1.5rem;
+}
+
+.upload-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #cbd5e1;
+  border-radius: 0.75rem;
+  background-color: rgba(248, 250, 252, 0.5);
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.upload-dropzone:hover {
+  background-color: #f8fafc;
+}
+
+.upload-icon {
+  font-size: 2.5rem;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+}
+
+.upload-title {
+  color: #0f172a;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.upload-desc {
+  color: #64748b;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+/* Additional Details */
+.additional-details-section {
+  margin-bottom: 2rem;
+}
+
+.additional-details-textarea {
+  width: 100%;
+  min-height: 120px;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  padding: 1rem;
+  font-size: 0.875rem;
+  color: #0f172a;
+  box-sizing: border-box;
+  font-family: inherit;
+  resize: none;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.additional-details-textarea:focus {
+  border-color: var(--primary, #f97f1a);
+  box-shadow: 0 0 0 1px var(--primary, #f97f1a);
+}
+
+.additional-details-textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* Submit Section */
+.submit-section {
+  padding-bottom: 2rem;
+}
+
+.submit-query-btn {
+  width: 100%;
+  background-color: var(--primary, #f97f1a);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 15px -3px rgba(249, 127, 26, 0.3);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.submit-query-btn:hover {
+  background-color: rgba(230, 110, 10, 1);
+}
+
+.submit-query-btn:active {
+  transform: scale(0.98);
+}
+
+.submit-query-btn .material-symbols-outlined {
+  font-size: 1.125rem;
+}
+
+.powered-by-text {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.625rem;
+  margin-top: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
