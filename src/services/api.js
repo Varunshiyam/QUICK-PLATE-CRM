@@ -55,25 +55,25 @@ export const restaurantService = {
     // TODO: Replace with apiClient.get('/restaurants') in Phase 3
     return [];
   },
-  getById: async (id) => {
+  getById: async (_id) => {
     return null;
   },
 };
 
 export const orderService = {
-  create: async (orderData) => {
+  create: async (_orderData) => {
     return null;
   },
   getAll: async () => {
     return [];
   },
-  getById: async (id) => {
+  getById: async (_id) => {
     return null;
   },
 };
 
 export const authService = {
-  login: async (credentials) => {
+  login: async (_credentials) => {
     return null;
   },
   logout: async () => {
