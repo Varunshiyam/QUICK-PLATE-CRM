@@ -185,11 +185,94 @@ const Home = () => {
 
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  
+  const [isAddAddressFormOpen, setIsAddAddressFormOpen] = useState(false);
+  const [newAddressForm, setNewAddressForm] = useState({ label: 'Home', street: '', city: '', pincode: '' });
+  const [formError, setFormError] = useState('');
+
+  // Load saved addresses from localStorage
+  const [savedAddresses, setSavedAddresses] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('quickplate_addresses') || '[]');
+    } catch { return []; }
+  });
+  const [activeAddressIdx, setActiveAddressIdx] = useState(() => {
+    try { return parseInt(localStorage.getItem('quickplate_active_addr_idx') || '0', 10); } catch { return 0; }
+  });
+
+  const persistAddresses = (list, idx) => {
+    localStorage.setItem('quickplate_addresses', JSON.stringify(list));
+    localStorage.setItem('quickplate_active_addr_idx', String(idx));
+  };
+
+ const handleSaveNewAddress = () => {
+  const { label, street, city, pincode } = newAddressForm;
+
+  if (!street.trim() || !city.trim() || !pincode.trim()) {
+    setFormError('Street, city and pincode are required.');
+    return;
+  }
+
+  if (!/^\d+$/.test(pincode.trim())) {
+    setFormError('Pincode must contain only numbers.');
+    return;
+  }
+
+  if (pincode.trim().length < 4) {
+    setFormError('Pincode must be at least 4 digits.');
+    return;
+  }
+
+  const newAddr = {
+    label: label || 'Other',
+    street: street.trim(),
+    city: city.trim(),
+    pincode: pincode.trim()
+  };
+
+  const updated = [...savedAddresses, newAddr];
+
+  const newActiveIdx = updated.length - 1;
+
+  setSavedAddresses(updated);
+  setActiveAddressIdx(newActiveIdx);
+
+  persistAddresses(updated, newActiveIdx);
+
+  setNewAddressForm({
+    label: 'Home',
+    street: '',
+    city: '',
+    pincode: ''
+  });
+
+  setFormError('');
+  setIsAddAddressFormOpen(false);
+
+  mediumTap();
+};
+
+  const handleDeleteAddress = (idx) => {
+    const updated = savedAddresses.filter((_, i) => i !== idx);
+    const newActive = activeAddressIdx >= updated.length ? Math.max(0, updated.length - 1) : activeAddressIdx;
+    setSavedAddresses(updated);
+    setActiveAddressIdx(newActive);
+    persistAddresses(updated, newActive);
+    lightTap();
+  };
+
+  const handleSelectAddress = (idx) => {
+    setActiveAddressIdx(idx);
+    localStorage.setItem('quickplate_active_addr_idx', String(idx));
+    lightTap();
+    setIsAddressModalOpen(false);
+  };
+
   const { logout, user } = useAppStore();
   
   const storedUser = getStoredUser();
-  const deliveryAddress = storedUser?.address || 'KCE, Coimbatore';
+  const defaultAddress = storedUser?.address || 'KCE, Coimbatore';
+  const activeAddr = savedAddresses[activeAddressIdx];
+  const deliveryAddress = activeAddr ? `${activeAddr.street}, ${activeAddr.city}` : defaultAddress;
 
   const handleLogoutDropdown = async () => {
     setIsProfileModalOpen(false);
@@ -306,28 +389,119 @@ const Home = () => {
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
-              <div className="address-slot active" onClick={() => { lightTap(); setIsAddressModalOpen(false); }}>
-                <div className="address-icon"><span className="material-symbols-outlined">home</span></div>
-                <div className="address-details">
-                  <h4>Home (Default)</h4>
-                  <p>{deliveryAddress.length > 35 ? `${deliveryAddress.substring(0, 35)}...` : deliveryAddress}</p>
+              {/* Default address */}
+              {savedAddresses.length === 0 && (
+                <div className="address-slot active" onClick={() => { lightTap(); setIsAddressModalOpen(false); }}>
+                  <div className="address-icon"><span className="material-symbols-outlined">home</span></div>
+                  <div className="address-details">
+                    <h4>Home (Default)</h4>
+                    <p>{defaultAddress.length > 35 ? `${defaultAddress.substring(0, 35)}...` : defaultAddress}</p>
+                  </div>
+                  <span className="material-symbols-outlined check">check_circle</span>
                 </div>
-                <span className="material-symbols-outlined check">check_circle</span>
-              </div>
-              <div className="address-slot" onClick={() => { lightTap(); setIsAddressModalOpen(false); }}>
-                <div className="address-icon"><span className="material-symbols-outlined">work</span></div>
-                <div className="address-details">
-                  <h4>Office</h4>
-                  <p>456 Market St, SF, CA</p>
-                </div>
-              </div>
-              <button className="address-add-btn" onClick={mediumTap}>
+              )}
+              {/* Saved addresses */}
+              {savedAddresses.map((addr, idx) => {
+                const iconMap = { Home: 'home', Work: 'work', Office: 'work', Hotel: 'hotel', Other: 'location_on' };
+                const icon = iconMap[addr.label] || 'location_on';
+                const isActive = idx === activeAddressIdx;
+                return (
+                  <div key={idx} className={`address-slot${isActive ? ' active' : ''}`} onClick={() => handleSelectAddress(idx)}>
+                    <div className="address-icon"><span className="material-symbols-outlined">{icon}</span></div>
+                    <div className="address-details">
+                      <h4>{addr.label}</h4>
+                      <p>{`${addr.street}, ${addr.city}${addr.pincode ? ' ' + addr.pincode : ''}`}</p>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginLeft: 'auto' }}>
+                      {isActive && <span className="material-symbols-outlined check">check_circle</span>}
+                      <button
+                        className="addr-delete-btn"
+                        onClick={e => { e.stopPropagation(); handleDeleteAddress(idx); }}
+                        title="Remove address"
+                      >
+                        <span className="material-symbols-outlined">delete</span>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+              <button className="address-add-btn" onClick={() => { mediumTap(); setIsAddAddressFormOpen(true); setIsAddressModalOpen(false); }}>
                 <span className="material-symbols-outlined">add</span>
                 Add new address
               </button>
             </motion.div>
           )}
-          
+
+          {/* ─── Add New Address Form Modal ─── */}
+          {isAddAddressFormOpen && (
+            <motion.div
+              className="home-address-dropdown dropdown-glass add-address-form"
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="add-addr-header">
+                <span className="add-addr-title">New Address</span>
+                <button className="add-addr-close" onClick={() => { setIsAddAddressFormOpen(false); setFormError(''); }}>
+                  <span className="material-symbols-outlined">close</span>
+                </button>
+              </div>
+
+              <div className="add-addr-label-row">
+                {['Home', 'Work', 'Hotel', 'Other'].map(lbl => (
+                  <button
+                    key={lbl}
+                    className={`addr-label-chip${newAddressForm.label === lbl ? ' selected' : ''}`}
+                    onClick={() => setNewAddressForm(f => ({ ...f, label: lbl }))}
+                  >
+                    {lbl}
+                  </button>
+                ))}
+              </div>
+
+              <div className="add-addr-fields">
+                <div className="add-addr-field">
+                  <span className="material-symbols-outlined">signpost</span>
+                  <input
+                    type="text"
+                    placeholder="Street / Area *"
+                    value={newAddressForm.street}
+                    onChange={e => setNewAddressForm(f => ({ ...f, street: e.target.value }))}
+                  />
+                </div>
+                <div className="add-addr-field">
+                  <span className="material-symbols-outlined">location_city</span>
+                  <input
+                    type="text"
+                    placeholder="City *"
+                    value={newAddressForm.city}
+                    onChange={e => setNewAddressForm(f => ({ ...f, city: e.target.value }))}
+                  />
+                </div>
+                <div className="add-addr-field">
+                  <span className="material-symbols-outlined">markunread_mailbox</span>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    placeholder="Pincode *"
+                    maxLength={10}
+                    value={newAddressForm.pincode}
+                    onChange={e => setNewAddressForm(f => ({ ...f, pincode: e.target.value.replace(/\D/g, '') }))}
+                  />
+                </div>
+              </div>
+
+              {formError && <p className="add-addr-error">{formError}</p>}
+
+              <button className="add-addr-save-btn" onClick={handleSaveNewAddress}>
+                <span className="material-symbols-outlined">check</span>
+                Save Address
+              </button>
+            </motion.div>
+          )}
+
           {isProfileModalOpen && (
             <motion.div
               className="home-profile-dropdown dropdown-glass"
