@@ -126,7 +126,7 @@ const PaymentIssue = () => {
       {/* Top Navigation */}
       <div className="payment-issue-header">
         <div className="payment-issue-back" onClick={() => { lightTap(); navigate(-1); }}>
-          <span className="material-symbols-outlined">arrow_back</span>
+          <span className="material-symbols-outlined">arrow_back_ios_new</span>
         </div>
         <h2 className="payment-issue-title">Report Payment Issue</h2>
       </div>

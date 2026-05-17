@@ -7,7 +7,7 @@
   background-color: #ffffff;
   color: #0f172a;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Outfit', sans-serif;
   position: relative;
   overflow: hidden;
 }
@@ -24,7 +24,7 @@
   padding: 1rem;
   background-color: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid rgba(249, 127, 26, 0.1);
 }
 
 /* Dark mode removed for header */
@@ -47,12 +47,14 @@
 
 
 .order-issue-title {
-  font-size: 1rem;
+  color: #0f172a;
+  font-size: 1.125rem;
   font-weight: 700;
+  line-height: 1.25;
   letter-spacing: -0.025em;
+  flex: 1 1 0%;
   text-align: center;
-  flex: 1;
-  margin: 0;
+  padding-right: 3rem; /* Balance back button */
 }
 
 .order-issue-main {
@@ -66,7 +68,16 @@
 }
 
 .order-issue-step-wrap {
-  padding: 0 1.5rem;
+  padding: 0 1.5rem 1rem;
+}
+
+.section-heading {
+  color: #0f172a;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
 }
 
 .order-issue-step-badge {
@@ -85,7 +96,7 @@
 .order-issue-orders-scroll {
   display: flex;
   gap: 1rem;
-  padding: 0 1.5rem 0.5rem 1.5rem;
+  padding: 0 1.5rem 1rem 1.5rem;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -177,7 +188,7 @@
 
 
 .order-issue-categories {
-  padding: 0 1.5rem;
+  padding: 0 1.5rem 2rem;
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.75rem;
