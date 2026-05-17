@@ -47,6 +47,61 @@ const STATUS_LABELS = {
   'CLOSED': 'Closed'
 };
 
+const FAQ_DATA = [
+  {
+    q: 'How do I track my order?',
+    a: 'Once your order is placed, go to Orders → select your order → tap "Track Order". You can follow the real-time status from restaurant to your door.'
+  },
+  {
+    q: 'Can I cancel my order after placing it?',
+    a: 'Orders can be cancelled within 2 minutes of placing them if the restaurant has not yet accepted. After acceptance, cancellation depends on the restaurant\'s policy.'
+  },
+  {
+    q: 'Can I edit my order after placing it?',
+    a: 'Unfortunately, orders cannot be edited once placed. You\'ll need to cancel (if still within the cancellation window) and place a new order with the correct items.'
+  },
+  {
+    q: 'Can I change the delivery address or phone number after placing an order?',
+    a: 'Address changes are not supported after an order is confirmed. Please ensure your delivery address is correct before placing the order. To update your phone number, visit your Profile page.'
+  },
+  {
+    q: 'Do you charge for delivery?',
+    a: 'Delivery fees vary based on distance and restaurant. If your order value is above the restaurant\'s free-delivery threshold, delivery is free. Any applicable delivery fee is shown clearly on the Review Order screen before you pay.'
+  },
+  {
+    q: 'Is there a minimum order value?',
+    a: 'Minimum order values are set by individual restaurants and vary. The minimum (if any) is displayed on the restaurant\'s menu page before you add items to your cart.'
+  },
+  {
+    q: 'Can I place a bulk or group order?',
+    a: 'Yes! You can add large quantities of items from a single restaurant. For very large corporate or event orders, tap "Chat With Us" and our team will assist you personally.'
+  },
+  {
+    q: 'Can I schedule an order in advance?',
+    a: 'Scheduled ordering is coming soon on Quick Plate! For now, orders are placed for immediate delivery. Stay tuned for updates.'
+  },
+  {
+    q: 'Will Quick Plate be accountable for food quality or quantity?',
+    a: 'While restaurants are responsible for preparing your food, Quick Plate takes quality seriously. If your order is incorrect, missing items, or below quality standards, raise an Order Issue from Quick Actions above and we\'ll make it right.'
+  },
+  {
+    q: 'How do I get an invoice for my order?',
+    a: 'Order invoices are available in the Orders section. Open your completed order and tap "Download Invoice". The PDF is sent to your registered email as well.'
+  },
+  {
+    q: 'What if my food arrived late or cold?',
+    a: 'We\'re sorry! Raise an Order Issue from Quick Actions above. Our team reviews it within 24 hours and may offer a refund or credit.'
+  },
+  {
+    q: 'Why was my payment declined?',
+    a: 'This can happen due to insufficient balance, bank restrictions, or network issues. Try a different payment method or raise a Payment Issue above.'
+  },
+  {
+    q: 'How do I contact a live agent?',
+    a: 'Tap "Chat With Us" in Quick Actions above. Agents are available 9 AM – 11 PM daily. Outside hours, leave a message and we\'ll respond ASAP.'
+  },
+];
+
 const Support = () => {
 
   const navigate = useNavigate();
@@ -54,6 +109,7 @@ const Support = () => {
 
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openFaq, setOpenFaq] = useState(null);
 
   /* -----------------------------
      Fetch Support Tickets
@@ -348,6 +404,35 @@ const Support = () => {
 
           </div>
 
+        </section>
+
+        {/* FAQ Section */}
+        <section className="support-section">
+          <div className="support-section-header">
+            <h3 className="support-section-title">Frequently Asked Questions</h3>
+          </div>
+
+          <div className="faq-list">
+            {FAQ_DATA.map((item, idx) => (
+              <div
+                key={idx}
+                className={`faq-item${openFaq === idx ? ' open' : ''}`}
+                onClick={() => { lightTap(); setOpenFaq(openFaq === idx ? null : idx); }}
+              >
+                <div className="faq-question">
+                  <span>{item.q}</span>
+                  <span className={`material-symbols-outlined faq-chevron${openFaq === idx ? ' rotated' : ''}`}>
+                    expand_more
+                  </span>
+                </div>
+                {openFaq === idx && (
+                  <div className="faq-answer">
+                    <p>{item.a}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </section>
 
       </main>
