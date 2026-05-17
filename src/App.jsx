@@ -3,6 +3,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AnimatePresence } from 'framer-motion';
 
+// Hooks & Components
+import useOnlineStatus from './hooks/useOnlineStatus';
+import Offline from './components/Offline';
+
 // Pages
 import Landing from './pages/Landing/Landing';
 import Features from './pages/Features/Features';
@@ -59,8 +63,11 @@ const LoadingScreen = () => (
 );
 
 function App() {
+  const isOnline = useOnlineStatus();
+
   return (
     <BrowserRouter>
+      {!isOnline && <Offline />}
       <Toaster
         position="top-center"
         toastOptions={{
