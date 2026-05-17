@@ -71,12 +71,12 @@ Both share the **same Salesforce data layer**, connected through authenticated R
 ┌───────────────────────────────────────────────────────────────┐
 │                        CUSTOMER LAYER                         │
 │          React 18 · Vite · Zustand · Framer Motion            │
-│   Landing → Home → Restaurant → Cart → Checkout → Tracking   │
+│   Landing → Home → Restaurant → Cart → Checkout → Tracking    │
 └──────────────────────────┬────────────────────────────────────┘
                            │ Firebase idToken
                            ▼
 ┌──────────────────────────────────────────────────────────────┐
-│                    AUTH BRIDGE                                │
+│                    AUTH BRIDGE                               │
 │     Firebase Auth  ──→  Google Identity API  ──→  Apex       │
 │     (idToken)           (verify)               (Customer__c) │
 └──────────────────────────┬───────────────────────────────────┘
