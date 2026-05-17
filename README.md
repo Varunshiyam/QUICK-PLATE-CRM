@@ -593,7 +593,7 @@ VITE_API_BASE_URL=https://your-salesforce-domain.my.salesforce.com
 
 <div align="center">
 
-### Built With 🔥 by [Varun Shiyam](https://github.com/Varunshiyam)
+### Built With Passion by [Varun Shiyam](https://github.com/Varunshiyam)
 
 **React** · **Salesforce Apex** · **Firebase** · **Stripe** · **Lightning Web Components**
 
