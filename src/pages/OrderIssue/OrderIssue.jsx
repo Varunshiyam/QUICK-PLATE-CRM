@@ -139,18 +139,21 @@ const OrderIssue = () => {
         <button className="order-issue-back-btn" onClick={handleBack}>
           <span className="material-symbols-outlined">arrow_back_ios_new</span>
         </button>
-        <h1 className="order-issue-title" style={{ fontWeight: 800 }}>Order Issue</h1>
+        <h1 className="order-issue-title">Order Issue</h1>
         <div className="w-10"></div>
       </header>
       
       <main className="order-issue-main">
         <section className="order-issue-section">
           <div className="order-issue-step-wrap mb-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-sm font-extrabold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
+            <div className="" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem'}}>
+              <h3 className="section-heading">
                 Select Recent Order
               </h3>
-              <span className="text-xs font-bold text-primary cursor-pointer">View All</span>
+              <span 
+                className=""
+                style={{ fontSize: '0.75rem', fontWeight: 700, color: '#f97f1a', cursor: 'pointer' }}
+              >View All</span>
             </div>
           </div>
           
@@ -192,10 +195,16 @@ const OrderIssue = () => {
         </section>
 
         <div className="order-issue-step-wrap mt-8 mb-6">
-          <h2 className="text-xl font-extrabold leading-tight text-slate-900 dark:text-slate-100 mb-2">
+          <h2 
+            className=""
+            style={{color: '#0f172a', fontSize: '18px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em'}}
+          >
             Reporting Issue for {selectedOrder?.name}
           </h2>
-          <p className="text-slate-500 dark:text-zinc-400 text-xs leading-relaxed">
+          <p 
+            className=""
+            style={{fontSize: '15px', color: '#94a3b8'}}
+          >
             Please select the category that best describes the problem with this specific order.
           </p>
         </div>

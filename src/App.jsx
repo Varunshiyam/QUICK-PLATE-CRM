@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AnimatePresence } from 'framer-motion';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 
 // Hooks & Components
 import useOnlineStatus from './hooks/useOnlineStatus';
