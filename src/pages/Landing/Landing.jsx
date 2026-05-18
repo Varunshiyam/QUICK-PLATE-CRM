@@ -64,6 +64,9 @@ const floatAnimation = {
 };
 
 const Landing = () => {
+  if (window.location.search.includes('trigger_error=true')) {
+    throw new Error("Simulated developer error for verifying the premium top-level Error Boundary fallback screen and recovery mechanics.");
+  }
   const { lightTap, mediumTap } = useHaptic();
   const navigate = useNavigate();
   const heroRef = useRef(null);
