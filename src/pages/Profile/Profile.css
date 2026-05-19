@@ -362,3 +362,151 @@
 .logout-row .action-row-left {
   color: #EF4444;
 }
+
+/* ─── Delete Account Button ─── */
+.delete-account-row {
+  color: #DC2626;
+}
+
+.delete-account-row .action-row-left {
+  color: #DC2626;
+}
+
+/* ─── Delete Account Modal ─── */
+.delete-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.delete-modal-content {
+  background: linear-gradient(180deg, #fcfbfa 0%, #f8f7f6 100%);
+  border-radius: 1.5rem 1.5rem 0 0;
+  padding: 2rem 1.5rem;
+  width: 100%;
+  max-width: 500px;
+  max-height: 80dvh;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+}
+
+.delete-modal-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.delete-modal-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(220, 38, 38, 0.15);
+  color: #DC2626;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 32px;
+}
+
+.delete-modal-header h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #0F172A;
+  margin: 0;
+}
+
+.delete-modal-description {
+  font-size: 0.9375rem;
+  color: #475569;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.delete-modal-info-box {
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.delete-modal-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.delete-modal-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: #475569;
+  font-weight: 500;
+}
+
+.delete-modal-list span.material-symbols-outlined {
+  color: #DC2626;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.delete-modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-direction: column;
+}
+
+.delete-modal-btn {
+  padding: 0.875rem 1rem;
+  border: none;
+  border-radius: 1rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.cancel-btn {
+  background: rgba(255, 255, 255, 0.7);
+  color: #475569;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.cancel-btn:active {
+  transform: scale(0.98);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.delete-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+}
