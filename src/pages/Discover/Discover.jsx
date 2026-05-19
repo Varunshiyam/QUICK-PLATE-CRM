@@ -85,6 +85,7 @@ const Discover = () => {
   const [activeCategory, setActiveCategory] = useState('Trending');
   
   const [restaurants, setRestaurants] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -125,8 +126,10 @@ const Discover = () => {
           };
         });
         setRestaurants(mappedData);
+        setIsLoading(false);
       } catch (err) {
         console.error('Failed to load restaurants:', err);
+        setIsLoading(false);
       }
     };
     loadRestaurants();
@@ -291,7 +294,19 @@ const Discover = () => {
                 <span className="material-symbols-outlined" style={{ color: '#94a3b8' }}>arrow_forward</span>
               </div>
               <div className="discover-new-list">
-                {displayList.map((item, idx) => (
+                {isLoading ? (
+  [...Array(3)].map((_, idx) => (
+    <div key={idx} className="discover-new-card skeleton-card">
+      <div className="discover-new-img-wrap skeleton-img-wrap"></div>
+      <div className="discover-new-info-row">
+        <div style={{ flex: 1 }}>
+          <div className="skeleton-line skeleton-title"></div>
+          <div className="skeleton-line skeleton-subtitle"></div>
+        </div>
+      </div>
+    </div>
+  ))
+) : displayList.map((item, idx) => (
                   <div 
                     key={idx} 
                     className="discover-new-card" 
