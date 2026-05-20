@@ -34,6 +34,8 @@ const Profile = () => {
   const [totalOrdersCount, setTotalOrdersCount] = useState(0);
   const [transactions, setTransactions] = useState([]);
   const [walletBalance, setWalletBalance] = useState(0);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editName, setEditName] = useState(user?.displayName || '');
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -223,7 +225,7 @@ const Profile = () => {
           <span className="material-symbols-outlined">arrow_back_ios_new</span>
         </button>
         <h1 className="profile-page-title">My Profile</h1>
-        <button className="profile-edit-btn" onClick={lightTap}>
+        <button className="profile-edit-btn" onClick={() => { lightTap(); setIsEditing(true); }}>
           <span className="material-symbols-outlined">edit</span>
         </button>
       </header>
@@ -398,6 +400,57 @@ const Profile = () => {
           </Link>
         </div>
       </nav>
+      {/* ─── Edit Profile Modal ─── */}
+      {isEditing && (
+        <div className="edit-modal-overlay" onClick={() => setIsEditing(false)}>
+          <div className="edit-modal glass-card" onClick={e => e.stopPropagation()}>
+            <h3 className="edit-modal-title">Edit Profile</h3>
+            
+            <div className="edit-modal-avatar">
+              <img src={user?.photoURL || USER_IMG} alt="Avatar" />
+            </div>
+
+            <div className="edit-modal-field">
+              <label>Display Name</label>
+              <input
+                type="text"
+                value={editName}
+                onChange={e => setEditName(e.target.value)}
+                placeholder="Enter your name"
+                className="edit-modal-input"
+              />
+            </div>
+
+            <div className="edit-modal-field">
+              <label>Email</label>
+              <input
+                type="text"
+                value={user?.email || ''}
+                disabled
+                className="edit-modal-input disabled"
+              />
+              <span className="edit-modal-hint">Email cannot be changed</span>
+            </div>
+
+            <div className="edit-modal-actions">
+              <button className="edit-modal-cancel" onClick={() => setIsEditing(false)}>
+                Cancel
+              </button>
+              <button className="edit-modal-save" onClick={() => {
+                lightTap();
+                if (editName.trim()) {
+                  useAppStore.setState(state => ({
+                      user: { ...state.user, displayName: editName.trim() }
+                  }));
+                }
+                setIsEditing(false);
+              }}>
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
