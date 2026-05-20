@@ -356,14 +356,27 @@ const Profile = () => {
           animate="visible"
           custom={0.3}
         >
-          <button className="profile-action-row glass-card" onClick={() => { mediumTap(); navigate('/support'); }}>
-            <div className="action-row-left">
-              <span className="material-symbols-outlined text-slate-400">help</span>
-              <span>Help & Support</span>
-            </div>
-            <span className="material-symbols-outlined text-slate-300">chevron_right</span>
-          </button>
-          
+         <button
+  className="profile-action-row glass-card"
+  onClick={() => navigate('/dashboard')}
+>
+  <div className="action-row-left">
+    <span>📊</span>
+    <span>Analytics Dashboard</span>
+  </div>
+
+  <span className="material-symbols-outlined text-slate-300">
+    chevron_right
+  </span>
+</button>
+
+<button className="profile-action-row glass-card" onClick={() => { mediumTap(); navigate('/support'); }}>
+  <div className="action-row-left">
+    <span className="material-symbols-outlined text-slate-400">help</span>
+    <span>Help & Support</span>
+  </div>
+  <span className="material-symbols-outlined text-slate-300">chevron_right</span>
+</button>
           <button className="profile-action-row glass-card logout-row" onClick={handleLogout}>
             <div className="action-row-left">
               <span className="material-symbols-outlined">logout</span>

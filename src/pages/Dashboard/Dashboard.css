@@ -1,0 +1,77 @@
+.dashboard-page {
+  padding: 24px;
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.dashboard-page h1 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #1d2238;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  background: white;
+  padding: 24px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.stat-card h2 {
+  font-size: 32px;
+  color: #ff7a00;
+  margin-bottom: 10px;
+}
+
+.stat-card p {
+  color: #555;
+  font-size: 16px;
+}
+.insights-section {
+  margin-top: 32px;
+}
+
+.insights-section h2 {
+  margin-bottom: 18px;
+  color: #1d2238;
+}
+
+.insights-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.insight-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: white;
+  padding: 18px;
+  border-radius: 18px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.insight-icon {
+  font-size: 24px;
+}
+
+.insight-card h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #1d2238;
+}
+
+.insight-card p {
+  margin-top: 6px;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
