@@ -1,4 +1,6 @@
 import './Dashboard.css';
+import { FiTrendingUp, FiBarChart2 } from "react-icons/fi";
+import { MdFastfood } from "react-icons/md";
 
 function Dashboard() {
   return (
@@ -41,7 +43,10 @@ function Dashboard() {
 
   <div className="insights-grid">
     <div className="insight-card">
-      <span className="insight-icon">🔥</span>
+      <span className="insight-icon">
+        <FiTrendingUp />
+      </span>
+
       <div>
         <h3>Busiest Day</h3>
         <p>Friday is your most active ordering day.</p>
@@ -49,7 +54,10 @@ function Dashboard() {
     </div>
 
     <div className="insight-card">
-      <span className="insight-icon">🍕</span>
+      <span className="insight-icon">
+        <MdFastfood />
+      </span>
+
       <div>
         <h3>Top Category</h3>
         <p>Pizza remains your most ordered category.</p>
@@ -57,7 +65,10 @@ function Dashboard() {
     </div>
 
     <div className="insight-card">
-      <span className="insight-icon">📈</span>
+      <span className="insight-icon">
+        <FiBarChart2 />
+      </span>
+
       <div>
         <h3>Growth</h3>
         <p>Your orders increased by 18% this month.</p>
