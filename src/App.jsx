@@ -4,6 +4,10 @@ import { Toaster } from 'react-hot-toast';
 import { AnimatePresence } from 'framer-motion';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 
+// Hooks & Components
+import useOnlineStatus from './hooks/useOnlineStatus';
+import Offline from './components/Offline';
+
 // Pages
 import Landing from './pages/Landing/Landing';
 import Features from './pages/Features/Features';
@@ -60,58 +64,59 @@ const LoadingScreen = () => (
 );
 
 function App() {
+  const isOnline = useOnlineStatus();
+
   return (
-    <ErrorBoundary>
-      <BrowserRouter>
-        <Toaster
-          position="top-center"
-          toastOptions={{
-            duration: 3000,
-            style: {
-              borderRadius: '12px',
-              background: '#2D3134',
-              color: '#fff',
-              fontSize: '0.875rem',
-              fontFamily: 'Outfit, sans-serif',
-              fontWeight: 500,
-              padding: '12px 20px',
-            },
-            success: {
-              iconTheme: { primary: '#00B894', secondary: '#fff' },
-            },
-            error: {
-              iconTheme: { primary: '#FF7675', secondary: '#fff' },
-            },
-          }}
-        />
-        <Suspense fallback={<LoadingScreen />}>
-          <AnimatePresence mode="wait">
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/features" element={<Features />} />
-              <Route path="/onboarding" element={<Onboarding />} />
-              <Route path="/onboarding-details" element={<OnboardingDetails />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/restaurant" element={<Restaurant />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/payment-success" element={<PaymentSuccess />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/orders" element={<Orders />} />
-              <Route path="/discover" element={<Discover />} />
-              <Route path="/tracking/:orderId" element={<Tracking />} />
-              <Route path="/support" element={<Support />} />
-              <Route path="/raise-refund" element={<RaiseRefund />} />
-              <Route path="/payment-issue" element={<PaymentIssue />} />
-              <Route path="/order-issue" element={<OrderIssue />} />
-              <Route path="/customerwallet" element={<CustomerWallet />} />
-              <Route path="/wallet-payment" element={<WalletPayment />} />
-              {/* More routes will be added as pages are built */}
-            </Routes>
-          </AnimatePresence>
-        </Suspense>
-      </BrowserRouter>
-    </ErrorBoundary>
+    <BrowserRouter>
+      {!isOnline && <Offline />}
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            borderRadius: '12px',
+            background: '#2D3134',
+            color: '#fff',
+            fontSize: '0.875rem',
+            fontFamily: 'Outfit, sans-serif',
+            fontWeight: 500,
+            padding: '12px 20px',
+          },
+          success: {
+            iconTheme: { primary: '#00B894', secondary: '#fff' },
+          },
+          error: {
+            iconTheme: { primary: '#FF7675', secondary: '#fff' },
+          },
+        }}
+      />
+      <Suspense fallback={<LoadingScreen />}>
+        <AnimatePresence mode="wait">
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/features" element={<Features />} />
+            <Route path="/onboarding" element={<Onboarding />} />
+            <Route path="/onboarding-details" element={<OnboardingDetails />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/restaurant" element={<Restaurant />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/discover" element={<Discover />} />
+            <Route path="/tracking/:orderId" element={<Tracking />} />
+            <Route path="/support" element={<Support />} />
+            <Route path="/raise-refund" element={<RaiseRefund />} />
+            <Route path="/payment-issue" element={<PaymentIssue />} />
+            <Route path="/order-issue" element={<OrderIssue />} />
+            <Route path="/customerwallet" element={<CustomerWallet />} />
+            <Route path="/wallet-payment" element={<WalletPayment />} />
+            {/* More routes will be added as pages are built */}
+          </Routes>
+        </AnimatePresence>
+      </Suspense>
+    </BrowserRouter>
   );
 }
 

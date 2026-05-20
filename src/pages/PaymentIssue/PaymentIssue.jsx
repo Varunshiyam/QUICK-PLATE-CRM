@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getStoredUser } from '../../services/firebase';
@@ -41,6 +41,47 @@ const PaymentIssue = () => {
   const [additionalDetails, setAdditionalDetails] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const fileInputRef = useRef(null);
+  const [attachment, setAttachment] = useState(null);
+  const [attachmentBase64, setAttachmentBase64] = useState('');
+  const [uploadError, setUploadError] = useState('');
+
+  const handleDropzoneClick = () => {
+    lightTap();
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setUploadError('');
+
+    if (!file) return;
+
+    const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+    if (!allowedTypes.includes(file.type)) {
+      setUploadError('Invalid file format. Only JPG, PNG, or PDF files are accepted.');
+      return;
+    }
+
+    const maxSize = 5 * 1024 * 1024;
+    if (file.size > maxSize) {
+      setUploadError('File exceeds size limit. Maximum permitted upload threshold is 5MB.');
+      return;
+    }
+
+    setAttachment(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setAttachmentBase64(reader.result);
+    };
+    reader.onerror = () => {
+      setUploadError('Error parsing binary data stream. Please reload and try again.');
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     mediumTap();
@@ -62,7 +103,10 @@ const PaymentIssue = () => {
           description: desc,
           restaurantName: selectedOrder?.name,
           reason: selectedIssueData?.title,
-          caseId: caseId
+          caseId: caseId,
+          attachmentData: attachmentBase64 || null,
+          attachmentName: attachment ? attachment.name : null,
+          additionalInfo: additionalDetails || ''
         };
         
         await axios.post(`${API_BASE_URL}/services/apexrest/case/create`, payload, {
@@ -208,11 +252,40 @@ const PaymentIssue = () => {
         {/* Upload Screenshot Section */}
         <h3 className="section-heading">Upload Screenshot</h3>
         <div className="upload-section">
-           <div className="upload-dropzone" onClick={() => lightTap()}>
-             <span className="material-symbols-outlined upload-icon">cloud_upload</span>
-             <p className="upload-title">Bank Statement or Receipt</p>
-             <p className="upload-desc">Maximum file size 5MB. Supports JPG, PNG or PDF.</p>
+           <div 
+             className={`upload-dropzone ${uploadError ? 'upload-error' : attachment ? 'upload-success' : ''}`} 
+             onClick={handleDropzoneClick}
+           >
+             <input 
+               type="file"
+               ref={fileInputRef}
+               onChange={handleFileChange}
+               accept="image/jpeg, image/png, application/pdf"
+               style={{ display: 'none' }}
+             />
+
+             {attachment ? (
+               <>
+                 <span className="material-symbols-outlined upload-icon-success">check_circle</span>
+                 <p className="upload-title-success">File Added Successfully</p>
+                 <p className="upload-filename">{attachment.name}</p>
+                 <p className="upload-replace-hint">Click anywhere inside to replace file</p>
+               </>
+             ) : (
+               <>
+                 <span className="material-symbols-outlined upload-icon">cloud_upload</span>
+                 <p className="upload-title">Bank Statement or Receipt</p>
+                 <p className="upload-desc">Maximum file size 5MB. Supports JPG, PNG or PDF.</p>
+               </>
+             )}
            </div>
+
+           {uploadError && (
+             <div className="upload-error-message">
+               <span className="material-symbols-outlined">error</span>
+               {uploadError}
+             </div>
+           )}
         </div>
 
         {/* Additional Details */}

@@ -52,7 +52,37 @@ const Restaurant = () => {
     lightTap();
     setActiveTab(category);
     // Add real scroll logic ideally here, for now it shifts states visually cleanly.
+    const section = sectionRefs.current[category];
+
+    if (section) {
+      section.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
   };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveTab(entry.target.dataset.category);
+          }
+        });
+      },
+      {
+        rootMargin: '-120px 0px -55% 0px',
+        threshold: 0,
+      }
+    );
+  
+    Object.values(sectionRefs.current).forEach((section) => {
+      if (section) observer.observe(section);
+    });
+  
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="rest-page">
@@ -148,6 +178,7 @@ const Restaurant = () => {
           <motion.div 
             key={section.category}
             className="rest-section"
+            data-category={section.category}
             ref={(el) => (sectionRefs.current[section.category] = el)}
             variants={fadeUp}
             initial="hidden"

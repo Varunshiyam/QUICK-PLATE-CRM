@@ -102,7 +102,7 @@ const Landing = () => {
             <Link to="/features" className="landing-nav-link" onClick={lightTap}>
               Features
             </Link>
-            <Link to="/" className="landing-nav-link" onClick={lightTap}>
+            <Link to="/support" className="landing-nav-link" onClick={lightTap}>
               Contact
             </Link>
           </div>
