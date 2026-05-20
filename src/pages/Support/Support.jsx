@@ -62,7 +62,7 @@ const FAQ_DATA = [
   },
   {
     q: 'Can I change the delivery address or phone number after placing an order?',
-    a: 'Address changes are not supported after an order is confirmed. Please ensure your delivery address is correct before placing the order. To update your phone number, visit your Profile page.'
+    a: 'Address changes are not supported after an order is confirmed. Please ensure your delivery address is correct before placing the order. If you need help with your phone number, tap "Chat With Us" in Quick Actions above and our team will assist you.'
   },
   {
     q: 'Do you charge for delivery?',

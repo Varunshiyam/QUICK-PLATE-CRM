@@ -34,6 +34,7 @@ const Profile = () => {
   const [totalOrdersCount, setTotalOrdersCount] = useState(0);
   const [transactions, setTransactions] = useState([]);
   const [walletBalance, setWalletBalance] = useState(0);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState(user?.displayName || '');
 
@@ -211,6 +212,37 @@ const Profile = () => {
     }
   };
 
+  const handleDeleteAccount = async () => {
+    mediumTap();
+    try {
+      // Clear all local storage
+      localStorage.clear();
+      
+      // Clear session storage
+      sessionStorage.clear();
+      
+      // Clear app state
+      logout();
+      
+      // Log out from Firebase
+      await logoutUser();
+      
+      // Close modal
+      setShowDeleteModal(false);
+      
+      // Navigate to home
+      navigate('/', { replace: true });
+    } catch (error) {
+      console.error('Account deletion failed', error);
+      // Fallback: still clear local data and redirect
+      localStorage.clear();
+      sessionStorage.clear();
+      logout();
+      setShowDeleteModal(false);
+      navigate('/', { replace: true });
+    }
+  };
+
   const dynamicStats = [
     { label: 'Total Orders', value: totalOrdersCount.toString(), icon: 'local_mall', color: 'indigo', action: null },
     { label: 'Favorites', value: '12', icon: 'favorite', color: 'red', action: null },
@@ -370,13 +402,21 @@ const Profile = () => {
   </span>
 </button>
 
-<button className="profile-action-row glass-card" onClick={() => { mediumTap(); navigate('/support'); }}>
-  <div className="action-row-left">
-    <span className="material-symbols-outlined text-slate-400">help</span>
-    <span>Help & Support</span>
-  </div>
-  <span className="material-symbols-outlined text-slate-300">chevron_right</span>
-</button>
+          <button className="profile-action-row glass-card" onClick={() => { mediumTap(); navigate('/support'); }}>
+            <div className="action-row-left">
+              <span className="material-symbols-outlined text-slate-400">help</span>
+              <span>Help & Support</span>
+            </div>
+            <span className="material-symbols-outlined text-slate-300">chevron_right</span>
+          </button>
+          
+          <button className="profile-action-row glass-card delete-account-row" onClick={() => { mediumTap(); setShowDeleteModal(true); }}>
+            <div className="action-row-left">
+              <span className="material-symbols-outlined">delete_outline</span>
+              <span>Delete Account</span>
+            </div>
+          </button>
+          
           <button className="profile-action-row glass-card logout-row" onClick={handleLogout}>
             <div className="action-row-left">
               <span className="material-symbols-outlined">logout</span>
@@ -388,6 +428,63 @@ const Profile = () => {
         {/* Bottom spacer for nav */}
         <div style={{ paddingBottom: '7rem' }} />
       </main>
+
+      {/* ─── Delete Account Confirmation Modal ─── */}
+      {showDeleteModal && (
+        <div className="delete-modal-overlay" onClick={() => setShowDeleteModal(false)}>
+          <motion.div 
+            className="delete-modal-content"
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ duration: 0.3 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="delete-modal-header">
+              <div className="delete-modal-icon">
+                <span className="material-symbols-outlined">warning</span>
+              </div>
+              <h2>Delete Account?</h2>
+            </div>
+
+            <p className="delete-modal-description">
+              This action cannot be undone. All your profile data, orders, and preferences will be permanently removed.
+            </p>
+
+            <div className="delete-modal-info-box">
+              <ul className="delete-modal-list">
+                <li>
+                  <span className="material-symbols-outlined">check_circle</span>
+                  <span>Order history will be removed</span>
+                </li>
+                <li>
+                  <span className="material-symbols-outlined">check_circle</span>
+                  <span>Wallet balance will be cleared</span>
+                </li>
+                <li>
+                  <span className="material-symbols-outlined">check_circle</span>
+                  <span>Saved favorites will be deleted</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="delete-modal-actions">
+              <button 
+                className="delete-modal-btn cancel-btn"
+                onClick={() => { lightTap(); setShowDeleteModal(false); }}
+              >
+                Cancel
+              </button>
+              <button 
+                className="delete-modal-btn delete-btn"
+                onClick={handleDeleteAccount}
+              >
+                Delete Account
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
 
       {/* ─── Bottom Navigation ─── */}
       <nav className="home-bottom-nav">
