@@ -1,3 +1,4 @@
+import Dashboard from './pages/Dashboard/Dashboard';
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
@@ -103,6 +104,7 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/discover" element={<Discover />} />
             <Route path="/tracking/:orderId" element={<Tracking />} />
