@@ -165,7 +165,29 @@ const Discover = () => {
       (r.cuisine && r.cuisine.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const displayList = searchQuery ? searchResults : newOnQuickPlate;
+  const categoryRestaurants = restaurants.filter((r) => {
+  const text = `${r.name} ${r.cuisine}`.toLowerCase();
+
+  if (activeCategory === 'Trending') {
+    return r.rating >= 4.8 || text.includes('japanese') || text.includes('pizza');
+  }
+
+  if (activeCategory === 'Healthy') {
+    return text.includes('healthy') || text.includes('salad') || text.includes('vegan') || text.includes('mediterranean') || text.includes('green');
+  }
+
+  if (activeCategory === 'Fast Food') {
+    return text.includes('burger') || text.includes('pizza') || text.includes('fast food') || text.includes('american');
+  }
+
+  if (activeCategory === 'Bakery') {
+    return text.includes('bakery') || text.includes('pastry') || text.includes('dessert') || text.includes('cake');
+  }
+
+  return true;
+});
+
+const displayList = searchQuery ? searchResults : categoryRestaurants;
 
   return (
     <div className="discover-page">
@@ -290,7 +312,7 @@ const Discover = () => {
               custom={0.2}
             >
               <div className="discover-section-header">
-                <h2 className="discover-section-title">New on Quick Plate</h2>
+                <h2 className="discover-section-title">{activeCategory}</h2>
                 <span className="material-symbols-outlined" style={{ color: '#94a3b8' }}>arrow_forward</span>
               </div>
               <div className="discover-new-list">
