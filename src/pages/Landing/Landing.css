@@ -447,7 +447,7 @@
 .modal-box {
   background: var(--color-white);
   border-radius: var(--radius-3xl);
-  padding: 2.5rem 2rem;
+  padding: 2rem 1.5rem;
   max-width: 360px;
   width: 100%;
   text-align: center;
@@ -478,28 +478,6 @@
   max-width: 260px;
   margin-left: auto;
   margin-right: auto;
-}
-
-.modal-stores {
-  display: flex;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-
-.modal-store-btn {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  padding: 0.85rem 1rem;
-  border-radius: var(--radius-2xl);
-  border: 2px solid var(--color-gray-200);
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-semibold);
-  color: var(--color-slate-700);
-  background: var(--color-gray-50);
-  opacity: 0.7;
 }
 
 .modal-store-btn .material-symbols-outlined {

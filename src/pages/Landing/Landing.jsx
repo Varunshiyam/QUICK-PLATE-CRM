@@ -343,16 +343,7 @@ const Landing = () => {
               We're working hard to bring QuickPlate to iOS & Android. Stay
               tuned for updates!
             </p>
-            <div className="modal-stores">
-              <div className="modal-store-btn">
-                <span className="material-symbols-outlined">phone_iphone</span>
-                App Store
-              </div>
-              <div className="modal-store-btn">
-                <span className="material-symbols-outlined">android</span>
-                Play Store
-              </div>
-            </div>
+
             <motion.button
               className="modal-close-btn"
               onClick={() => setShowModal(false)}
