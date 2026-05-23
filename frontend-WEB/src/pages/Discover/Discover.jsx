@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
@@ -156,13 +156,37 @@ const Discover = () => {
     newOnQuickPlate.push(...restaurants.filter(r => !newOnQuickPlate.includes(r)).slice(0, 3 - newOnQuickPlate.length));
   }
   
+  const filteredByCategory = useMemo(() => {
+    if (!restaurants || restaurants.length === 0) return [];
+    
+    return restaurants.filter(r => {
+      const c = r.cuisine ? r.cuisine.toLowerCase() : '';
+      const n = r.name ? r.name.toLowerCase() : '';
+      
+      if (activeCategory === 'Trending') {
+        return parseFloat(r.rating) >= 4.8;
+      }
+      if (activeCategory === 'Healthy') {
+        return c.includes('healthy') || c.includes('salad') || c.includes('mediterranean') || c.includes('grain') || c.includes('vegan');
+      }
+      if (activeCategory === 'Fast Food') {
+        return c.includes('burger') || c.includes('pizza') || c.includes('bbq') || c.includes('fast food') || c.includes('grill') || c.includes('american');
+      }
+      if (activeCategory === 'Bakery') {
+        return c.includes('bakery') || c.includes('dessert') || c.includes('pastry') || c.includes('cake') || n.includes('sweet') || n.includes('bakery');
+      }
+      return true;
+    });
+  }, [restaurants, activeCategory]);
+
   const searchResults = restaurants.filter(
     (r) =>
       r.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (r.cuisine && r.cuisine.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const displayList = searchQuery ? searchResults : newOnQuickPlate;
+  const displayList = searchQuery ? searchResults : filteredByCategory;
+
 
   return (
     <div className="discover-page">
@@ -287,7 +311,7 @@ const Discover = () => {
               custom={0.2}
             >
               <div className="discover-section-header">
-                <h2 className="discover-section-title">New on Quick Plate</h2>
+                <h2 className="discover-section-title">{activeCategory} on Quick Plate</h2>
                 <span className="material-symbols-outlined" style={{ color: '#94a3b8' }}>arrow_forward</span>
               </div>
               <div className="discover-new-list">
