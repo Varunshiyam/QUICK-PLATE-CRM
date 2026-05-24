@@ -312,7 +312,7 @@ const displayList = searchQuery ? searchResults : categoryRestaurants;
               custom={0.2}
             >
               <div className="discover-section-header">
-                <h2 className="discover-section-title">{activeCategory}</h2>
+                <h2 className="discover-section-title">{activeCategory} on Quick Plate</h2>
                 <span className="material-symbols-outlined" style={{ color: '#94a3b8' }}>arrow_forward</span>
               </div>
               <div className="discover-new-list">
