@@ -22,7 +22,7 @@
 - [Core Workflows](#-core-workflows)
 - [API Reference](#-api-reference)
 - [Installation & Setup](#-getting-started)
-- [Environment Configuration](#️-environment-configuration)
+ - [Environment Configuration](#️-environment-configuration)
 - [Deployment](#-deployment)
 - [Contributing](#-contributing)
 - [License](#-license)
