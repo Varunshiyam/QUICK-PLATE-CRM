@@ -77,6 +77,8 @@ git push origin feat/your-feature-name
 
 Then go to GitHub and click **"Compare & pull request"**.
 
+> ⚠️ **GSSoC'26 contributors**: Make sure to set the base branch to `Gssoc-Dev` when opening your PR.
+
 ---
 
 ## Branch Naming Guidelines
@@ -99,7 +101,7 @@ Use the following prefixes for your branch names:
 
 Follow the [Conventional Commits](https://www.conventionalcommits.org/) format:
 
-```
+```text
 type(scope): short description
 
 Examples:
@@ -121,16 +123,17 @@ refactor(orders): extract order status helper
 
 Before submitting a PR:
 
-- ✅ Your branch is up to date with `main`
+- ✅ Your branch is up to date with `Gssoc-Dev`
 - ✅ Code follows the style standards below
 - ✅ No console.log statements left in code
 - ✅ PR title follows the commit message format
 - ✅ PR description mentions `Closes #issue_number`
 - ✅ Only files related to the issue are changed
+- ✅ Base branch is set to `Gssoc-Dev`
 
 ### PR Description Template
 
-```
+```markdown
 ## What does this PR do?
 Brief description of the changes.
 
@@ -163,6 +166,7 @@ Closes #ISSUE_NUMBER
 - Place page-level components in `src/pages/`
 - Use **camelCase** for variables and functions
 - Use **PascalCase** for component names and files
+- Style with **TailwindCSS** utility classes
 
 ```jsx
 // ✅ Good
@@ -179,6 +183,31 @@ export default OrderCard;
 
 // ❌ Avoid
 class OrderCard extends React.Component { ... }
+```
+
+### Node.js / Express (Backend)
+
+- Use **async/await** instead of callbacks
+- Use **named exports** for route handlers
+- Keep route handlers thin — move business logic to service files
+- Always handle errors with try/catch and pass to Express error middleware
+- Use **kebab-case** for file names (`order-service.js`)
+
+```js
+// ✅ Good
+export const getOrder = async (req, res, next) => {
+  try {
+    const order = await OrderService.findById(req.params.id);
+    res.json({ success: true, order });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ❌ Avoid
+app.get('/order', function(req, res) {
+  Order.findById(req.params.id, function(err, order) { ... });
+});
 ```
 
 ### CSS / Styling
@@ -220,10 +249,11 @@ Welcome, GSSoC'26 participants! 🧡
 
 Before picking up an issue:
 
-1. Read the [GSSoC Contribution Guide](./gssoc26/Readme.md)
+1. Read the [GSSoC Contribution Guide](https://github.com/Varunshiyam/QUICK-PLATE-CRM/tree/main/gssoc26)
 2. Comment on the issue asking to be assigned — **don't submit PRs for unassigned issues**
 3. One issue per contributor at a time
 4. Issues labeled `level:beginner` are great starting points
+5. Always target the **`Gssoc-Dev`** branch in your PRs
 
 ### Point System
 

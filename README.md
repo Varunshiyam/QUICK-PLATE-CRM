@@ -1,20 +1,12 @@
-<div align="center">
-
 # 🚀 QuickPlate
 
 ### Lightning-Fast Food Delivery Platform
 
 *Revolutionizing quick commerce with real-time ordering and intelligent delivery*
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![React](https://img.shields.io/badge/React-18.x-61DAFB?logo=react)](https://reactjs.org/)
-[![Salesforce](https://img.shields.io/badge/Salesforce-CRM-00A1E0?logo=salesforce)](https://www.salesforce.com/)
-[![Firebase](https://img.shields.io/badge/Firebase-Auth-FFCA28?logo=firebase)](https://firebase.google.com/)
-[![Stripe](https://img.shields.io/badge/Stripe-Payments-008CDD?logo=stripe)](https://stripe.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![React](https://img.shields.io/badge/React-18.x-61DAFB?logo=react)](https://reactjs.org/) [![Salesforce](https://img.shields.io/badge/Salesforce-CRM-00A1E0?logo=salesforce)](https://www.salesforce.com/) [![Firebase](https://img.shields.io/badge/Firebase-Auth-FFCA28?logo=firebase)](https://firebase.google.com/) [![Stripe](https://img.shields.io/badge/Stripe-Payments-008CDD?logo=stripe)](https://stripe.com/)
 
 [Features](#-key-features) • [Architecture](#-architecture) • [Getting Started](#-getting-started) • [API Documentation](#-api-reference) • [Contributing](#-contributing)
-
-</div>
 
 ---
 
@@ -30,7 +22,7 @@
 - [Core Workflows](#-core-workflows)
 - [API Reference](#-api-reference)
 - [Installation & Setup](#-getting-started)
-- [Environment Configuration](#-environment-configuration)
+- [Environment Configuration](#️-environment-configuration)
 - [Deployment](#-deployment)
 - [Contributing](#-contributing)
 - [License](#-license)
@@ -40,25 +32,13 @@
 
 ## 🌟 GSSoC'26 Contributions
 
-<div align="center">
-
-
 ### 🔥 GirlScript Summer of Code 2026 — Season Open 🔥
 
-![GSSoC 2026](https://img.shields.io/badge/GSSoC'26-Open%20For%20Contributions-FF6600?style=for-the-badge&logo=github&logoColor=white)
-![Season](https://img.shields.io/badge/Season-2026-FF8C00?style=for-the-badge&logoColor=white)
-![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge&logoColor=white)
+[![GSSoC 2026](https://img.shields.io/badge/GSSoC'26-Open%20For%20Contributions-FF6600?logo=github&logoColor=white)](https://github.com/Varunshiyam/QUICK-PLATE-CRM)
 
-**Welcome to QuickPlate's GSSoC'26 program!** 🧡 
+**Welcome to QuickPlate's GSSoC'26 program!** 🧡
 
-# 👇🏽
-
-
-</div>
-
-
-🔗 **[GSSoC'26 Contribution Guide](./gssoc26/Readme.md)**
-
+🔗 **[GSSoC'26 Contribution Guide](https://github.com/Varunshiyam/QUICK-PLATE-CRM/blob/main/gssoc26/Readme.md)**
 > 📌 If you're a contributor, please start from the guide above before raising issues or PRs.
 
 ---
@@ -83,91 +63,25 @@ To create the fastest, most reliable food delivery experience by leveraging cutt
 
 ## ✨ Key Features
 
-<table>
-<tr>
-<td width="50%">
-
-### 🎨 Customer UI-Experience
-- **Google OAuth Integration** - One-click authentication
-- **Smart Restaurant Discovery** - Location-based filtering
-- **Real-Time Order Tracking** - Live status updates
-- **Seamless Checkout** - Stripe-powered payments
-- **Instant Notifications** - Order status alerts
-- **Easy Refund Process** - Structured support workflow
-
-</td>
-<td width="50%">
-
-### ⚙️ Platform Capabilities
-- **Automated Delivery Assignment** - Intelligent agent matching
-- **Dynamic Workload Balancing** - Optimized agent utilization
-- **Multi-City Support** - Scalable geographic expansion
-- **Webhook Integration** - Real-time payment processing
-- **CRM Business Rules** - Centralized logic enforcement
-- **Audit Trail** - Complete transaction history
-
-</td>
-</tr>
-</table>
+| 🎨 Customer UI-Experience | ⚙️ Platform Capabilities |
+|---------------------------|--------------------------|
+| **Google OAuth Integration** - One-click authentication | **Automated Delivery Assignment** - Intelligent agent matching |
+| **Smart Restaurant Discovery** - Location-based filtering | **Dynamic Workload Balancing** - Optimized agent utilization |
+| **Real-Time Order Tracking** - Live status updates | **Multi-City Support** - Scalable geographic expansion |
+| **Seamless Checkout** - Stripe-powered payments | **Webhook Integration** - Real-time payment processing |
+| **Instant Notifications** - Order status alerts | **CRM Business Rules** - Centralized logic enforcement |
+| **Easy Refund Process** - Structured support workflow | **Audit Trail** - Complete transaction history |
 
 ---
 
 ## 🏗️ System Architecture
 
-QuickPlate follows a **modern frontend-first architecture** with a centralized enterprise backend:
-
-```mermaid
-graph TB
-    subgraph "Client Layer"
-        A[React SPA]
-        B[Firebase Auth]
-    end
-    
-    subgraph "API Gateway"
-        C[Apex REST APIs]
-        D[Webhook Endpoints]
-    end
-    
-    subgraph "Business Logic Layer"
-        E[Salesforce CRM]
-        F[Process Automation]
-        G[Workflow Rules]
-    end
-    
-    subgraph "External Services"
-        H[Stripe Payment Gateway]
-        I[Google OAuth]
-    end
-    
-    subgraph "Data Layer"
-        J[(Customer Data)]
-        K[(Order Management)]
-        L[(Restaurant Catalog)]
-        M[(Delivery Ops)]
-    end
-    
-    A --> B
-    A --> C
-    B --> I
-    C --> E
-    H --> D
-    D --> E
-    E --> F
-    E --> G
-    E --> J
-    E --> K
-    E --> L
-    E --> M
-    
-    style A fill:#61DAFB,stroke:#333,stroke-width:2px
-    style E fill:#00A1E0,stroke:#333,stroke-width:2px
-    style H fill:#008CDD,stroke:#333,stroke-width:2px
-```
+QuickPlate follows a **modern frontend-first architecture** with a centralized enterprise backend.
 
 ### 🔄 Architecture Principles
 
 | Layer | Responsibility | Technology |
-|-------|---------------|------------|
+| --- | --- | --- |
 | **Presentation** | UI/UX, User Interactions | React 18.x, TailwindCSS |
 | **Authentication** | Identity & Access Management | Firebase Authentication |
 | **API Gateway** | Request Routing, Validation | Salesforce Apex REST |
@@ -179,28 +93,17 @@ graph TB
 
 ## 💻 Technology Stack
 
-<div align="center">
-
 ### Frontend Technologies
 
-![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![TailwindCSS](https://img.shields.io/badge/Tailwind-3.x-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Firebase](https://img.shields.io/badge/Firebase-10.x-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+[![React](https://img.shields.io/badge/React-18.2.0-61DAFB?logo=react&logoColor=white)](https://reactjs.org/) [![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript) [![TailwindCSS](https://img.shields.io/badge/Tailwind-3.x-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/) [![Firebase](https://img.shields.io/badge/Firebase-10.x-FFCA28?logo=firebase&logoColor=black)](https://firebase.google.com/)
 
 ### Backend Technologies
 
-![Salesforce](https://img.shields.io/badge/Salesforce-API_v59-00A1E0?style=for-the-badge&logo=salesforce&logoColor=white)
-![Apex](https://img.shields.io/badge/Apex-REST_APIs-00A1E0?style=for-the-badge&logo=salesforce&logoColor=white)
-![SOQL](https://img.shields.io/badge/SOQL-Database-00A1E0?style=for-the-badge&logo=salesforce&logoColor=white)
+[![Salesforce](https://img.shields.io/badge/Salesforce-API_v59-00A1E0?logo=salesforce&logoColor=white)](https://www.salesforce.com/) [![Apex](https://img.shields.io/badge/Apex-REST_APIs-00A1E0?logo=salesforce&logoColor=white)](https://developer.salesforce.com/) [![SOQL](https://img.shields.io/badge/SOQL-Database-00A1E0?logo=salesforce&logoColor=white)](https://developer.salesforce.com/)
 
 ### Integration & Services
 
-![Stripe](https://img.shields.io/badge/Stripe-Latest-008CDD?style=for-the-badge&logo=stripe&logoColor=white)
-![REST](https://img.shields.io/badge/REST-APIs-009688?style=for-the-badge&logo=fastapi&logoColor=white)
-![Webhooks](https://img.shields.io/badge/Webhooks-Real--time-FF6B6B?style=for-the-badge&logo=webhook&logoColor=white)
-
-</div>
+[![Stripe](https://img.shields.io/badge/Stripe-Latest-008CDD?logo=stripe&logoColor=white)](https://stripe.com/) [![REST](https://img.shields.io/badge/REST-APIs-009688?logo=fastapi&logoColor=white)](https://restfulapi.net/) [![Webhooks](https://img.shields.io/badge/Webhooks-Real--time-FF6B6B?logo=webhook&logoColor=white)](https://stripe.com/docs/webhooks)
 
 ---
 
@@ -251,12 +154,9 @@ The platform uses a **normalized relational model** within Salesforce CRM:
 │ Onboarded__c     │       │ Cuisine_Type__c  │       │ Max_Orders__c    │
 └────────┬─────────┘       └────────┬─────────┘       └────────┬─────────┘
          │                          │                          │
-         │                          │                          │
          │         ┌────────────────┴──────────────┐          │
-         │         │                                │          │
          │         │         Order__c               │          │
          └─────────┤                                ├──────────┘
-                   ├────────────────────────────────┤
                    │ Customer__c (Lookup)           │
                    │ Restaurant__c (Lookup)         │
                    │ Delivery_Agent__c (Lookup)     │
@@ -281,11 +181,10 @@ The platform uses a **normalized relational model** within Salesforce CRM:
 
 ### 🗃️ Object Definitions
 
-<details>
-<summary><b>Customer__c</b> - Customer profiles and authentication</summary>
+**Customer__c - Customer profiles and authentication**
 
 | Field | Type | Description |
-|-------|------|-------------|
+| --- | --- | --- |
 | `Firebase_UID__c` | Text(128) | Unique Firebase identifier |
 | `Name` | Text(80) | Customer full name |
 | `Email__c` | Email | Primary email address |
@@ -294,13 +193,10 @@ The platform uses a **normalized relational model** within Salesforce CRM:
 | `City__c` | Picklist | Service city |
 | `Onboarded__c` | Checkbox | Profile completion status |
 
-</details>
-
-<details>
-<summary><b>Restaurant__c</b> - Restaurant catalog and metadata</summary>
+**Restaurant__c - Restaurant catalog and metadata**
 
 | Field | Type | Description |
-|-------|------|-------------|
+| --- | --- | --- |
 | `Name` | Text(80) | Restaurant name |
 | `City__c` | Picklist | Operating city |
 | `Prep_Time__c` | Number | Average preparation time (minutes) |
@@ -308,13 +204,10 @@ The platform uses a **normalized relational model** within Salesforce CRM:
 | `Cuisine_Type__c` | Multi-Picklist | Cuisine categories |
 | `Rating__c` | Number(3,2) | Average customer rating |
 
-</details>
-
-<details>
-<summary><b>Order__c</b> - Order lifecycle management</summary>
+**Order__c - Order lifecycle management**
 
 | Field | Type | Description |
-|-------|------|-------------|
+| --- | --- | --- |
 | `Customer__c` | Lookup(Customer__c) | Order owner |
 | `Restaurant__c` | Lookup(Restaurant__c) | Restaurant reference |
 | `Delivery_Agent__c` | Lookup(DeliveryAgent__c) | Assigned agent |
@@ -323,20 +216,15 @@ The platform uses a **normalized relational model** within Salesforce CRM:
 | `Total_Amount__c` | Currency | Order total |
 | `Order_Time__c` | DateTime | Order placement timestamp |
 
-</details>
-
-<details>
-<summary><b>PaymentTransaction__c</b> - Payment records and reconciliation</summary>
+**PaymentTransaction__c - Payment records and reconciliation**
 
 | Field | Type | Description |
-|-------|------|-------------|
+| --- | --- | --- |
 | `Order__c` | Lookup(Order__c) | Associated order |
 | `Amount__c` | Currency | Transaction amount |
 | `Stripe_ID__c` | Text(255) | Stripe transaction ID |
 | `Status__c` | Picklist | PENDING, SUCCESS, FAILED, REFUNDED |
 | `Transaction_Time__c` | DateTime | Payment timestamp |
-
-</details>
 
 ---
 
@@ -346,40 +234,26 @@ QuickPlate implements a **multi-layered security architecture**:
 
 ### 🔑 Authentication Flow
 
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant R as React App
-    participant F as Firebase
-    participant A as Apex API
-    participant S as Salesforce CRM
-
-    U->>R: Click "Sign in with Google"
-    R->>F: Initiate OAuth
-    F->>U: Google Login Page
-    U->>F: Enter Credentials
-    F->>R: Return ID Token
-    R->>A: API Call + ID Token
-    A->>F: Verify Token
-    F->>A: Token Valid + UID
-    A->>S: Query Customer by UID
-    
-    alt Customer Exists
-        S->>A: Customer Record
-        A->>R: Login Success + Profile
-    else New Customer
-        A->>S: Create Customer Record
-        S->>A: New Customer Created
-        A->>R: Account Created + Onboarding Required
-    end
-    
-    R->>U: Redirect to Dashboard/Onboarding
+```text
+User → React App → Firebase (Google OAuth) → Apex API → Salesforce CRM
+                                                ↓
+                                        Verify Token
+                                                ↓
+                                    Query Customer by UID
+                                                ↓
+                              ┌─────────────────┴─────────────────┐
+                              │                                   │
+                      [Customer Exists]                   [New Customer]
+                              │                                   │
+                      Login Success                    Create Customer Record
+                              │                                   │
+                      Return Profile                  Redirect to Onboarding
 ```
 
 ### 🛡️ Security Layers
 
 | Layer | Implementation | Purpose |
-|-------|----------------|---------|
+| --- | --- | --- |
 | **Client Authentication** | Firebase ID Tokens | Verify user identity |
 | **API Authorization** | Token validation in Apex | Prevent unauthorized access |
 | **Data Access Control** | Salesforce Sharing Rules | Row-level security |
@@ -395,27 +269,21 @@ sequenceDiagram
 global class OrderAPI {
     @HttpPost
     global static Response createOrder() {
-        // 1. Extract Firebase ID token from header
         String idToken = RestContext.request.headers.get('Authorization');
-        
-        // 2. Validate token and get Firebase UID
         String firebaseUID = FirebaseAuthService.validateToken(idToken);
-        
+
         if (String.isBlank(firebaseUID)) {
             return new Response(401, 'Unauthorized');
         }
-        
-        // 3. Query customer by UID (prevents cross-user access)
+
         Customer__c customer = [
-            SELECT Id, Name, Onboarded__c 
-            FROM Customer__c 
-            WHERE Firebase_UID__c = :firebaseUID 
+            SELECT Id, Name, Onboarded__c
+            FROM Customer__c
+            WHERE Firebase_UID__c = :firebaseUID
             LIMIT 1
         ];
-        
-        // 4. Process order for authenticated customer only
+
         Order__c order = createOrderForCustomer(customer.Id);
-        
         return new Response(200, order);
     }
 }
@@ -428,10 +296,6 @@ global class OrderAPI {
 ### 1️⃣ Customer Onboarding
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    ONBOARDING WORKFLOW                       │
-└─────────────────────────────────────────────────────────────┘
-
 [Google Login] → [Token Verified] → [Customer Created]
                                             ↓
                                     [Check Profile]
@@ -444,55 +308,17 @@ global class OrderAPI {
                                                             ↓
                                                 [Collect: Name, Phone, Address]
                                                             ↓
-                                                    [Update Customer]
-                                                            ↓
                                                 [Set Onboarded = TRUE]
                                                             ↓
                                                     [Access Platform]
 ```
 
-**API Endpoint**: `POST /api/v1/customer/onboard`
-
-**Required Fields**:
-- Name (Text, max 80 characters)
-- Phone (E.164 format)
-- Address (Complete street address)
-- City (From supported cities list)
-
----
-
 ### 2️⃣ Order Creation & Payment
-
-```mermaid
-stateDiagram-v2
-    [*] --> BrowseRestaurants: User Authenticated
-    BrowseRestaurants --> SelectRestaurant: Choose Restaurant
-    SelectRestaurant --> CreateOrder: Initiate Order
-    CreateOrder --> PaymentPending: Order Created
-    
-    PaymentPending --> StripeCheckout: Redirect to Stripe
-    StripeCheckout --> PaymentProcessing: User Completes Payment
-    
-    PaymentProcessing --> PaymentSuccess: Payment Successful
-    PaymentProcessing --> PaymentFailed: Payment Failed
-    
-    PaymentSuccess --> WebhookReceived: Stripe Webhook
-    WebhookReceived --> UpdateOrder: Update Transaction
-    UpdateOrder --> OrderConfirmed: Status: CONFIRMED
-    
-    OrderConfirmed --> AssignAgent: Trigger Assignment
-    AssignAgent --> OrderAssigned: Agent Assigned
-    OrderAssigned --> InDelivery: Out for Delivery
-    InDelivery --> Delivered: Order Delivered
-    Delivered --> [*]
-    
-    PaymentFailed --> PaymentPending: Retry Payment
-```
 
 **Order States**:
 
 | Status | Description | Payment Status |
-|--------|-------------|----------------|
+| --- | --- | --- |
 | `PAYMENT_PENDING` | Order created, awaiting payment | `UNPAID` |
 | `CONFIRMED` | Payment successful, order confirmed | `PAID` |
 | `ASSIGNED` | Delivery agent assigned | `PAID` |
@@ -500,16 +326,12 @@ stateDiagram-v2
 | `DELIVERED` | Order completed | `PAID` |
 | `CANCELLED` | Order cancelled | `UNPAID` or `REFUNDED` |
 
----
-
 ### 3️⃣ Automated Delivery Assignment
 
 **Algorithm**: Intelligent agent matching based on availability and workload
 
 ```apex
-// Simplified assignment logic
 public static DeliveryAgent__c assignDeliveryAgent(Order__c order) {
-    // Query available agents in order's city
     List<DeliveryAgent__c> availableAgents = [
         SELECT Id, Name, Workload__c, Max_Orders__c
         FROM DeliveryAgent__c
@@ -519,21 +341,19 @@ public static DeliveryAgent__c assignDeliveryAgent(Order__c order) {
         ORDER BY Workload__c ASC
         LIMIT 1
     ];
-    
+
     if (availableAgents.isEmpty()) {
         throw new NoAgentAvailableException();
     }
-    
+
     DeliveryAgent__c agent = availableAgents[0];
-    
-    // Update order and agent
     order.Delivery_Agent__c = agent.Id;
     order.Order_Status__c = 'ASSIGNED';
     update order;
-    
+
     agent.Workload__c += 1;
     update agent;
-    
+
     return agent;
 }
 ```
@@ -543,8 +363,6 @@ public static DeliveryAgent__c assignDeliveryAgent(Order__c order) {
 2. ✅ Currently available
 3. ✅ Below maximum order capacity
 4. ✅ Lowest current workload
-
----
 
 ### 4️⃣ Refund & Support Workflow
 
@@ -557,48 +375,51 @@ Customer Request → Support Ticket Created → Agent Review
                                 │                                   │
                           [Approved]                           [Rejected]
                                 │                                   │
-                    Finance Team Notified                    Notify Customer
-                                │                                   │
-                    Process Refund via Stripe              Close Ticket
+                    Process Refund via Stripe              Notify Customer
                                 │
                     Update Payment Status → REFUNDED
                                 │
                     Update Order Status → CANCELLED
-                                │
-                    Notify Customer
 ```
-
-**API Endpoints**:
-- `POST /api/v1/support/ticket` - Create support ticket
-- `PUT /api/v1/support/ticket/{id}/approve` - Approve refund
-- `PUT /api/v1/support/ticket/{id}/reject` - Reject refund
 
 ---
 
 ## 🔌 API Reference
 
 ### Base URL
-```
-Production: https://quickplate.my.salesforce-sites.com/services/apexrest
+
+```text
+Production:  https://quickplate.my.salesforce-sites.com/services/apexrest
 Development: https://quickplate--dev.sandbox.my.salesforce-sites.com/services/apexrest
 ```
 
 ### Authentication Header
+
 ```http
 Authorization: Bearer <FIREBASE_ID_TOKEN>
 Content-Type: application/json
 ```
 
----
+### 📋 Quick Reference Table
 
-### 📍 Endpoints
+| Method | Path | Description | Auth Required |
+|--------|------|-------------|:---:|
+| `POST` | `/api/v1/customer/onboard` | Complete customer profile setup | ✅ |
+| `GET` | `/api/v1/restaurants` | List all active restaurants | ✅ |
+| `GET` | `/api/v1/restaurants?city={city}` | Filter restaurants by city | ✅ |
+| `POST` | `/api/v1/orders` | Create a new order | ✅ |
+| `GET` | `/api/v1/orders/{orderId}` | Get order details and status | ✅ |
+| `GET` | `/api/v1/orders` | List all orders for current user | ✅ |
+| `POST` | `/api/v1/support/ticket` | Submit a refund or support request | ✅ |
+| `PUT` | `/api/v1/support/ticket/{id}/approve` | Approve refund (admin only) | ✅ |
+| `PUT` | `/api/v1/support/ticket/{id}/reject` | Reject refund (admin only) | ✅ |
+| `POST` | `/webhook/stripe` | Stripe payment event webhook | 🔑 Stripe Sig |
 
-<details>
-<summary><b>POST</b> /api/v1/customer/onboard</summary>
+### 📍 Detailed Endpoints
 
-**Description**: Complete customer onboarding
+**POST /api/v1/customer/onboard**
 
-**Request Body**:
+Request Body:
 ```json
 {
   "name": "John Doe",
@@ -608,7 +429,7 @@ Content-Type: application/json
 }
 ```
 
-**Response** (200):
+Response (200):
 ```json
 {
   "success": true,
@@ -622,18 +443,13 @@ Content-Type: application/json
 }
 ```
 
-</details>
+**GET /api/v1/restaurants**
 
-<details>
-<summary><b>GET</b> /api/v1/restaurants</summary>
-
-**Description**: Fetch active restaurants
-
-**Query Parameters**:
+Query Parameters:
 - `city` (optional): Filter by city
 - `cuisine` (optional): Filter by cuisine type
 
-**Response** (200):
+Response (200):
 ```json
 {
   "success": true,
@@ -651,29 +467,20 @@ Content-Type: application/json
 }
 ```
 
-</details>
+**POST /api/v1/orders**
 
-<details>
-<summary><b>POST</b> /api/v1/orders</summary>
-
-**Description**: Create new order
-
-**Request Body**:
+Request Body:
 ```json
 {
   "restaurantId": "a025g000001XyZwXYZ",
   "items": [
-    {
-      "name": "Margherita Pizza",
-      "quantity": 2,
-      "price": 299
-    }
+    { "name": "Margherita Pizza", "quantity": 2, "price": 299 }
   ],
   "totalAmount": 598
 }
 ```
 
-**Response** (201):
+Response (201):
 ```json
 {
   "success": true,
@@ -688,14 +495,9 @@ Content-Type: application/json
 }
 ```
 
-</details>
+**GET /api/v1/orders/{orderId}**
 
-<details>
-<summary><b>GET</b> /api/v1/orders/{orderId}</summary>
-
-**Description**: Get order details and status
-
-**Response** (200):
+Response (200):
 ```json
 {
   "success": true,
@@ -703,14 +505,8 @@ Content-Type: application/json
     "id": "a035g000002PqRsTUV",
     "orderStatus": "IN_DELIVERY",
     "paymentStatus": "PAID",
-    "restaurant": {
-      "name": "Tasty Bites",
-      "city": "Bangalore"
-    },
-    "deliveryAgent": {
-      "name": "Ravi Kumar",
-      "phone": "+919876543210"
-    },
+    "restaurant": { "name": "Tasty Bites", "city": "Bangalore" },
+    "deliveryAgent": { "name": "Ravi Kumar", "phone": "+919876543210" },
     "totalAmount": 598,
     "orderTime": "2024-01-15T10:30:00Z",
     "estimatedDelivery": "2024-01-15T11:00:00Z"
@@ -718,14 +514,9 @@ Content-Type: application/json
 }
 ```
 
-</details>
+**POST /api/v1/support/ticket**
 
-<details>
-<summary><b>POST</b> /api/v1/support/ticket</summary>
-
-**Description**: Create support ticket for refund
-
-**Request Body**:
+Request Body:
 ```json
 {
   "orderId": "a035g000002PqRsTUV",
@@ -734,7 +525,7 @@ Content-Type: application/json
 }
 ```
 
-**Response** (201):
+Response (201):
 ```json
 {
   "success": true,
@@ -747,69 +538,71 @@ Content-Type: application/json
 }
 ```
 
-</details>
-
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-```bash
-Node.js >= 18.x
-npm >= 9.x
-Salesforce Developer Account
-Firebase Project
-Stripe Account
-```
+Make sure you have the following installed:
+
+| Tool | Version | Download |
+|------|---------|----------|
+| Node.js | >= 18.x | [nodejs.org](https://nodejs.org) |
+| npm | >= 9.x | Comes with Node.js |
+| Git | Latest | [git-scm.com](https://git-scm.com) |
+
+You also need accounts on:
+- [Firebase](https://firebase.google.com/) — for Google OAuth authentication
+- [Salesforce Developer Edition](https://developer.salesforce.com/signup) — for the CRM backend
+- [Stripe](https://stripe.com/) — for payment processing
 
 ### Installation
 
-1. **Clone the repository**
+**Step 1 — Fork the repository**
+
+Go to [github.com/Varunshiyam/QUICK-PLATE-CRM](https://github.com/Varunshiyam/QUICK-PLATE-CRM) and click **Fork** (top right).
+
+**Step 2 — Clone your fork**
+
 ```bash
-git clone https://github.com/yourusername/quickplate.git
-cd quickplate
+git clone https://github.com/YOUR_USERNAME/QUICK-PLATE-CRM.git
+cd QUICK-PLATE-CRM
 ```
 
-2. **Install dependencies**
+**Step 3 — Add upstream remote**
+
+```bash
+git remote add upstream https://github.com/Varunshiyam/QUICK-PLATE-CRM.git
+```
+
+**Step 4 — Navigate to the frontend**
+
+```bash
+cd frontend-WEB
+```
+
+**Step 5 — Install dependencies**
+
 ```bash
 npm install
 ```
 
-3. **Configure environment variables**
+**Step 6 — Set up environment variables**
+
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` with your credentials:
-```env
-# Firebase Configuration
-REACT_APP_FIREBASE_API_KEY=your_api_key
-REACT_APP_FIREBASE_AUTH_DOMAIN=your_domain
-REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+Open `.env` and fill in your credentials (see [Environment Configuration](#️-environment-configuration) below).
 
-# Salesforce API
-REACT_APP_SF_API_BASE_URL=https://your-instance.salesforce.com
+**Step 7 — Start the development server**
 
-# Stripe
-REACT_APP_STRIPE_PUBLIC_KEY=pk_test_your_key
-```
-
-4. **Deploy Salesforce Metadata**
 ```bash
-# Login to Salesforce
-sfdx auth:web:login -a QuickPlate
-
-# Deploy custom objects and Apex classes
-sfdx force:source:deploy -p force-app/main/default
+npm run dev
 ```
 
-5. **Start development server**
-```bash
-npm start
-```
-
-Visit `http://localhost:3000` 🎉
+Visit `http://localhost:5173` 🎉
 
 ---
 
@@ -817,52 +610,57 @@ Visit `http://localhost:3000` 🎉
 
 ### Frontend (.env)
 
+Copy `frontend-WEB/.env.example` to `frontend-WEB/.env` and fill in your values:
+
 ```env
-# Firebase
-REACT_APP_FIREBASE_API_KEY=
-REACT_APP_FIREBASE_AUTH_DOMAIN=
-REACT_APP_FIREBASE_PROJECT_ID=
-REACT_APP_FIREBASE_STORAGE_BUCKET=
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=
-REACT_APP_FIREBASE_APP_ID=
+# ── Firebase Configuration ─────────────────────────────────────
+VITE_FIREBASE_API_KEY=your_firebase_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+VITE_FIREBASE_APP_ID=your_firebase_app_id
 
-# Salesforce
-REACT_APP_SF_API_BASE_URL=
-REACT_APP_SF_SITE_URL=
+# ── Salesforce API ─────────────────────────────────────────────
+VITE_SF_API_BASE_URL=https://your-instance.salesforce-sites.com/services/apexrest
+VITE_SF_SITE_URL=https://your-instance.salesforce-sites.com
 
-# Stripe
-REACT_APP_STRIPE_PUBLIC_KEY=
+# ── Stripe Payments ────────────────────────────────────────────
+VITE_STRIPE_PUBLIC_KEY=pk_test_your_stripe_publishable_key
 
-# Environment
-REACT_APP_ENV=development
+# ── App Config ─────────────────────────────────────────────────
+VITE_APP_ENV=development
 ```
+
+### Where to find each value
+
+| Variable | Where to Find |
+|----------|--------------|
+| `VITE_FIREBASE_*` | Firebase Console → Project Settings → General → Your apps |
+| `VITE_SF_API_BASE_URL` | Salesforce Setup → Sites → your site URL |
+| `VITE_STRIPE_PUBLIC_KEY` | Stripe Dashboard → Developers → API Keys |
+
+> ⚠️ **Never commit your `.env` file.** It is already listed in `.gitignore`.
 
 ### Backend (Salesforce)
 
 Configure Custom Settings:
 - Navigate to **Setup → Custom Settings**
 - Create **QuickPlate_Config__c**
-- Add fields:
-  - `Stripe_Secret_Key__c`
-  - `Stripe_Webhook_Secret__c`
-  - `Firebase_Project_ID__c`
-  - `Max_Delivery_Agent_Workload__c`
+- Add fields: `Stripe_Secret_Key__c`, `Stripe_Webhook_Secret__c`, `Firebase_Project_ID__c`, `Max_Delivery_Agent_Workload__c`
 
 ---
 
 ## 📦 Deployment
 
-### Frontend Deployment (Vercel/Netlify)
+### Frontend Deployment (Firebase Hosting)
 
 ```bash
 # Build production bundle
 npm run build
 
-# Deploy to Vercel
-vercel --prod
-
-# Or deploy to Netlify
-netlify deploy --prod --dir=build
+# Deploy to Firebase
+firebase deploy
 ```
 
 ### Backend Deployment (Salesforce)
@@ -879,10 +677,7 @@ sfdx force:user:permset:assign -n QuickPlate_Customer_Access -u user@email.com
 
 1. Go to Stripe Dashboard → Webhooks
 2. Add endpoint: `https://your-salesforce-site.com/services/apexrest/webhook/stripe`
-3. Select events:
-   - `checkout.session.completed`
-   - `payment_intent.succeeded`
-   - `payment_intent.payment_failed`
+3. Select events: `checkout.session.completed`, `payment_intent.succeeded`, `payment_intent.payment_failed`
 
 ---
 
@@ -899,7 +694,7 @@ sfdx force:user:permset:assign -n QuickPlate_Customer_Access -u user@email.com
 ### Scalability Metrics
 
 | Metric | Target | Current |
-|--------|--------|---------|
+| --- | --- | --- |
 | API Response Time | < 200ms | 150ms avg |
 | Order Processing | < 2s | 1.8s avg |
 | Concurrent Users | 10,000+ | Tested to 15,000 |
@@ -927,7 +722,6 @@ npm run test:coverage
 ### Salesforce Testing
 
 ```bash
-# Run Apex tests
 sfdx force:apex:test:run -n OrderAPITest,PaymentServiceTest -r human
 ```
 
@@ -935,12 +729,12 @@ sfdx force:apex:test:run -n OrderAPITest,PaymentServiceTest -r human
 
 ## 🤝 Contributing
 
-We welcome contributions! Please follow these guidelines:
+We welcome contributions! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) before starting.
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+2. Create a feature branch (`git checkout -b feat/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feat/amazing-feature`)
 5. Open a Pull Request
 
 ### Code Style
@@ -950,23 +744,21 @@ We welcome contributions! Please follow these guidelines:
 - Write meaningful commit messages
 - Add tests for new features
 
+> 📌 GSSoC'26 contributors — start from the [GSSoC Contribution Guide](./gssoc26/Readme.md) first!
+
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/Varunshiyam/QUICK-PLATE-CRM/blob/main/LICENSE) file for details.
 
 ---
 
 ## 💬 Support
 
-<div align="center">
-
 **Need Help?**
 
 [📧 Email Support](mailto:support@quickplate.com) • [💬 Discord Community](https://discord.gg/quickplate) • [📚 Documentation](https://docs.quickplate.com)
-
-</div>
 
 ---
 
@@ -979,12 +771,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-<div align="center">
-
 **Built with ❤️ by the QuickPlate Team**
 
 ⭐ Star us on GitHub — it helps!
 
-[Website](https://quickplate.com) • [Blog](https://blog.quickplate.com) • [Twitter](https://twitter.com/quickplate)
-
-</div>
+[Live Demo](https://quick-plate-crm.web.app/) • [GSSoC Dev](https://gssoc-quick-plate-crm.netlify.app/)

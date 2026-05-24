@@ -46,11 +46,13 @@ This Code of Conduct applies within all community spaces, including GitHub Issue
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the project maintainers at:
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported privately and confidentially to the project maintainer:
 
-📧 **[Open a GitHub Issue](https://github.com/Varunshiyam/QUICK-PLATE-CRM/issues)**
+📧 **conduct@quickplate.com** (private and confidential)
 
-All complaints will be reviewed and investigated promptly and fairly. All maintainers are obligated to respect the privacy and security of the reporter of any incident.
+You may also reach out directly to the project maintainer via GitHub: [@Varunshiyam](https://github.com/Varunshiyam)
+
+All complaints will be reviewed and investigated promptly and fairly. The identity of the reporter will be kept confidential throughout the process. All maintainers are obligated to respect the privacy and security of the reporter of any incident.
 
 ---
 
@@ -79,8 +81,6 @@ Maintainers will follow these Community Impact Guidelines in determining consequ
 ## Attribution
 
 This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org/), version 2.1, available at [https://www.contributor-covenant.org/version/2/1/code_of_conduct.html](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html).
-
-Community Impact Guidelines were inspired by [Mozilla's code of conduct enforcement ladder](https://github.com/mozilla/diversity).
 
 ---
 
