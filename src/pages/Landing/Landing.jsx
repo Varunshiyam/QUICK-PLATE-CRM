@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import useHaptic from '../../hooks/useHaptic';
 import './Landing.css';
 
@@ -81,7 +82,14 @@ const Landing = () => {
 
   const handleDownload = () => {
     lightTap();
-    // Will trigger app download
+    toast("The Quick Plate mobile application is currently in development! You can access all features directly through this web app.", {
+      icon: "📱",
+      style: {
+        background: '#2D3134',
+        color: '#fff',
+        fontFamily: 'Outfit, sans-serif',
+      }
+    });
   };
 
   return (
