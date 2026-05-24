@@ -56,10 +56,18 @@ const OnboardingDetails = () => {
         }
       },
       (err) => {
-      toast.error('Location denied. Please enter address manually.', { id: 'location-toast' });
-      setIsLocationLoading(false);
-      setManualEntry(true); // ← auto-switch to manual on denial
+        let message = 'Location access failed. Please enter address manually.';
+        if (err.code === 1) {
+          message = 'Location denied. Please enter address manually.';
+        } else if (err.code === 2) {
+          message = 'Location unavailable. Please enter address manually.';
+        } else if (err.code === 3) {
+          message = 'Location request timed out. Please enter address manually.';
       }
+  toast.error(message, { id: 'location-toast' });
+  setIsLocationLoading(false);
+  setManualEntry(true);
+}
     );
   };
 
@@ -88,16 +96,15 @@ if (!trimmedAddress) {
 }
 
 // Check if address is too short
-if (trimmedAddress.length < 10) {
-  toast.error('Please enter a complete address.');
+if (trimmedAddress.length < 15) {
+  toast.error('Please enter a more complete address.');
   return;
 }
 
-// Check for valid 6-digit Indian pincode
-const pincodeRegex = /\b\d{6}\b/;
-
-if (!pincodeRegex.test(trimmedAddress)) {
-  toast.error('Please include a valid 6-digit pincode in the address.');
+// Soft check — warn if address looks too vague
+const vaguePatterns = /^(home|house|flat|near|beside|opposite|behind|my home|my house)\s*$/i;
+if (vaguePatterns.test(trimmedAddress)) {
+  toast.error('Please enter a specific address with street/area details.');
   return;
 }
 
