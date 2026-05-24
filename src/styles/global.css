@@ -163,15 +163,18 @@
 }
 
 /* ─── Smooth theme transitions (applied briefly on toggle) ─── */
-html.theme-transition,
-html.theme-transition *,
-html.theme-transition *::before,
-html.theme-transition *::after {
+html.theme-transition body,
+html.theme-transition #root,
+html.theme-transition [class*="-page"],
+html.theme-transition [class*="-header"],
+html.theme-transition [class*="-nav"],
+html.theme-transition [class*="-card"],
+html.theme-transition [class*="-btn"] {
   transition:
     background-color var(--transition-base),
     color var(--transition-base),
     border-color var(--transition-base),
-    box-shadow var(--transition-base) !important;
+    box-shadow var(--transition-base);
 }
 
 /* ─── CSS Reset & Base ─── */
