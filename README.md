@@ -594,7 +594,7 @@ npm install
 cp .env.example .env
 ```
 
-Open `.env` and fill in your credentials (see [Environment Configuration](#️-environment-configuration) below).
+Open `.env` and fill in your credentials (see - [Environment Configuration](#-environment-configuration) below).
 
 **Step 7 — Start the development server**
 

@@ -123,13 +123,13 @@ refactor(orders): extract order status helper
 
 Before submitting a PR:
 
-- ✅ Your branch is up to date with `Gssoc-Dev`
 - ✅ Code follows the style standards below
 - ✅ No console.log statements left in code
 - ✅ PR title follows the commit message format
 - ✅ PR description mentions `Closes #issue_number`
 - ✅ Only files related to the issue are changed
-- ✅ Base branch is set to `Gssoc-Dev`
+- ✅ **GSSoC'26 contributors**: Base branch is set to `Gssoc-Dev`
+- ✅ **Regular contributors**: Base branch is set to `main`
 
 ### PR Description Template
 
