@@ -18,6 +18,7 @@ const ThemeToggle = ({ className = '' }) => {
       className={`theme-toggle ${className}`.trim()}
       onClick={handleToggle}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      aria-pressed={isDark}
       title={isDark ? 'Light mode' : 'Dark mode'}
     >
       <span className="material-symbols-outlined theme-toggle-icon" aria-hidden="true">
