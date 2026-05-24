@@ -84,7 +84,7 @@
 }
 
 .landing-nav-link.active::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -4px;
   left: 50%;
@@ -189,7 +189,7 @@
 }
 
 .landing-circle-img-wrap::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.05);
@@ -287,7 +287,9 @@
   padding: 1.25rem 2rem;
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-primary);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
   width: 100%;
   text-align: center;
 }
@@ -310,7 +312,9 @@
   padding: 1.25rem 2rem;
   border-radius: var(--radius-2xl);
   border: 2px solid var(--color-gray-200);
-  transition: background var(--transition-fast), transform var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    transform var(--transition-fast);
   width: 100%;
   text-align: center;
 }
@@ -348,7 +352,7 @@
   width: 56px;
   height: 56px;
   min-width: 56px;
-  background: #FFF7ED;
+  background: #fff7ed;
   border-radius: var(--radius-2xl);
   display: flex;
   align-items: center;
@@ -424,4 +428,73 @@
   background: linear-gradient(to top, var(--color-bg), transparent);
   pointer-events: none;
   z-index: 0;
+}
+
+/* ─── Download App Modal ─── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 1.5rem;
+}
+
+.modal-box {
+  background: var(--color-white);
+  border-radius: var(--radius-3xl);
+  padding: 2rem 1.5rem;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-2xl);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.modal-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-weight: var(--fw-extrabold);
+  font-size: var(--fs-xl);
+  color: var(--color-slate-900);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.modal-subtitle {
+  font-size: var(--fs-sm);
+  color: var(--color-slate-500);
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+  max-width: 260px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.modal-store-btn .material-symbols-outlined {
+  font-size: 18px;
+  color: var(--color-primary);
+}
+
+.modal-close-btn {
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-base);
+  padding: 1rem 2rem;
+  border-radius: var(--radius-2xl);
+  border: none;
+  box-shadow: var(--shadow-primary);
+  cursor: pointer;
+  width: 100%;
 }
