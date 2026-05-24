@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 import useHaptic from '../../hooks/useHaptic';
 import './Tracking.css';
 
@@ -34,10 +35,14 @@ const Tracking = () => {
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [countdown, setCountdown] = useState(null);
+  const [error, setError] = useState(null);
 
   const pollingRef = useRef(null);
   const simIntervalRef = useRef(null);
   const isFetchingRef = useRef(false);
+  const failureCountRef = useRef(0);
+  const maxFailures = 10;
+  const orderStatus = order?.status;
 
   useEffect(() => {
     if (!orderId) return;
@@ -62,31 +67,68 @@ const Tracking = () => {
         }
 
         if (data) {
-          setOrder(prev => ({
-            ...(prev || {}),
-            id: data.orderId,
-            status: data.orderStatus,
-            agent: {
-              ...(prev?.agent || MOCK_ORDER.agent),
-              name: data.agent?.name || prev?.agent?.name || MOCK_ORDER.agent.name
-            },
-            estimatedTime: prev?.estimatedTime || MOCK_ORDER.estimatedTime,
-            statusText: prev?.statusText || MOCK_ORDER.statusText,
-            statusDesc: prev?.statusDesc || MOCK_ORDER.statusDesc
-          }));
+          failureCountRef.current = 0;
+          setError(null);
+
+          setOrder(prev => {
+            // Determine the agent object
+            let newAgent = null;
+            if (isMockMode) {
+              newAgent = data.agent;
+            } else if (data.agent) {
+               // Use the real agent from the backend, with some default placeholders for missing fields
+               newAgent = {
+                 name: data.agent.name || 'Delivery Agent',
+                 rating: data.agent.rating || 'New',
+                 vehicle: data.agent.vehicle || 'Bike',
+                 deliveries: 'N/A',
+                 image: 'https://cdn-icons-png.flaticon.com/512/3063/3063822.png' // Default avatar
+               };
+            }
+
+            return {
+              ...(prev || {}),
+              id: data.orderId || orderId,
+              status: data.orderStatus || 'PENDING',
+              agent: newAgent,
+              estimatedTime: prev?.estimatedTime || MOCK_ORDER.estimatedTime,
+              statusText: prev?.statusText || MOCK_ORDER.statusText,
+              statusDesc: prev?.statusDesc || MOCK_ORDER.statusDesc
+            };
+          });
 
           if (
             ['ASSIGNED','PICKED_UP','OUT_FOR_DELIVERY','DELIVERED','CANCELLED']
               .includes(data.orderStatus)
           ) {
-            if (pollingRef.current) {
-               clearInterval(pollingRef.current);
+            if (['DELIVERED','CANCELLED'].includes(data.orderStatus)) {
+              if (pollingRef.current) {
+                 clearInterval(pollingRef.current);
+              }
             }
           }
+        } else {
+          console.warn('Empty data received from tracking API');
         }
 
       } catch (err) {
+        isFetchingRef.current = false;
+        failureCountRef.current += 1;
         console.error('Tracking error:', err);
+
+        if (failureCountRef.current >= maxFailures) {
+          if (pollingRef.current) {
+            clearInterval(pollingRef.current);
+            pollingRef.current = null;
+          }
+
+          const errorMsg = err.response?.data?.message
+            || 'Unable to fetch tracking information. Please try again.';
+
+          toast.error(errorMsg);
+          setError('Tracking unavailable - Please contact support');
+          setLoading(false);
+        }
       } finally {
         isFetchingRef.current = false;
         setLoading(false);
@@ -110,10 +152,10 @@ const Tracking = () => {
 
   // Frontend simulation logic handling page refreshes
   useEffect(() => {
-    if (!order) return;
+    if (!orderStatus) return;
     
     // Check if it's DELIVERED
-    if (order.status === 'DELIVERED') {
+    if (orderStatus === 'DELIVERED') {
       const redirectTimer = setTimeout(() => {
         navigate('/orders');
       }, 3000);
@@ -121,7 +163,7 @@ const Tracking = () => {
     }
 
     // Only simulate if the backend status has reached ASSIGNED
-    if (['CONFIRMED', 'PREPARING', 'CANCELLED'].includes(order.status)) {
+    if (['CONFIRMED', 'PREPARING', 'CANCELLED'].includes(orderStatus)) {
       return;
     }
 
@@ -129,7 +171,7 @@ const Tracking = () => {
     let startTime = parseInt(localStorage.getItem(storageKey), 10);
     
     // First time we hit ASSIGNED, record start time
-    if (!startTime && order.status === 'ASSIGNED') {
+    if (!startTime && orderStatus === 'ASSIGNED') {
       startTime = Date.now();
       localStorage.setItem(storageKey, startTime.toString());
     }
@@ -189,7 +231,25 @@ const Tracking = () => {
 
       return () => clearInterval(simIntervalRef.current);
     }
-  }, [order?.status, orderId, navigate]);
+  }, [orderStatus, orderId, navigate]);
+
+  if (error) {
+    return (
+      <div className="track-loading-screen">
+        <div className="track-error-container">
+          <span className="material-symbols-outlined track-error-icon">error_outline</span>
+          <h3 className="track-error-title">Tracking Unavailable</h3>
+          <p className="track-error-message">{error}</p>
+          <button
+            className="track-retry-btn"
+            onClick={() => window.location.reload()}
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (loading || !order) {
     return (
