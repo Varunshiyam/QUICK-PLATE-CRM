@@ -17,7 +17,7 @@ const OnboardingDetails = () => {
   const [address, setAddress] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLocationLoading, setIsLocationLoading] = useState(false);
-
+  const [manualEntry, setManualEntry] = useState(false);
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, '');
 
   const handleChange = (e) => {
@@ -56,8 +56,9 @@ const OnboardingDetails = () => {
         }
       },
       (err) => {
-        toast.error('Failed to get location. Please allow permissions.', { id: 'location-toast' });
-        setIsLocationLoading(false);
+      toast.error('Location denied. Please enter address manually.', { id: 'location-toast' });
+      setIsLocationLoading(false);
+      setManualEntry(true); // ← auto-switch to manual on denial
       }
     );
   };
@@ -78,10 +79,27 @@ const OnboardingDetails = () => {
       return;
     }
 
-    if (!address) {
-      toast.error('Please set your delivery address.');
-      return;
-    }
+    const trimmedAddress = address.trim();
+
+// Check if address is empty
+if (!trimmedAddress) {
+  toast.error('Please enter your delivery address.');
+  return;
+}
+
+// Check if address is too short
+if (trimmedAddress.length < 10) {
+  toast.error('Please enter a complete address.');
+  return;
+}
+
+// Check for valid 6-digit Indian pincode
+const pincodeRegex = /\b\d{6}\b/;
+
+if (!pincodeRegex.test(trimmedAddress)) {
+  toast.error('Please include a valid 6-digit pincode in the address.');
+  return;
+}
 
     const currentUser = auth.currentUser;
     if (!currentUser) {
@@ -99,7 +117,7 @@ const OnboardingDetails = () => {
         idToken,
         fullName: form.fullName.trim(),
         phone: form.phone.trim(),
-        address: address
+        address: trimmedAddress
       });
 
       const storedRaw = localStorage.getItem('quickplate_user');
@@ -166,6 +184,31 @@ const OnboardingDetails = () => {
             </div>
             <span className="material-symbols-outlined obd-chevron">chevron_right</span>
           </button>
+           <button
+            type="button"
+            className="obd-manual-toggle"
+            onClick={() => {
+              setManualEntry(!manualEntry);
+              if (manualEntry) setAddress(''); // clear manual address when switching back to GPS
+            }}
+          >
+            {manualEntry ? '📍 Use current location instead' : '✏️ Enter address manually'}
+          </button>
+
+        
+          {manualEntry && (
+            <div className="obd-input-box" style={{ marginTop: '0.75rem' }}>
+              <span className="material-symbols-outlined obd-input-icon">edit_location</span>
+              <input
+                className="obd-input"
+                type="text"
+                placeholder="e.g. 42 MG Road, Bangalore, Karnataka 560001"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                minLength={10}
+              />
+            </div>
+          )}
         </div>
 
         <div className="obd-form-group">

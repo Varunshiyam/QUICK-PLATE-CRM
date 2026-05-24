@@ -194,6 +194,19 @@
   transform: translateX(0.25rem);
 }
 
+.obd-manual-toggle {
+  background: none;
+  border: none;
+  color: #fb7e18;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.4rem 0;
+  text-align: left;
+  text-decoration: underline;
+  margin-top: 0.5rem;
+}
+
 /* Form Styles */
 
 .obd-form-group {
