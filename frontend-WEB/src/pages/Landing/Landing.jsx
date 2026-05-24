@@ -82,7 +82,7 @@ const Landing = () => {
   };
 
   return (
-    <>
+    <div className="landing-page">
       {/* ─── Glassmorphic Header ─── */}
       <header className="landing-header">
         <motion.nav
@@ -268,7 +268,7 @@ const Landing = () => {
 
       {/* Bottom gradient fade */}
       <div className="landing-bottom-fade" />
-    </>
+    </div>
   );
 };
 
