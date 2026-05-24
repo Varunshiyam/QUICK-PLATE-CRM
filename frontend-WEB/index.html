@@ -13,6 +13,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <title>Quick Plate — Food Delivery</title>
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem('quick-plate-theme');
+          document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
