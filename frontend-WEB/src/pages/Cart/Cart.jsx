@@ -549,8 +549,8 @@ const Cart = () => {
                 padding: "10px",
                 border: "1px solid black",
                 position: "absolute",
-                right: "10px",
-                top: "60px",
+                right: "0px",
+                top: "45px",
                 zIndex: 1000
               }}
             >
