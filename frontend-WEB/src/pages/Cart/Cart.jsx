@@ -532,13 +532,32 @@ const Cart = () => {
 
           </div>
 
-          <button className="cart-icon-btn">
+          <button className="cart-icon-btn"
+            onClick={() => setShowMenu(!showMenu)}
+          >
 
             <span className="material-symbols-outlined">
               more_horiz
             </span>
 
           </button>
+          {showMenu && (
+            <div
+              className="cart-menu"
+              style={{
+                background: "white",
+                padding: "10px",
+                border: "1px solid black",
+                position: "absolute",
+                right: "10px",
+                top: "60px",
+                zIndex: 1000
+              }}
+            >
+              <p>View Details</p>
+            </div>
+          )}
+
 
         </div>
 
@@ -747,9 +766,8 @@ const Cart = () => {
                   </div>
 
                   <button
-                    className={`wallet-toggle ${
-                      useWallet ? 'active' : ''
-                    }`}
+                    className={`wallet-toggle ${useWallet ? 'active' : ''
+                      }`}
                     onClick={() => {
                       lightTap();
                       setUseWallet(!useWallet);
