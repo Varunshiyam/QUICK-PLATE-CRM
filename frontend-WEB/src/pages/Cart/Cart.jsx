@@ -553,17 +553,19 @@ const Cart = () => {
           <span
             className="material-symbols-outlined"
             style={{
-              fontSize: '64px',
-              opacity: 0.5
+              fontSize: '90px',
+              opacity: 0.8
             }}
           >
             shopping_basket
           </span>
 
-          <h2>Your cart is empty</h2>
+          <h2 style={{ fontSize: '32px', marginTop: '16px' }}>
+            Your Cart is Empty
+          </h2>
 
-          <p>
-            Craving something delicious? Let's fix that.
+          <p style={{ maxWidth: '420px', lineHeight: '1.6', opacity: 0.8 }}>
+            Craving something delicious? Explore our menu and add your favorite meals to the cart.
           </p>
 
           <button
@@ -573,7 +575,7 @@ const Cart = () => {
               navigate('/restaurant');
             }}
           >
-            Browse Menu
+            Start Shopping
           </button>
 
         </div>
@@ -747,9 +749,8 @@ const Cart = () => {
                   </div>
 
                   <button
-                    className={`wallet-toggle ${
-                      useWallet ? 'active' : ''
-                    }`}
+                    className={`wallet-toggle ${useWallet ? 'active' : ''
+                      }`}
                     onClick={() => {
                       lightTap();
                       setUseWallet(!useWallet);
