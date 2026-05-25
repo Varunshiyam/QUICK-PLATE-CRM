@@ -62,7 +62,7 @@ const isMockMode = !API_BASE_URL;
 const OrderIssue = () => {
   const navigate = useNavigate();
   const { lightTap, mediumTap } = useHaptic();
-  
+
   const [recentOrders] = useState(getInitialOrders);
   const [selectedOrder, setSelectedOrder] = useState(recentOrders[0]);
   const [selectedIssue, setSelectedIssue] = useState('order_not_placed');
@@ -86,12 +86,12 @@ const OrderIssue = () => {
   const handleSubmit = async () => {
     mediumTap();
     setIsSubmitting(true);
-    
+
     const selectedIssueData = ISSUE_CATEGORIES.find(i => i.id === selectedIssue);
     const desc = selectedIssueData ? `${selectedIssueData.title} reported` : 'Issue reported with order';
-    
+
     const caseId = `CASE-${Math.floor(Math.random() * 90000) + 10000}`;
-    
+
     try {
       if (!isMockMode) {
         const storedUser = getStoredUser() || {};
@@ -104,7 +104,7 @@ const OrderIssue = () => {
           reason: selectedIssueData?.title,
           caseId: caseId
         };
-        
+
         await axios.post(`${API_BASE_URL}/services/apexrest/case/create`, payload, {
           headers: { 'Content-Type': 'application/json' },
           timeout: 15000
@@ -125,7 +125,7 @@ const OrderIssue = () => {
         ticketStatus: 'NEW',
         description: desc
       };
-      
+
       const existing = JSON.parse(localStorage.getItem('supportTickets') || '[]');
       localStorage.setItem('supportTickets', JSON.stringify([newTicket, ...existing]));
 
@@ -142,7 +142,7 @@ const OrderIssue = () => {
         <h1 className="order-issue-title">Order Issue</h1>
         <div className="w-10"></div>
       </header>
-      
+
       <main className="order-issue-main">
         <section className="order-issue-section">
           <div className="order-issue-step-wrap mb-4">
@@ -156,26 +156,26 @@ const OrderIssue = () => {
               >View All</span>
             </div>
           </div>
-          
+
           <div className="order-issue-orders-scroll">
             {recentOrders.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '2rem 1rem', color: '#94a3b8', width: '100%' }}>
-                 <p style={{ fontWeight: 600 }}>No recent orders to report issues for.</p>
+                <p style={{ fontWeight: 600 }}>No recent orders to report issues for.</p>
               </div>
             ) : (
               recentOrders.map((order) => {
                 const isSelected = selectedOrder?.id === order.id;
                 return (
-                  <button 
+                  <button
                     key={order.id}
-                    className={`order-issue-order-card ${isSelected ? 'selected' : ''}`} 
+                    className={`order-issue-order-card ${isSelected ? 'selected' : ''}`}
                     onClick={() => handleOrderSelect(order)}
                   >
                     <div className="order-issue-order-img-wrap">
-                      <img 
-                        alt={order.name} 
-                        className="order-issue-order-img" 
-                        src={order.image} 
+                      <img
+                        alt={order.name}
+                        className="order-issue-order-img"
+                        src={order.image}
                       />
                       {isSelected && (
                         <div className="order-issue-check-badge">
@@ -213,9 +213,9 @@ const OrderIssue = () => {
           {ISSUE_CATEGORIES.map((issue) => {
             const isSelected = selectedIssue === issue.id;
             return (
-              <button 
+              <button
                 key={issue.id}
-                className={`order-issue-category-card ${isSelected ? 'selected' : ''}`} 
+                className={`order-issue-category-card ${isSelected ? 'selected' : ''}`}
                 onClick={() => handleIssueSelect(issue.id)}
               >
                 <div className={`order-issue-category-icon-wrap ${isSelected ? 'selected' : ''}`}>
