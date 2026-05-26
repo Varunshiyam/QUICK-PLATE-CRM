@@ -11,9 +11,12 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 .cart-header {
@@ -46,6 +49,7 @@
   cursor: pointer;
   transition: background 0.2s;
 }
+
 .cart-icon-btn:active {
   background: #e2e8f0;
 }
@@ -160,10 +164,11 @@
   border-radius: 50%;
   background: #fff;
   border: none;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   color: #0f172a;
   cursor: pointer;
 }
+
 .cart-stepper-btn.add {
   background: var(--color-primary);
   color: white;
@@ -186,6 +191,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .cart-delete-btn:hover {
   color: #ef4444;
 }
@@ -226,7 +232,10 @@
   scroll-padding-left: 1.5rem;
   scroll-padding-right: 1.5rem;
 }
-.addons-list::-webkit-scrollbar { display: none; }
+
+.addons-list::-webkit-scrollbar {
+  display: none;
+}
 
 .addon-card {
   min-width: 140px;
@@ -234,7 +243,7 @@
   padding: 0.75rem;
   border-radius: 1.5rem;
   border: 1px solid #f1f5f9;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   flex-shrink: 0;
 }
 
@@ -353,6 +362,7 @@
 .wallet-toggle:not(.active) {
   background: #e2e8f0;
 }
+
 .wallet-toggle:not(.active) .knob {
   background: #fff;
   right: auto;
@@ -393,7 +403,7 @@
   pointer-events: none;
 }
 
-.cart-fixed-bottom > div {
+.cart-fixed-bottom>div {
   max-width: var(--max-width, 600px);
   margin: 0 auto;
 }
@@ -436,7 +446,7 @@
 .checkout-divider {
   height: 24px;
   width: 1px;
-  background: rgba(255,255,255,0.3);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .empty-cart-view {
@@ -454,12 +464,14 @@
   color: #cbd5e1;
   margin-bottom: 1rem;
 }
+
 .empty-cart-view h2 {
   font-size: 1.25rem;
   font-weight: 700;
   color: #0f172a;
   margin: 0;
 }
+
 .empty-cart-view p {
   color: #64748b;
   margin-top: 0.5rem;
@@ -474,4 +486,29 @@
   font-weight: 600;
   border: none;
   cursor: pointer;
+}
+
+.empty-cart-icon {
+  font-size: clamp(64px, 14vw, 90px);
+  opacity: 0.8;
+}
+
+.empty-cart-title {
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  margin-top: 16px;
+}
+
+.empty-cart-message {
+  max-width: 420px;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+.empty-cart-btn {
+  transition: 0.3s ease;
+}
+
+.empty-cart-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }

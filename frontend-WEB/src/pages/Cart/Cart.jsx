@@ -551,20 +551,17 @@ const Cart = () => {
         <div className="empty-cart-view">
 
           <span
-            className="material-symbols-outlined"
-            style={{
-              fontSize: '90px',
-              opacity: 0.8
-            }}
+            className="material-symbols-outlined empty-cart-icon"
+            aria-hidden="true"
           >
             shopping_basket
           </span>
 
-          <h2 style={{ fontSize: '32px', marginTop: '16px' }}>
+          <h2 className="empty-cart-title">
             Your Cart is Empty
           </h2>
 
-          <p style={{ maxWidth: '420px', lineHeight: '1.6', opacity: 0.8 }}>
+          <p className="empty-cart-message">
             Craving something delicious? Explore our menu and add your favorite meals to the cart.
           </p>
 
