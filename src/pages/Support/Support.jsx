@@ -145,6 +145,12 @@ const Support = () => {
 
         console.error("Ticket fetch error:", err);
 
+        const errorMsg = err.response?.data?.message
+          || 'Unable to load support tickets. Please try again.';
+
+        toast.error(errorMsg);
+        setTickets([]);
+
       } finally {
 
         setLoading(false);

@@ -75,7 +75,7 @@ const CheckoutForm = () => {
     
     const interval = setInterval(fetchWalletBalance, 5000);
     return () => clearInterval(interval);
-  }, [location.state?.computedWalletApplied]);
+  }, [location.state?.computedWalletApplied, storedUser?.customerId]);
   
   // Max we can apply is the subtotal + deliveryFee + taxes (calculated without wallet first)
   const taxesPreWallet = location.state?.computedTaxes ?? (subtotal > 0 ? 4.50 : 0);
@@ -148,6 +148,7 @@ const CheckoutForm = () => {
   const handlePaySubmit = async () => {
     if (isSubmittingRef.current) return;
     isSubmittingRef.current = true;
+    let walletDeductionId = null;
 
     heavyTap();
     setUiState(UI_STATES.PROCESSING);
@@ -166,8 +167,9 @@ const CheckoutForm = () => {
         // ensure we don't deduct twice for same order
         const alreadyDeducted = txns.some(t => t.description === 'Payment for order ' + orderId);
         if (!alreadyDeducted) {
+          walletDeductionId = 'WTX-' + Math.floor(100000 + Math.random() * 900000);
           txns.unshift({
-             id: 'WTX-' + Math.floor(100000 + Math.random() * 900000),
+             id: walletDeductionId,
              amount: -walletApplied,
              date: new Date().toISOString(),
              type: 'Order Deduct',
@@ -205,9 +207,40 @@ const CheckoutForm = () => {
         if (isMockMode) {
           await new Promise(r => setTimeout(r, 1500));
         } else {
-          await axios.post(`${API_BASE_URL}/create-payment-intent`, {
-             orderId, amount: totalPayCents, method: paymentMethod
-          }).catch(() => {});
+          try {
+            const response = await axios.post(`${API_BASE_URL}/create-payment-intent`, {
+               orderId, amount: totalPayCents, method: paymentMethod
+            });
+
+            if (!response.data?.success) {
+              throw new Error(response.data?.message || 'Payment intent creation failed');
+            }
+          } catch (err) {
+            isSubmittingRef.current = false;
+            errorTap();
+
+            // Rollback wallet deduction if payment failed
+            if (walletDeductionId) {
+              const txns = JSON.parse(localStorage.getItem('quickplate_wallet_txns') || '[]');
+              const idx = txns.findIndex(t => t.id === walletDeductionId);
+              if (idx >= 0) {
+                txns.splice(idx, 1);
+                localStorage.setItem('quickplate_wallet_txns', JSON.stringify(txns));
+                window.dispatchEvent(new Event('storage')); // Alert listeners of rollback
+              }
+            }
+
+            const errorMsg = err.response?.data?.message
+              || err.message
+              || 'Payment processing failed. Please try again.';
+
+            toast.error(errorMsg);
+            setErrorMessage(`Payment Intent Error: ${errorMsg}`);
+            setUiState(UI_STATES.FAILED);
+
+            console.error('Payment intent creation failed:', err);
+            return;
+          }
         }
         
         startBackendPolling(orderId);
@@ -215,6 +248,18 @@ const CheckoutForm = () => {
     } catch (err) {
       isSubmittingRef.current = false;
       errorTap();
+
+      // Rollback wallet on unexpected error
+      if (walletDeductionId) {
+        const txns = JSON.parse(localStorage.getItem('quickplate_wallet_txns') || '[]');
+        const idx = txns.findIndex(t => t.id === walletDeductionId);
+        if (idx >= 0) {
+          txns.splice(idx, 1);
+          localStorage.setItem('quickplate_wallet_txns', JSON.stringify(txns));
+          window.dispatchEvent(new Event('storage'));
+        }
+      }
+
       setErrorMessage(err.message || 'An unexpected error occurred processing your order.');
       setUiState(UI_STATES.FAILED);
     }
