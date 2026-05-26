@@ -475,3 +475,167 @@
   border: none;
   cursor: pointer;
 }
+/* ========================================
+   DROPDOWN MENU
+   ======================================== */
+
+.cart-dropdown-menu {
+  position: absolute;
+  right: 1rem;
+  top: 55px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 100;
+  min-width: 160px;
+  overflow: hidden;
+  border: 1px solid #f1f5f9;
+}
+
+.cart-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: none;
+  background: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #0f172a;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+}
+
+.cart-dropdown-item:hover {
+  background: rgba(251, 126, 24, 0.08);
+  color: #fb7e18;
+}
+
+/* ========================================
+   HELP MODAL
+   ======================================== */
+
+.help-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.help-modal {
+  background: #ffffff;
+  border-radius: 20px 20px 0 0;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.help-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.help-modal-header h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.help-modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.help-modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.help-modal-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.help-modal-field input,
+.help-modal-field select,
+.help-modal-field textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: #0f172a;
+  background: #f8fafc;
+  outline: none;
+  font-family: 'Inter', sans-serif;
+}
+
+.help-modal-field input:focus,
+.help-modal-field select:focus,
+.help-modal-field textarea:focus {
+  border-color: #fb7e18;
+}
+
+.help-modal-field textarea {
+  resize: none;
+}
+
+.help-modal-submit {
+  width: 100%;
+  padding: 0.9rem;
+  background: #fb7e18;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.help-modal-submit:hover {
+  background: rgba(251, 126, 24, 0.9);
+}
+
+.help-modal-submit:active {
+  transform: scale(0.98);
+}
+
+.help-modal-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  color: #22c55e;
+  text-align: center;
+}
+
+.help-modal-success .material-symbols-outlined {
+  font-size: 3rem;
+}
+
+.help-modal-success p {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+}
