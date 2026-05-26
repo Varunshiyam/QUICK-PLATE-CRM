@@ -136,7 +136,7 @@ const Landing = () => {
             >
               Features
             </Link>
-            <Link to="/support" className="landing-nav-link" onClick={lightTap}>
+            <Link to="/contact" className="landing-nav-link" onClick={lightTap}>
               Contact
             </Link>
           </div>
