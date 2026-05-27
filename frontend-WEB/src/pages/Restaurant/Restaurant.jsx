@@ -111,7 +111,7 @@ const Restaurant = () => {
           {restaurantBanners.map((banner) => (
             <div key={banner.id} className={`rest-banner-card theme-${banner.theme}`}>
               <div className="rest-banner-bg-img">
-                 <img src={banner.img} alt="" />
+                 <img src={banner.img} alt={`${banner.supertitle} — ${banner.title}`} />
               </div>
               <div className="rest-banner-content">
                 <div>
