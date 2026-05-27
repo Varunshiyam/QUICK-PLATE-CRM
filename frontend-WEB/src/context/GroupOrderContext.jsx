@@ -1,15 +1,7 @@
-import React, { createContext, useContext, useReducer, useCallback, useMemo } from 'react';
+import React, { createContext, useReducer, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-export const GROUP_ORDER_ACTIONS = {
-  START_SESSION: 'START_SESSION',
-  SET_PARTICIPANTS: 'SET_PARTICIPANTS',
-  ADD_ITEM: 'ADD_ITEM',
-  REMOVE_ITEM: 'REMOVE_ITEM',
-  UPDATE_QTY: 'UPDATE_QTY',
-  SET_PAYMENT_STATUS: 'SET_PAYMENT_STATUS',
-  RESET: 'RESET',
-};
+import { GROUP_ORDER_ACTIONS } from './groupOrderActions';
 
 const initialState = {
   sessionId: null,
@@ -79,7 +71,7 @@ function groupOrderReducer(state, action) {
   }
 }
 
-const GroupOrderContext = createContext(null);
+ const GroupOrderContext = createContext(null);
 
 export function GroupOrderProvider({ currentUserId, children }) {
   const [state, dispatch] = useReducer(groupOrderReducer, initialState);
@@ -135,10 +127,4 @@ GroupOrderProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export function useGroupOrder() {
-  const ctx = useContext(GroupOrderContext);
-  if (!ctx) {
-    throw new Error('useGroupOrder must be used inside <GroupOrderProvider>');
-  }
-  return ctx;
-}
+export default GroupOrderContext;

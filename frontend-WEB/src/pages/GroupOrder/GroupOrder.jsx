@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { GroupOrderButton, InviteModal, BillSplitPreview } from '../../components/GroupOrder';
 import { GroupOrderProvider } from '../../context/GroupOrderContext';
 
+
 const MOCK_PARTICIPANTS = [
   { id: 'you', name: 'You', initials: 'YO', avatarColor: '#FAC775' },
   { id: 'arjun', name: 'Arjun', initials: 'AR', avatarColor: '#B5D4F4' },
