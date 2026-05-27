@@ -1,0 +1,58 @@
+.gob-root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 12px;
+  background-color: #d85a30;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+
+.gob-root:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.gob-root:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.gob-root:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.gob-root--loading {
+  pointer-events: none;
+}
+
+.gob-icon {
+  flex-shrink: 0;
+}
+
+.gob-label {
+  line-height: 1;
+}
+
+.gob-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: gob-spin 0.7s linear infinite;
+}
+
+@keyframes gob-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

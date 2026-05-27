@@ -1,0 +1,141 @@
+.bsp-root {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.bsp-tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.bsp-tab {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: 0.5px solid rgba(0, 0, 0, 0.12);
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: #666;
+  transition: all 0.15s;
+}
+
+.bsp-tab--active {
+  background: #d85a30;
+  color: #fff;
+  border-color: #d85a30;
+}
+
+.bsp-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.bsp-card {
+  background: #f5f5f3;
+  border: 0.5px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.bsp-card-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.bsp-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 500;
+  color: #3c3404;
+  flex-shrink: 0;
+}
+
+.bsp-card-amount {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.bsp-status {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.bsp-status--pending {
+  background: #faeeda;
+  color: #854f0b;
+}
+
+.bsp-status--waiting {
+  background: #e6f1fb;
+  color: #185fa5;
+}
+
+.bsp-status--paid {
+  background: #eaf3de;
+  color: #3b6d11;
+}
+
+.bsp-summary {
+  background: #f5f5f3;
+  border: 0.5px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.bsp-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  font-size: 14px;
+}
+
+.bsp-summary-label {
+  color: #666;
+}
+
+.bsp-summary-row--total {
+  font-weight: 500;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.08);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+.bsp-pay-btn {
+  width: 100%;
+  padding: 13px;
+  border-radius: 12px;
+  background: #d85a30;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  transition: opacity 0.15s;
+}
+
+.bsp-pay-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.bsp-pay-btn:disabled {
+  background: #eaf3de;
+  color: #3b6d11;
+  cursor: default;
+}
