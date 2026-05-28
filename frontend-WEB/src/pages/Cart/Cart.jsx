@@ -71,6 +71,31 @@ const Cart = () => {
     useState(true);
 
   // ========================================
+  // COUPON STATE
+  // ========================================
+
+  const [couponInput, setCouponInput] =
+    useState('');
+
+  const [appliedCoupon, setAppliedCoupon] =
+    useState(null);
+
+  const [couponError, setCouponError] =
+    useState('');
+
+  const [showCelebration, setShowCelebration] =
+    useState(false);
+
+  const [showCouponSheet, setShowCouponSheet] =
+    useState(false);
+
+  const [couponEligibility, setCouponEligibility] =
+    useState({
+      isFirstOrder:   null,
+      accountAgeDays: null,
+    });
+
+  // ========================================
   // RESTAURANT CONTEXT
   // ========================================
 
@@ -100,6 +125,192 @@ const Cart = () => {
   const ADDONS =
     availableAddons.slice(0, 4);
 
+  useEffect(() => {
+
+    const checkEligibility = async () => {
+
+      try {
+
+        const firebaseUser = auth.currentUser;
+
+        let accountAgeDays = 0;
+        if (firebaseUser?.metadata?.creationTime) {
+          const created = new Date(firebaseUser.metadata.creationTime);
+          accountAgeDays = Math.floor(
+            (Date.now() - created.getTime()) / (1000 * 60 * 60 * 24)
+          );
+        }
+
+        let isFirstOrder = true;
+        if (firebaseUser && API_BASE_URL) {
+          try {
+            const idToken = await firebaseUser.getIdToken(true);
+            const res = await axios.get(
+              `${API_BASE_URL}/services/apexrest/customer/orders?idToken=${encodeURIComponent(idToken)}`
+            );
+            const orders = res.data?.orders || [];
+            isFirstOrder = orders.length === 0;
+          } catch {
+            isFirstOrder = false;
+          }
+        }
+
+        setCouponEligibility({
+          isFirstOrder,
+          accountAgeDays,
+          usedCodes: [],
+        });
+
+      } catch (err) {
+        console.error('Coupon eligibility check failed:', err);
+      }
+    };
+
+    checkEligibility();
+
+  }, []);
+
+  const { isFirstOrder, accountAgeDays } = couponEligibility;
+  const eligibilityLoading = isFirstOrder === null || accountAgeDays === null;
+
+  const today = new Date();
+  const month = today.getMonth() + 1;
+  const day   = today.getDate();
+
+  const AVAILABLE_COUPONS = [
+
+    {
+      code:        'WELCOME10',
+      label:       'First Purchase',
+      description: 'Exclusively for first-time buyers. Welcome aboard!',
+      badge:       '🎉 New User',
+      type:        'percent',
+      value:       10,
+      minOrder:    0,
+      category:    'welcome',
+      isEligible:  () => isFirstOrder === true,
+      lockReason:  () => isFirstOrder === false ? 'Not a first order' : null,
+    },
+
+    {
+      code:        'LOYAL1',
+      label:       'Loyalty Reward',
+      description: 'For members with us for over a year. Thank you!',
+      badge:       '⭐ Loyal Member',
+      type:        'percent',
+      value:       5,
+      minOrder:    0,
+      category:    'loyalty',
+
+      isEligible:  () => accountAgeDays >= 365,
+      lockReason:  () => accountAgeDays < 365 ? `Available after 6 months (${Math.max(0, 365 - accountAgeDays)}d left)` : null,
+    },
+
+    {
+      code:        'LOYAL5',
+      label:       'Super Loyalty',
+      description: 'Exclusive for members with us over 5 years. You rock!',
+      badge:       '💎 VIP Member',
+      type:        'percent',
+      value:       15,
+      minOrder:    0,
+      category:    'loyalty',
+
+      isEligible:  () => accountAgeDays >= 1825,
+      lockReason:  () => accountAgeDays < 1825 ? `Available after 1 year (${Math.max(0, 1825 - accountAgeDays)}d left)` : null,
+    },
+
+    {
+      code:        'SAVE500',
+      label:       'Big Saver',
+      description: 'Save ₹500 on orders above ₹2000. Stack up!',
+      badge:       '🛒 Cart Offer',
+      type:        'flat',
+      value:       500,
+      minOrder:    2000,
+      category:    'cart',
+
+      isEligible:  () => subtotal >= 2000,
+      lockReason:  () =>
+        subtotal < 2000
+          ? `Add ₹${(2000 - subtotal).toFixed(0)} more to unlock`
+          : null,
+    },
+
+    {
+      code:        'INDIA15',
+      label:       'Independence Day',
+      description: '15% off on Independence Day. Jai Hind! 🇮🇳',
+      badge:       '🇮🇳 Seasonal',
+      type:        'percent',
+      value:       15,
+      minOrder:    0,
+      category:    'seasonal',
+
+      isEligible:  () => month === 8 && day === 15,
+      lockReason:  () =>
+        !(month === 8 && day === 15)
+          ? 'Available on 15th August only'
+          : null,
+    },
+
+    {
+      code:        'NEWYEAR20',
+      label:       'New Year Special',
+      description: '20% off to ring in the New Year with great food!',
+      badge:       '🎆 New Year',
+      type:        'percent',
+      value:       20,
+      minOrder:    0,
+      category:    'seasonal',
+
+      isEligible:  () =>
+        (month === 12 && day === 31) ||
+        (month === 1  && day <= 2),
+      lockReason:  () =>
+        !((month === 12 && day === 31) || (month === 1 && day <= 2))
+          ? 'Available Dec 31 – Jan 2 only'
+          : null,
+    },
+
+  ];
+
+  const applyCouponCode = (code) => {
+
+    const trimmed = code.trim().toUpperCase();
+    const found   = AVAILABLE_COUPONS.find(c => c.code === trimmed);
+
+    if (!found) {
+      setCouponError('Invalid coupon code. Please try again.');
+      return;
+    }
+
+    if (eligibilityLoading) {
+      setCouponError('Checking eligibility, please wait...');
+      return;
+    }
+
+    if (!found.isEligible()) {
+      const reason = found.lockReason();
+      setCouponError(reason || 'You are not eligible for this coupon.');
+      return;
+    }
+
+    setAppliedCoupon(found);
+    setCouponError('');
+    setCouponInput('');
+    setShowCouponSheet(false);
+    setShowCelebration(true);
+    mediumTap();
+    setTimeout(() => setShowCelebration(false), 2800);
+  };
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponError('');
+    lightTap();
+  };
+
   // ========================================
   // BILLING
   // ========================================
@@ -114,10 +325,18 @@ const Cart = () => {
       ? 4.50
       : 0;
 
+  const couponDiscount = (() => {
+    if (!appliedCoupon || subtotal === 0) return 0;
+    if (appliedCoupon.type === 'percent') {
+      return parseFloat(((subtotal * appliedCoupon.value) / 100).toFixed(2));
+    }
+    return Math.min(appliedCoupon.value, subtotal);
+  })();
+
   const maxApplicableWallet =
     Math.min(
       walletBalance,
-      subtotal + deliveryFee + taxes
+      subtotal + deliveryFee + taxes - couponDiscount
     );
 
   const walletApplied =
@@ -129,6 +348,7 @@ const Cart = () => {
     subtotal +
     deliveryFee +
     taxes -
+    couponDiscount -
     walletApplied;
 
   // ========================================
@@ -532,31 +752,14 @@ const Cart = () => {
 
           </div>
 
-          <button
-            className="cart-icon-btn"
-            onClick={() => setShowMenu(!showMenu)}
-          >
+          <button className="cart-icon-btn">
 
             <span className="material-symbols-outlined">
               more_horiz
             </span>
 
           </button>
-          {showMenu && (
-            <div
-              style={{
-                background: "white",
-                padding: "10px",
-                border: "1px solid black",
-                position: "absolute",
-                right: "0px",
-                top: "45px",
-                zIndex: 1000
-              }}
-            >
-              <p>View Details</p>
-            </div>
-          )}
+
         </div>
 
       </header>
@@ -740,6 +943,239 @@ const Cart = () => {
               </div>
             </div>
 
+            {/* COUPON SECTION */}
+
+            <div className="coupon-section">
+
+              <AnimatePresence>
+                {showCelebration && (
+                  <motion.div
+                    className="coupon-celebration"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="confetti-burst">
+                      {['🎉','✨','🎊','💥','⭐','🌟'].map((e, i) => (
+                        <span key={i} className={`confetti-piece piece-${i}`}>{e}</span>
+                      ))}
+                    </div>
+                    <p className="celebration-text">Coupon Applied! 🎉</p>
+                    <p className="celebration-sub">
+                      You saved {appliedCoupon?.type === 'percent'
+                        ? `${appliedCoupon?.value}%`
+                        : `₹${appliedCoupon?.value}`
+                      }!
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {appliedCoupon ? (
+
+                <motion.div
+                  className="coupon-applied-card"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                >
+                  <div className="coupon-applied-left">
+                    <span className="coupon-applied-icon">🏷️</span>
+                    <div>
+                      <p className="coupon-applied-code">{appliedCoupon.code}</p>
+                      <p className="coupon-applied-savings">
+                        You saved {appliedCoupon.type === 'percent'
+                          ? `${appliedCoupon.value}% (₹${couponDiscount.toFixed(2)})`
+                          : `₹${couponDiscount.toFixed(2)}`
+                        }
+                      </p>
+                    </div>
+                  </div>
+                  <button className="coupon-remove-btn" onClick={removeCoupon}>
+                    <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>close</span>
+                  </button>
+                </motion.div>
+
+              ) : (
+
+                <div className="coupon-input-row">
+                  <div className="coupon-input-wrap">
+                    <span className="material-symbols-outlined coupon-input-icon">
+                      local_offer
+                    </span>
+                    <input
+                      type="text"
+                      className="coupon-input"
+                      placeholder="Enter coupon code"
+                      value={couponInput}
+                      onChange={e => {
+                        setCouponInput(e.target.value.toUpperCase());
+                        setCouponError('');
+                      }}
+                      onKeyDown={e => {
+                        if (e.key === 'Enter') applyCouponCode(couponInput);
+                      }}
+                    />
+                  </div>
+                  <button
+                    className="coupon-apply-btn"
+                    onClick={() => applyCouponCode(couponInput)}
+                    disabled={!couponInput.trim()}
+                  >
+                    Apply
+                  </button>
+                </div>
+
+              )}
+
+              {couponError && (
+                <motion.p
+                  className="coupon-error"
+                  initial={{ opacity: 0, x: -4 }}
+                  animate={{ opacity: 1, x: 0 }}
+                >
+                  {couponError}
+                </motion.p>
+              )}
+
+              {!appliedCoupon && (
+                <button
+                  className="coupon-view-all-btn"
+                  onClick={() => {
+                    lightTap();
+                    setShowCouponSheet(true);
+                  }}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>
+                    confirmation_number
+                  </span>
+                  View available coupons
+                  <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>
+                    chevron_right
+                  </span>
+                </button>
+              )}
+
+            </div>
+
+            <AnimatePresence>
+              {showCouponSheet && (
+                <>
+                  <motion.div
+                    className="coupon-sheet-overlay"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => setShowCouponSheet(false)}
+                  />
+                  <motion.div
+                    className="coupon-sheet"
+                    initial={{ y: '100%' }}
+                    animate={{ y: 0 }}
+                    exit={{ y: '100%' }}
+                    transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+                  >
+                    <div className="coupon-sheet-handle" />
+                    <div className="coupon-sheet-header">
+                      <h3 className="coupon-sheet-title">Available Coupons</h3>
+                      <button
+                        className="cart-icon-btn"
+                        onClick={() => setShowCouponSheet(false)}
+                      >
+                        <span className="material-symbols-outlined">close</span>
+                      </button>
+                    </div>
+
+                    <div className="coupon-sheet-input-row">
+                      <div className="coupon-input-wrap">
+                        <span className="material-symbols-outlined coupon-input-icon">
+                          local_offer
+                        </span>
+                        <input
+                          type="text"
+                          className="coupon-input"
+                          placeholder="Or type a code manually"
+                          value={couponInput}
+                          onChange={e => {
+                            setCouponInput(e.target.value.toUpperCase());
+                            setCouponError('');
+                          }}
+                        />
+                      </div>
+                      <button
+                        className="coupon-apply-btn"
+                        onClick={() => applyCouponCode(couponInput)}
+                        disabled={!couponInput.trim()}
+                      >
+                        Apply
+                      </button>
+                    </div>
+
+                    {couponError && (
+                      <p className="coupon-error" style={{ padding: '0 1.5rem' }}>
+                        {couponError}
+                      </p>
+                    )}
+
+                    <div className="coupon-list no-scrollbar">
+                      {eligibilityLoading ? (
+                        <div className="coupon-loading">
+                          <span className="material-symbols-outlined coupon-loading-icon">
+                            pending
+                          </span>
+                          <p>Checking your eligibility...</p>
+                        </div>
+                      ) : (
+                        AVAILABLE_COUPONS.map(coupon => {
+                          const eligible   = coupon.isEligible();
+                          const lockReason = coupon.lockReason();
+                          const isLocked   = !eligible;
+                          return (
+                            <div
+                              key={coupon.code}
+                              className={`coupon-card ${isLocked ? 'coupon-locked' : ''}`}
+                            >
+                              <div className="coupon-card-left">
+                                <span className="coupon-badge">{coupon.badge}</span>
+                                <h4 className="coupon-card-label">{coupon.label}</h4>
+                                <p className="coupon-card-desc">{coupon.description}</p>
+                                {isLocked && lockReason && (
+                                  <p className="coupon-lock-msg">
+                                    🔒 {lockReason}
+                                  </p>
+                                )}
+                              </div>
+                              <div className="coupon-card-sep" />
+                              <div className="coupon-card-right">
+                                <div className="coupon-code-pill">{coupon.code}</div>
+                                <p className="coupon-card-value">
+                                  {coupon.type === 'percent'
+                                    ? `${coupon.value}% OFF`
+                                    : `₹${coupon.value} OFF`
+                                  }
+                                </p>
+                                <button
+                                  className="coupon-use-btn"
+                                  disabled={isLocked}
+                                  onClick={() => {
+                                    if (!isLocked) applyCouponCode(coupon.code);
+                                  }}
+                                >
+                                  {isLocked ? 'Locked' : 'Apply'}
+                                </button>
+                              </div>
+                              <div className="coupon-notch coupon-notch-top" />
+                              <div className="coupon-notch coupon-notch-bot" />
+                            </div>
+                          );
+                        })
+                      )}
+                    </div>
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
+
             {/* BILL */}
 
             <div className="bill-section">
@@ -764,8 +1200,9 @@ const Cart = () => {
                   </div>
 
                   <button
-                    className={`wallet-toggle ${useWallet ? 'active' : ''
-                      }`}
+                    className={`wallet-toggle ${
+                      useWallet ? 'active' : ''
+                    }`}
                     onClick={() => {
                       lightTap();
                       setUseWallet(!useWallet);
@@ -829,6 +1266,26 @@ const Cart = () => {
                       </span>
 
                     </div>
+
+                  )}
+
+                  {appliedCoupon && couponDiscount > 0 && (
+
+                    <motion.div
+                      className="bill-row"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                    >
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <span className="material-symbols-outlined" style={{ fontSize: '14px', color: '#22c55e' }}>
+                          local_offer
+                        </span>
+                        {appliedCoupon.code}
+                      </span>
+                      <span style={{ color: '#22c55e', fontWeight: 600 }}>
+                        - ₹{couponDiscount.toFixed(2)}
+                      </span>
+                    </motion.div>
 
                   )}
 
