@@ -100,7 +100,7 @@ function App() {
             <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
             <Route path="/orders" element={<AuthGuard><Orders /></AuthGuard>} />
             <Route path="/discover" element={<Discover />} />
-            <Route path="/tracking/:orderId" element={<Tracking />} />
+            <Route path="/tracking/:orderId" element={<AuthGuard><Tracking /></AuthGuard>} />
             <Route path="/support" element={<Support />} />
             <Route path="/raise-refund" element={<RaiseRefund />} />
             <Route path="/payment-issue" element={<PaymentIssue />} />
