@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AnimatePresence } from 'framer-motion';
 
+// Auth Guard
+import AuthGuard from './components/AuthGuard';
+
 // Pages
 import Landing from './pages/Landing/Landing';
 import Features from './pages/Features/Features';
