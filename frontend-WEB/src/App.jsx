@@ -96,7 +96,7 @@ function App() {
             <Route path="/restaurant" element={<Restaurant />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<AuthGuard><Checkout /></AuthGuard>} />
-            <Route path="/payment-success" element={<PaymentSuccess />} />
+            <Route path="/payment-success" element={<AuthGuard><PaymentSuccess /></AuthGuard>} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/discover" element={<Discover />} />
