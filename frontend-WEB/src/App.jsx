@@ -103,7 +103,7 @@ function App() {
             <Route path="/tracking/:orderId" element={<AuthGuard><Tracking /></AuthGuard>} />
             <Route path="/support" element={<Support />} />
             <Route path="/raise-refund" element={<AuthGuard><RaiseRefund /></AuthGuard>} />
-            <Route path="/payment-issue" element={<PaymentIssue />} />
+            <Route path="/payment-issue" element={<AuthGuard><PaymentIssue /></AuthGuard>} />
             <Route path="/order-issue" element={<OrderIssue />} />
             <Route path="/customerwallet" element={<CustomerWallet />} />
             <Route path="/wallet-payment" element={<WalletPayment />} />
