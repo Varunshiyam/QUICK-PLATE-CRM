@@ -106,7 +106,7 @@ function App() {
             <Route path="/payment-issue" element={<AuthGuard><PaymentIssue /></AuthGuard>} />
             <Route path="/order-issue" element={<AuthGuard><OrderIssue /></AuthGuard>} />
             <Route path="/customerwallet" element={<AuthGuard><CustomerWallet /></AuthGuard>} />
-            <Route path="/wallet-payment" element={<WalletPayment />} />
+            <Route path="/wallet-payment" element={<AuthGuard><WalletPayment /></AuthGuard>} />
             {/* More routes will be added as pages are built */}
           </Routes>
         </AnimatePresence>
