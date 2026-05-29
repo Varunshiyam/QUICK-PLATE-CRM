@@ -97,7 +97,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<AuthGuard><Checkout /></AuthGuard>} />
             <Route path="/payment-success" element={<AuthGuard><PaymentSuccess /></AuthGuard>} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/discover" element={<Discover />} />
             <Route path="/tracking/:orderId" element={<Tracking />} />
