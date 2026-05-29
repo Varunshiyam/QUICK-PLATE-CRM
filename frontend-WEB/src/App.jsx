@@ -105,7 +105,7 @@ function App() {
             <Route path="/raise-refund" element={<AuthGuard><RaiseRefund /></AuthGuard>} />
             <Route path="/payment-issue" element={<AuthGuard><PaymentIssue /></AuthGuard>} />
             <Route path="/order-issue" element={<AuthGuard><OrderIssue /></AuthGuard>} />
-            <Route path="/customerwallet" element={<CustomerWallet />} />
+            <Route path="/customerwallet" element={<AuthGuard><CustomerWallet /></AuthGuard>} />
             <Route path="/wallet-payment" element={<WalletPayment />} />
             {/* More routes will be added as pages are built */}
           </Routes>
