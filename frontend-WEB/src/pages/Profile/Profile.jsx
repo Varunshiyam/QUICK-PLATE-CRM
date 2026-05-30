@@ -303,7 +303,26 @@ const Profile = () => {
                 </div>
               ))
             ) : (
-               <p style={{textAlign: 'center', fontSize: '14px', color: '#94a3b8', padding: '1rem'}}>No past deliveries found.</p>
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                style={{ textAlign: 'center', padding: '1.5rem 1rem' }}
+              >
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.1, duration: 0.4, type: 'spring' }}
+                  style={{ marginBottom: '0.75rem', display: 'flex', justifyContent: 'center' }}
+                >
+                  <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="36" fill="#fff4ec" stroke="#fb7e18" strokeWidth="2"/>
+                    <text x="40" y="50" textAnchor="middle" fontSize="28">🛵</text>
+                  </svg>
+                </motion.div>
+                <p style={{ fontWeight: 700, color: '#1e293b', fontSize: '0.95rem', marginBottom: '0.25rem' }}>No deliveries yet</p>
+                <p style={{ fontSize: '0.82rem', color: '#94a3b8' }}>Your completed orders will show up here.</p>
+              </motion.div>
             )}
           </div>
         </motion.section>
@@ -345,7 +364,26 @@ const Profile = () => {
                 </div>
               ))
             ) : (
-               <p style={{textAlign: 'center', fontSize: '14px', color: '#94a3b8', padding: '1rem'}}>No transactions found.</p>
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                style={{ textAlign: 'center', padding: '1.5rem 1rem' }}
+              >
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.1, duration: 0.4, type: 'spring' }}
+                  style={{ marginBottom: '0.75rem', display: 'flex', justifyContent: 'center' }}
+                >
+                  <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="36" fill="#fff4ec" stroke="#fb7e18" strokeWidth="2"/>
+                    <text x="40" y="50" textAnchor="middle" fontSize="28">💳</text>
+                  </svg>
+                </motion.div>
+                <p style={{ fontWeight: 700, color: '#1e293b', fontSize: '0.95rem', marginBottom: '0.25rem' }}>No transactions yet</p>
+                <p style={{ fontSize: '0.82rem', color: '#94a3b8' }}>Payments and refunds will appear here.</p>
+              </motion.div>
             )}
           </div>
         </motion.section>
