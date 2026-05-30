@@ -548,35 +548,89 @@ const Cart = () => {
 
       {cart.length === 0 ? (
 
-        <div className="empty-cart-view">
+        <motion.div
+          className="empty-cart-view"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
 
-          <span
-            className="material-symbols-outlined"
-            style={{
-              fontSize: '64px',
-              opacity: 0.5
-            }}
+          {/* Illustrated SVG — QuickPlate themed */}
+          <motion.div
+            initial={{ scale: 0.7, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.1, duration: 0.5, type: 'spring', stiffness: 200 }}
+            style={{ marginBottom: '1.5rem' }}
           >
-            shopping_basket
-          </span>
+            <svg
+              width="140"
+              height="140"
+              viewBox="0 0 140 140"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* Plate base */}
+              <circle cx="70" cy="85" r="42" fill="#fff4ec" stroke="#fb7e18" strokeWidth="2.5" />
+              <circle cx="70" cy="85" r="30" fill="#fff" stroke="#fde0c8" strokeWidth="1.5" />
 
-          <h2>Your cart is empty</h2>
+              {/* Fork */}
+              <rect x="55" y="58" width="3" height="22" rx="1.5" fill="#fb7e18" opacity="0.5" />
+              <rect x="51" y="56" width="2" height="10" rx="1" fill="#fb7e18" opacity="0.4" />
+              <rect x="55" y="56" width="2" height="10" rx="1" fill="#fb7e18" opacity="0.4" />
+              <rect x="59" y="56" width="2" height="10" rx="1" fill="#fb7e18" opacity="0.4" />
 
-          <p>
+              {/* Knife */}
+              <rect x="82" y="56" width="3" height="24" rx="1.5" fill="#fb7e18" opacity="0.5" />
+              <path d="M82 56 Q88 62 85 68 L82 68 Z" fill="#fb7e18" opacity="0.4" />
+
+              {/* Empty plate dot */}
+              <circle cx="70" cy="85" r="5" fill="#fde0c8" />
+
+              {/* Cart icon on top */}
+              <circle cx="95" cy="42" r="20" fill="#fb7e18" />
+              <text x="95" y="49" textAnchor="middle" fontSize="18" fill="white">🛒</text>
+
+              {/* Sparkles */}
+              <circle cx="30" cy="40" r="3" fill="#fb7e18" opacity="0.3" />
+              <circle cx="110" cy="30" r="2" fill="#fb7e18" opacity="0.4" />
+              <circle cx="25" cy="70" r="2" fill="#fde0c8" opacity="0.6" />
+              <circle cx="118" cy="65" r="3" fill="#fde0c8" opacity="0.5" />
+            </svg>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25, duration: 0.4 }}
+            style={{ fontSize: '1.4rem', fontWeight: 700, color: '#1e293b', marginBottom: '0.5rem' }}
+          >
+            Your cart is empty
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35, duration: 0.4 }}
+            style={{ color: '#94a3b8', fontSize: '0.95rem', marginBottom: '1.75rem' }}
+          >
             Craving something delicious? Let's fix that.
-          </p>
+          </motion.p>
 
-          <button
+          <motion.button
             className="empty-cart-btn"
             onClick={() => {
               lightTap();
               navigate('/restaurant');
             }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.45, duration: 0.4 }}
+            whileTap={{ scale: 0.96 }}
           >
             Browse Menu
-          </button>
+          </motion.button>
 
-        </div>
+        </motion.div>
 
       ) : (
 
