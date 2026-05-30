@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import useHaptic from '../../hooks/useHaptic';
@@ -256,9 +257,26 @@ const Orders = () => {
                   </div>
                   
                   {supportTickets.length === 0 && refundProcessingOrders.length === 0 ? (
-                    <div style={{ textAlign: 'center', padding: '2rem 1rem', color: '#94a3b8' }}>
-                       <p style={{ fontWeight: 600 }}>No active tickets.</p>
-                    </div>
+                    <motion.div
+                      style={{ textAlign: 'center', padding: '2rem 1rem' }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: 0.1, duration: 0.4, type: 'spring' }}
+                        style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'center' }}
+                      >
+                        <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="45" cy="45" r="40" fill="#fff4ec" stroke="#fb7e18" strokeWidth="2"/>
+                          <text x="45" y="54" textAnchor="middle" fontSize="30" fill="#fb7e18">🎉</text>
+                        </svg>
+                      </motion.div>
+                      <p style={{ fontWeight: 700, color: '#1e293b', marginBottom: '0.25rem' }}>All clear!</p>
+                      <p style={{ fontSize: '0.85rem', color: '#94a3b8' }}>No active support tickets.</p>
+                    </motion.div>
                   ) : (
                     <div className="orders-list">
                   {supportTickets.map((ticket) => {
@@ -439,13 +457,85 @@ const Orders = () => {
 
             {/* EMPTY STATE */}
             {activeTab === 'orders' && activeOrders.length === 0 && pastOrders.length === 0 && (
-              <div style={{ textAlign: 'center', padding: '3rem 1rem', color: '#94a3b8' }}>
-                 <span className="material-symbols-outlined" style={{ fontSize: '48px', color: '#cbd5e1', marginBottom: '1rem' }}>receipt_long</span>
-                 <p style={{ fontWeight: 600 }}>No orders found.</p>
-              </div>
-            )}
-          </div>
+              <motion.div
+                style={{ textAlign: 'center', padding: '3rem 1.5rem' }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+
+                <motion.div
+                  initial={{ scale: 0.7, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.1, duration: 0.5, type: 'spring', stiffness: 180 }}
+                  style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'center' }}
+                >
+                  <svg width="140" height="140" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    {/* Delivery box */}
+                    <rect x="30" y="60" width="80" height="55" rx="10" fill="#fff4ec" stroke="#fb7e18" strokeWidth="2.5"/>
+                    <rect x="30" y="60" width="80" height="20" rx="10" fill="#fde0c8" />
+                    {/* Box tape */}
+                    <rect x="62" y="60" width="16" height="55" rx="4" fill="#fb7e18" opacity="0.2"/>
+                    <rect x="30" y="68" width="80" height="4" rx="2" fill="#fb7e18" opacity="0.15"/>
+                    {/* Sad face on box */}
+                    <circle cx="62" cy="88" r="3" fill="#fb7e18" opacity="0.5"/>
+                    <circle cx="78" cy="88" r="3" fill="#fb7e18" opacity="0.5"/>
+                    <path d="M62 100 Q70 95 78 100" stroke="#fb7e18" strokeWidth="2" strokeLinecap="round" opacity="0.5"/>
+                    {/* Scooter */}
+                    <circle cx="98" cy="38" r="18" fill="#fb7e18"/>
+                    <text x="98" y="45" textAnchor="middle" fontSize="16" fill="white">📦</text>
+                    {/* Sparkles */}
+                    <circle cx="22" cy="55" r="3" fill="#fb7e18" opacity="0.25"/>
+                    <circle cx="118" cy="50" r="2" fill="#fde0c8" opacity="0.5"/>
+                    <circle cx="20" cy="90" r="2" fill="#fb7e18" opacity="0.2"/>
+                  </svg>
+                </motion.div>
+
+                <motion.h3
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.25, duration: 0.4 }}
+                  style={{ fontWeight: 700, fontSize: '1.2rem', color: '#1e293b', marginBottom: '0.5rem' }}
+                >
+                  No orders yet
+                </motion.h3>
+
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.35, duration: 0.4 }}
+                  style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '1.5rem' }}
+                >
+                  Your order history will appear here once you place your first order.
+                </motion.p>
+
+                <motion.button
+                  onClick={() => { lightTap(); navigate('/restaurant'); }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.45, duration: 0.4 }}
+                  whileTap={{ scale: 0.96 }}
+                  style={{
+                    background: '#fb7e18',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '14px',
+                    padding: '0.75rem 2rem',
+                    fontWeight: 700,
+                    fontSize: '0.95rem',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Order Now
+                </motion.button>
+
+              </motion.div>
         )}
+        </div>
+      )}
+            
+
+        
       </main>
 
       {/* ─── Bottom Navigation ─── */}
