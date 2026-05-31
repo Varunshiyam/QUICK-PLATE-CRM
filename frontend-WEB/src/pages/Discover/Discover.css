@@ -299,3 +299,59 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Filter bar */
+.discover-filters {
+  margin: 0 -1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(248, 247, 245, 0.6);
+  backdrop-filter: blur(8px);
+}
+.discover-filters-inner {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 160px;
+}
+.filter-label {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 700;
+}
+.filter-pills {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  overflow-x: auto;
+}
+.filter-pill {
+  white-space: nowrap;
+  height: 36px;
+  padding: 0 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  color: #334155;
+  font-weight: 700;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.filter-pill.active {
+  background: var(--color-primary, #f97f1a);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 6px 18px rgba(249,127,26,0.14);
+}
+
+@media (max-width: 640px) {
+  .discover-filters-inner { gap: 0.75rem; }
+  .filter-group { min-width: 120px; }
+  .filter-pill { height: 32px; padding: 0 0.5rem; font-size: 0.8rem; }
+}

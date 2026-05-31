@@ -87,6 +87,10 @@ const Discover = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  // Filters
+  const [selectedSort, setSelectedSort] = useState('rating'); // rating | time | distance
+  const [selectedPrices, setSelectedPrices] = useState([]); // ['$','$$','$$$']
+  const [selectedCuisines, setSelectedCuisines] = useState([]);
 
   useEffect(() => {
     const loadRestaurants = async () => {
@@ -162,7 +166,43 @@ const Discover = () => {
       (r.cuisine && r.cuisine.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const displayList = searchQuery ? searchResults : newOnQuickPlate;
+  // helper to parse numeric values from strings like '15-25 min' or '2.4 mi'
+  const parseTimeMin = (timeStr) => {
+    if (!timeStr) return 999;
+    const m = timeStr.match(/(\d+)(?:-(\d+))?/);
+    if (!m) return 999;
+    return parseInt(m[1], 10);
+  };
+  const parseDistance = (distStr) => {
+    if (!distStr) return 999;
+    const m = distStr.match(/([\d.]+)/);
+    return m ? parseFloat(m[1]) : 999;
+  };
+
+  // Combine search query + filters
+  const filteredRestaurants = restaurants
+    .filter((r) => {
+      // text search
+      const matchesText = searchQuery
+        ? (r.name.toLowerCase().includes(searchQuery.toLowerCase()) || (r.cuisine && r.cuisine.toLowerCase().includes(searchQuery.toLowerCase())))
+        : true;
+
+      // price filter
+      const matchesPrice = selectedPrices.length > 0 ? selectedPrices.includes(r.price) : true;
+
+      // cuisine filter (any of selected cuisines should be present in cuisine string)
+      const matchesCuisine = selectedCuisines.length > 0 ? selectedCuisines.some(tag => r.cuisine.toLowerCase().includes(tag.toLowerCase())) : true;
+
+      return matchesText && matchesPrice && matchesCuisine;
+    })
+    .sort((a, b) => {
+      if (selectedSort === 'rating') return parseFloat(b.rating) - parseFloat(a.rating);
+      if (selectedSort === 'time') return parseTimeMin(a.time) - parseTimeMin(b.time);
+      if (selectedSort === 'distance') return parseDistance(a.distance) - parseDistance(b.distance);
+      return 0;
+    });
+
+  const displayList = (searchQuery || selectedPrices.length > 0 || selectedCuisines.length > 0) ? filteredRestaurants : newOnQuickPlate;
 
   return (
     <div className="discover-page">
@@ -239,6 +279,50 @@ const Discover = () => {
                 <span>{cat.label}</span>
               </button>
             ))}
+          </div>
+        </div>
+
+        {/* Filter Bar */}
+        <div className="discover-filters hide-scrollbar">
+          <div className="discover-filters-inner">
+            <div className="filter-group">
+              <label className="filter-label">Sort By</label>
+              <div className="filter-pills">
+                <button className={`filter-pill ${selectedSort === 'rating' ? 'active' : ''}`} onClick={() => setSelectedSort('rating')}>Rating</button>
+                <button className={`filter-pill ${selectedSort === 'time' ? 'active' : ''}`} onClick={() => setSelectedSort('time')}>Delivery Time</button>
+                <button className={`filter-pill ${selectedSort === 'distance' ? 'active' : ''}`} onClick={() => setSelectedSort('distance')}>Distance</button>
+              </div>
+            </div>
+
+            <div className="filter-group">
+              <label className="filter-label">Price</label>
+              <div className="filter-pills">
+                {['$', '$$', '$$$', '$$$$'].map(p => (
+                  <button
+                    key={p}
+                    className={`filter-pill ${selectedPrices.includes(p) ? 'active' : ''}`}
+                    onClick={() => {
+                      setSelectedPrices(prev => prev.includes(p) ? prev.filter(x => x !== p) : [...prev, p]);
+                    }}
+                  >{p}</button>
+                ))}
+              </div>
+            </div>
+
+            <div className="filter-group">
+              <label className="filter-label">Cuisine</label>
+              <div className="filter-pills">
+                {['Fast Food', 'Healthy', 'Bakery', 'Japanese', 'Italian', 'Indian'].map(c => (
+                  <button
+                    key={c}
+                    className={`filter-pill ${selectedCuisines.includes(c) ? 'active' : ''}`}
+                    onClick={() => {
+                      setSelectedCuisines(prev => prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c]);
+                    }}
+                  >{c}</button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
