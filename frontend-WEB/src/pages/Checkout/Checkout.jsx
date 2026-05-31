@@ -25,22 +25,22 @@ const CheckoutForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { lightTap, heavyTap, successTap, errorTap, mediumTap } = useHaptic();
-  
+
   const { cart, getCartTotal, clearCart } = useAppStore();
-  
+
   const storedUser = getStoredUser();
   const deliveryAddress = storedUser?.address || '452 West 19th Street, Apt 4B\nChelsea, New York, NY 10011';
 
   const [uiState, setUiState] = useState(UI_STATES.READY);
   const [errorMessage, setErrorMessage] = useState('');
-  
+
   // Payment Method Selection (Only capturing mode now)
   const [paymentMethod, setPaymentMethod] = useState('card'); // 'card', 'upi', 'cod'
-  
+
   // Calculated Totals
   const subtotal = location.state?.computedSubtotal ?? getCartTotal();
   const deliveryFee = 0; // FREE
-  
+
   const [walletBalance, setWalletBalance] = useState(0);
   const [isLoadingWallet, setIsLoadingWallet] = useState(
     location.state?.computedWalletApplied !== undefined ? false : true
@@ -72,21 +72,21 @@ const CheckoutForm = () => {
       }
     };
     fetchWalletBalance();
-    
+
     const interval = setInterval(fetchWalletBalance, 5000);
     return () => clearInterval(interval);
   }, [location.state?.computedWalletApplied]);
-  
+
   // Max we can apply is the subtotal + deliveryFee + taxes (calculated without wallet first)
   const taxesPreWallet = location.state?.computedTaxes ?? (subtotal > 0 ? 4.50 : 0);
   const maxApplicableWallet = Math.min(walletBalance, subtotal + deliveryFee + taxesPreWallet);
-  
+
   const useWallet = location.state?.useWallet !== false; // default true if missing
   const walletApplied = location.state?.computedWalletApplied ?? (useWallet ? maxApplicableWallet : 0);
 
   const taxes = taxesPreWallet;
-  const totalPayStr = location.state?.computedTotalPay !== undefined 
-    ? location.state.computedTotalPay.toFixed(2) 
+  const totalPayStr = location.state?.computedTotalPay !== undefined
+    ? location.state.computedTotalPay.toFixed(2)
     : Math.max(0, subtotal > 0 ? subtotal + deliveryFee + taxes - walletApplied : 0).toFixed(2);
   const totalPayCents = Math.round(parseFloat(totalPayStr) * 100);
 
@@ -108,7 +108,7 @@ const CheckoutForm = () => {
       attempts++;
       try {
         let isPaid = false;
-        
+
         if (isMockMode) {
           await new Promise(r => setTimeout(r, 2000));
           isPaid = true;
@@ -122,9 +122,25 @@ const CheckoutForm = () => {
         if (isPaid) {
           clearInterval(pollingTimerRef.current);
           successTap();
-
+          //  FIX: Deduct wallet only AFTER payment is confirmed
+          if (walletApplied > 0) {
+            const txns = JSON.parse(localStorage.getItem('quickplate_wallet_txns') || '[]');
+            // ensure we don't deduct twice for same order
+            const alreadyDeducted = txns.some(t => t.description === 'Payment for order ' + orderId);
+            if (!alreadyDeducted) {
+              txns.unshift({
+                id: 'WTX-' + Math.floor(100000 + Math.random() * 900000),
+                amount: -walletApplied,
+                date: new Date().toISOString(),
+                type: 'Order Deduct',
+                description: 'Payment for order ' + orderId
+              });
+              localStorage.setItem('quickplate_wallet_txns', JSON.stringify(txns));
+              window.dispatchEvent(new Event('storage')); // Alert other listeners
+            }
+          }
           setUiState(UI_STATES.SUCCESS);
-          
+
           setTimeout(() => {
             clearCart();
             navigate(`/tracking/${orderId}`, { replace: true });
@@ -155,28 +171,12 @@ const CheckoutForm = () => {
 
     try {
       const orderId = location.state?.orderId;
-      
+
       if (!orderId) {
         throw new Error('Order tracking ID is missing. Please initiate from the cart.');
       }
 
-      // Deduct Wallet Balance Immediately upon purchase logic trigger
-      if (walletApplied > 0) {
-        const txns = JSON.parse(localStorage.getItem('quickplate_wallet_txns') || '[]');
-        // ensure we don't deduct twice for same order
-        const alreadyDeducted = txns.some(t => t.description === 'Payment for order ' + orderId);
-        if (!alreadyDeducted) {
-          txns.unshift({
-             id: 'WTX-' + Math.floor(100000 + Math.random() * 900000),
-             amount: -walletApplied,
-             date: new Date().toISOString(),
-             type: 'Order Deduct',
-             description: 'Payment for order ' + orderId
-          });
-          localStorage.setItem('quickplate_wallet_txns', JSON.stringify(txns));
-          window.dispatchEvent(new Event('storage')); // Alert other listeners
-        }
-      }
+
 
       if (totalPayCents === 0) {
         // Wallet covers everything, bypass external payment gateway
@@ -206,10 +206,10 @@ const CheckoutForm = () => {
           await new Promise(r => setTimeout(r, 1500));
         } else {
           await axios.post(`${API_BASE_URL}/create-payment-intent`, {
-             orderId, amount: totalPayCents, method: paymentMethod
-          }).catch(() => {});
+            orderId, amount: totalPayCents, method: paymentMethod
+          }).catch(() => { });
         }
-        
+
         startBackendPolling(orderId);
       }
     } catch (err) {
@@ -225,7 +225,7 @@ const CheckoutForm = () => {
       {/* ─── State Modals ─── */}
       <AnimatePresence mode="wait">
         {(uiState === UI_STATES.WAITING || uiState === UI_STATES.SUCCESS || uiState === UI_STATES.FAILED || isLoadingWallet) && (
-          <motion.div 
+          <motion.div
             className="checkout-state-overlay"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -247,10 +247,10 @@ const CheckoutForm = () => {
                 <p className="checkout-state-desc">Please don't close this screen while we verify the order securely.</p>
               </>
             )}
-            
+
             {uiState === UI_STATES.SUCCESS && (
               <>
-                <motion.span 
+                <motion.span
                   className="material-symbols-outlined state-icon-large success"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
@@ -268,8 +268,8 @@ const CheckoutForm = () => {
                 <span className="material-symbols-outlined state-icon-large error">error</span>
                 <h3 className="checkout-state-title">Transaction Failed</h3>
                 <p className="checkout-state-desc">{errorMessage}</p>
-                <button 
-                  className="retry-btn" 
+                <button
+                  className="retry-btn"
                   onClick={() => { lightTap(); isSubmittingRef.current = false; setUiState(UI_STATES.READY); setErrorMessage(''); }}
                 >
                   Retry Payment
@@ -282,9 +282,9 @@ const CheckoutForm = () => {
 
       <AnimatePresence mode="wait">
         {(uiState === UI_STATES.READY || uiState === UI_STATES.PROCESSING) && (
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }} 
-            animate={{ opacity: 1, y: 0 }} 
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             key="checkout-flow"
           >
@@ -317,7 +317,7 @@ const CheckoutForm = () => {
                     <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>receipt_long</span>
                   </div>
                 </div>
-                
+
                 {walletApplied > 0 && (
                   <div style={{
                     marginTop: '12px',
@@ -349,7 +349,7 @@ const CheckoutForm = () => {
                 <h2 className="co-section-title">Payment Method</h2>
 
                 {/* Card Option */}
-                <div 
+                <div
                   className={`co-method-row ${paymentMethod === 'card' ? 'selected' : ''}`}
                   onClick={() => { mediumTap(); setPaymentMethod('card'); }}
                 >
@@ -366,7 +366,7 @@ const CheckoutForm = () => {
                 </div>
 
                 {/* UPI Option */}
-                <div 
+                <div
                   className={`co-method-row ${paymentMethod === 'upi' ? 'selected' : ''}`}
                   onClick={() => { mediumTap(); setPaymentMethod('upi'); setErrorMessage(''); }}
                 >
@@ -383,7 +383,7 @@ const CheckoutForm = () => {
                 </div>
 
                 {/* COD Option */}
-                <div 
+                <div
                   className={`co-method-row ${paymentMethod === 'cod' ? 'selected' : ''}`}
                   onClick={() => { mediumTap(); setPaymentMethod('cod'); setErrorMessage(''); }}
                 >
@@ -433,15 +433,15 @@ const CheckoutForm = () => {
       {/* ─── Fixed Bottom Pay Button ─── */}
       <AnimatePresence>
         {(uiState === UI_STATES.READY || uiState === UI_STATES.PROCESSING) && (
-          <motion.div 
+          <motion.div
             className="checkout-fixed-bottom"
             initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }} 
+            animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
           >
             <div>
-              <button 
-                className="confirm-pay-btn" 
+              <button
+                className="confirm-pay-btn"
                 onClick={handlePaySubmit}
                 disabled={uiState === UI_STATES.PROCESSING}
               >
