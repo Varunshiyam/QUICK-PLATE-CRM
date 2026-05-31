@@ -207,7 +207,10 @@ const CheckoutForm = () => {
         } else {
           await axios.post(`${API_BASE_URL}/create-payment-intent`, {
             orderId, amount: totalPayCents, method: paymentMethod
-          }).catch(() => { });
+          }).catch((err) => {
+            console.error('Payment intent creation failed:', err);
+            throw err;
+          });
         }
 
         startBackendPolling(orderId);
