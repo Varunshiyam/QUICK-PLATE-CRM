@@ -70,6 +70,15 @@ const Cart = () => {
   const [isWalletLoading, setWalletLoading] =
     useState(true);
 
+    const [showMenu, setShowMenu] = useState(false);
+    const [showHelpModal, setShowHelpModal] = useState(false);
+    const [helpForm, setHelpForm] = useState({
+      issueType: '',
+      email: '',
+      description: ''
+      });
+    const [helpSubmitted, setHelpSubmitted] = useState(false);
+
   // ========================================
   // RESTAURANT CONTEXT
   // ========================================
@@ -483,6 +492,20 @@ const Cart = () => {
         restData
       );
     };
+    const handleHelpSubmit = () => {
+    if (!helpForm.issueType || !helpForm.email || !helpForm.description) {
+      alert('Please fill all fields.');
+      return;
+    }
+    console.log('Help Request:', helpForm);
+    setHelpSubmitted(true);
+    setTimeout(() => {
+      setShowHelpModal(false);
+      setHelpSubmitted(false);
+      setHelpForm({ issueType: '', email: '', description: '' });
+    }, 2000);
+};
+
 
   // ========================================
   // UI
@@ -533,30 +556,33 @@ const Cart = () => {
           </div>
 
           <button
-            className="cart-icon-btn"
-            onClick={() => setShowMenu(!showMenu)}
-          >
+          className="cart-icon-btn"
+          onClick={() => {
+            lightTap();
+            setShowMenu(!showMenu);
+          }}
+        >
+          <span className="material-symbols-outlined">
+            more_horiz
+          </span>
+        </button>
 
-            <span className="material-symbols-outlined">
-              more_horiz
-            </span>
-
-          </button>
-          {showMenu && (
-            <div
-              style={{
-                background: "white",
-                padding: "10px",
-                border: "1px solid black",
-                position: "absolute",
-                right: "0px",
-                top: "45px",
-                zIndex: 1000
+        {showMenu && (
+          <div className="cart-dropdown-menu">
+            <button
+              className="cart-dropdown-item"
+              onClick={() => {
+                setShowMenu(false);
+                setShowHelpModal(true);
               }}
             >
-              <p>View Details</p>
-            </div>
-          )}
+              <span className="material-symbols-outlined">
+                help_outline
+              </span>
+              Need Help?
+            </button>
+          </div>
+        )}
         </div>
 
       </header>
@@ -988,8 +1014,69 @@ const Cart = () => {
         </div>
 
       </nav>
+              {/* HELP MODAL */}
+      {showHelpModal && (
+        <div className="help-modal-overlay" onClick={() => setShowHelpModal(false)}>
+          <div className="help-modal" onClick={(e) => e.stopPropagation()}>
 
-    </div>
+            <div className="help-modal-header">
+              <h2>Need Help?</h2>
+              <button className="help-modal-close" onClick={() => setShowHelpModal(false)}>
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+
+            {helpSubmitted ? (
+              <div className="help-modal-success">
+                <span className="material-symbols-outlined">check_circle</span>
+                <p>Query submitted! We'll get back to you soon.</p>
+              </div>
+            ) : (
+              <>
+                <div className="help-modal-field">
+                  <label>Issue Type</label>
+                  <select
+                    value={helpForm.issueType}
+                    onChange={(e) => setHelpForm({ ...helpForm, issueType: e.target.value })}
+                  >
+                    <option value="">Select an issue</option>
+                    <option value="wrong_item">Wrong Item</option>
+                    <option value="payment_issue">Payment Issue</option>
+                    <option value="cancel_order">Cancel Order</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+
+                <div className="help-modal-field">
+                  <label>Your Email</label>
+                  <input
+                    type="email"
+                    placeholder="you@example.com"
+                    value={helpForm.email}
+                    onChange={(e) => setHelpForm({ ...helpForm, email: e.target.value })}
+                  />
+                </div>
+
+                <div className="help-modal-field">
+                  <label>Describe your issue</label>
+                  <textarea
+                    rows={4}
+                    placeholder="Tell us what went wrong..."
+                    value={helpForm.description}
+                    onChange={(e) => setHelpForm({ ...helpForm, description: e.target.value })}
+                  />
+                </div>
+
+                <button className="help-modal-submit" onClick={handleHelpSubmit}>
+                  Submit Query
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+    </div> 
   );
 };
 
