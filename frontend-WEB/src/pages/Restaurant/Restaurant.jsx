@@ -32,14 +32,14 @@ const Restaurant = () => {
   const RESTAURANT_INFO = { ...restaurantData, heroImg };
 
   const [activeTab, setActiveTab] = useState(MENU[0]?.category || 'Starters');
-  
+
   const { addToCart, getCartItemCount, getCartTotal, cartRestaurantId, cartRestaurant } = useAppStore();
 
   const handleAddToCart = (item) => {
     mediumTap();
     addToCart(item, RESTAURANT_INFO);
   };
-  
+
   const totalItemCount = getCartItemCount();
   const totalCartPrice = getCartTotal();
   // Safe extraction for ID logic below mapped to our whole object 
@@ -58,18 +58,18 @@ const Restaurant = () => {
     <div className="rest-page">
       {/* ─── Hero Image Section ─── */}
       <div className="rest-hero">
-        <div 
+        <div
           className="rest-hero-bg"
           style={{ backgroundImage: `url('${RESTAURANT_INFO.heroImg}')` }}
         />
         <div className="rest-hero-overlay" />
-        
+
         {/* Top Actions */}
         <div className="rest-hero-top">
           <button className="rest-glass-btn" onClick={() => { mediumTap(); navigate(-1); }}>
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
-          
+
           <div className="rest-top-actions">
             <button className="rest-glass-btn" onClick={lightTap}>
               <span className="material-symbols-outlined">search</span>
@@ -82,7 +82,7 @@ const Restaurant = () => {
 
         {/* Hero Info Details */}
         <div className="rest-hero-bottom">
-          <motion.h1 
+          <motion.h1
             className="rest-title"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -90,7 +90,7 @@ const Restaurant = () => {
           >
             {RESTAURANT_INFO.name}
           </motion.h1>
-          <motion.div 
+          <motion.div
             className="rest-meta"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -111,7 +111,7 @@ const Restaurant = () => {
           {restaurantBanners.map((banner) => (
             <div key={banner.id} className={`rest-banner-card theme-${banner.theme}`}>
               <div className="rest-banner-bg-img">
-                 <img src={banner.img} alt="" />
+                <img src={banner.img} alt="" />
               </div>
               <div className="rest-banner-content">
                 <div>
@@ -131,7 +131,7 @@ const Restaurant = () => {
       {/* ─── Sticky Tab Bar ─── */}
       <div className="rest-tabs">
         {MENU.map((section) => (
-          <button 
+          <button
             key={section.category}
             className={`rest-tab-item ${activeTab === section.category ? 'active' : ''}`}
             onClick={() => scrollToSection(section.category)}
@@ -144,8 +144,8 @@ const Restaurant = () => {
 
       {/* ─── Menu Items Flow ─── */}
       <div className="rest-content">
-        {MENU.map((section, sectionIdx) => (
-          <motion.div 
+        {MENU.filter(section => section.category === activeTab).map((section, sectionIdx) => (
+          <motion.div
             key={section.category}
             className="rest-section"
             ref={(el) => (sectionRefs.current[section.category] = el)}
@@ -156,11 +156,11 @@ const Restaurant = () => {
             custom={0.1}
           >
             <h2 className="rest-section-title">{section.category}</h2>
-            
+
             <div className="rest-menu-list">
               {section.items.map((item, itemIdx) => (
                 <div key={item.id} className="rest-menu-card">
-                  
+
                   <div className="rest-menu-info">
                     {item.badge && (
                       <div className="rest-badge">
@@ -190,7 +190,7 @@ const Restaurant = () => {
       {/* ─── Floating View Cart Action ─── */}
       <AnimatePresence>
         {totalItemCount > 0 && currentCartRestId === RESTAURANT_INFO.name && (
-          <motion.div 
+          <motion.div
             className="rest-floating-cart"
             initial={{ opacity: 0, y: 50, x: "-50%" }}
             animate={{ opacity: 1, y: 0, x: "-50%" }}
@@ -208,7 +208,7 @@ const Restaurant = () => {
         )}
       </AnimatePresence>
 
-      {/* ─── Sticky Bottom Navigation ─── */ }
+      {/* ─── Sticky Bottom Navigation ─── */}
       <nav className="rest-bottom-nav glass-nav-override">
         <div className="rest-nav-inner">
           <Link to="/home" className="rest-nav-item" onClick={lightTap}>
