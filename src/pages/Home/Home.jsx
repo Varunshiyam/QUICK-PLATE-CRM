@@ -575,7 +575,15 @@ const Home = () => {
                 transition={{ duration: 0.4 }}
               >
                 <div className="home-banner-bg-img">
-                   <img src={BANNERS[currentBanner].img} alt="" />
+                  <img
+                    src={BANNERS[currentBanner].img}
+                    alt={[
+                      BANNERS[currentBanner].supertitle,
+                      BANNERS[currentBanner].title,
+                      BANNERS[currentBanner].subtitle,
+                      'promotion',
+                    ].filter(Boolean).join(' ')}
+                  />
                 </div>
                 <div className="home-banner-content">
                   <div>
