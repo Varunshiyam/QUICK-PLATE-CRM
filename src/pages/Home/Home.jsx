@@ -676,6 +676,11 @@ const Home = () => {
         >
           <div className="home-section-header" style={{ padding: 0, marginBottom: '1.25rem' }}>
             <h2 className="home-section-title">Premium Selections</h2>
+            {isLoading ? (
+              <span className="home-count-placeholder">Loading...</span>
+            ) : (
+              <span className="home-restaurant-total">{filteredRestaurants.length} restaurants</span>
+            )}
             <button className="home-section-action" onClick={lightTap} style={{ color: '#94A3B8' }}>
               See all
             </button>

@@ -726,6 +726,28 @@
   color: #0F172A;
 }
 
+.home-restaurant-total {
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+  margin-left: 0.5rem;
+  flex-shrink: 0;
+}
+
+.home-count-placeholder {
+  font-size: 13px;
+  font-weight: 500;
+  color: #94a3b8;
+  margin-left: 0.5rem;
+  flex-shrink: 0;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
 .home-section-action {
   font-size: 13px;
   font-weight: 700;
