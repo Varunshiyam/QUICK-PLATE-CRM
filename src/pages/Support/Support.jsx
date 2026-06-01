@@ -455,7 +455,7 @@ const Support = () => {
             onClick={lightTap}
           >
             <span className="material-symbols-outlined">home</span>
-            <span>Home</span>
+            <span className="home-nav-label">Home</span>
           </Link>
 
           <Link
@@ -464,7 +464,7 @@ const Support = () => {
             onClick={lightTap}
           >
             <span className="material-symbols-outlined">explore</span>
-            <span>Discover</span>
+            <span className="home-nav-label">Discover</span>
           </Link>
 
           <Link
@@ -475,16 +475,16 @@ const Support = () => {
             <span className="material-symbols-outlined">
               receipt_long
             </span>
-            <span>Orders</span>
+            <span className="home-nav-label">Orders</span>
           </Link>
 
           <Link
             to="/profile"
-            className="home-nav-item"
+            className="home-nav-item active"
             onClick={lightTap}
           >
             <span className="material-symbols-outlined">person</span>
-            <span>Profile</span>
+            <span className="home-nav-label">Profile</span>
           </Link>
 
         </div>
