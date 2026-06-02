@@ -72,8 +72,8 @@ describe('Restaurant Page Component Tests', () => {
     expect(screen.getByText('• 15-20 min • $$')).toBeInTheDocument();
 
     // Verify category tabs exist
-    expect(screen.getByText('Starters')).toBeInTheDocument();
-    expect(screen.getByText('Main Course')).toBeInTheDocument();
+    expect(screen.getAllByText('Starters')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('Main Course')[0]).toBeInTheDocument();
   });
 
   it('triggers addToCart when ADD button is clicked', () => {
