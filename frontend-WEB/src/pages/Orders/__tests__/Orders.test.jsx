@@ -30,14 +30,14 @@ describe('Orders Component Tests', () => {
   });
 
   it('renders mock orders when in mock mode (no API base URL)', async () => {
-    render(
+    const { container } = render(
       <MemoryRouter>
         <Orders />
       </MemoryRouter>
     );
 
     // Initial loading indicator
-    expect(screen.getByClassName('orders-spinner')).toBeInTheDocument();
+    expect(container.querySelector('.orders-spinner')).toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByText("Joe's Pizza")).toBeInTheDocument();

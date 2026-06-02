@@ -72,6 +72,8 @@ describe('Discover Component Tests', () => {
     expect(searchInput).toBeInTheDocument();
 
     fireEvent.change(searchInput, { target: { value: 'Sakura' } });
-    expect(screen.getByText('Sakura Omakase')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Sakura Omakase')).toBeInTheDocument();
+    });
   });
 });
