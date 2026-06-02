@@ -139,7 +139,7 @@ describe('Cart Component Tests', () => {
       expect(screen.getByText('Truffle Burger')).toBeInTheDocument();
     });
 
-    const checkoutBtn = screen.getByRole('button', { name: /Proceed to Pay/i || /Checkout/i || /Pay/i || /Order/i || /Place/i });
+    const checkoutBtn = screen.getByRole('button', { name: /Proceed to Checkout/i });
     fireEvent.click(checkoutBtn);
 
     await waitFor(() => {
