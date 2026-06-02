@@ -41,7 +41,7 @@ describe('Orders Component Tests', () => {
 
     await waitFor(() => {
       expect(screen.getByText("Joe's Pizza")).toBeInTheDocument();
-      expect(screen.getByText("The Burger Joint")).toBeInTheDocument();
+      expect(screen.getByText("Sushi Zen - Omakase")).toBeInTheDocument();
     });
   });
 
@@ -59,7 +59,9 @@ describe('Orders Component Tests', () => {
     const ticketsTab = screen.getByText('Support Tickets');
     fireEvent.click(ticketsTab);
 
-    expect(screen.getByText('Active Tickets')).toBeInTheDocument();
-    expect(screen.getByText('Past Tickets')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Active Tickets')).toBeInTheDocument();
+      expect(screen.getByText('The Burger Joint')).toBeInTheDocument();
+    });
   });
 });
