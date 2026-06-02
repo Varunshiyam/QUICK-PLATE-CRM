@@ -47,12 +47,15 @@ import axiosMock from 'axios';
 describe('PaymentSuccess Component Tests', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.useFakeTimers();
     mockSearchParams = new URLSearchParams('orderId=ORD-999');
+    vi.spyOn(global, 'setTimeout').mockImplementation((cb) => {
+      cb();
+      return 123;
+    });
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    vi.restoreAllMocks();
   });
 
   it('renders verifying state and handles successful payment polling', async () => {
@@ -69,17 +72,11 @@ describe('PaymentSuccess Component Tests', () => {
     // Initial check
     expect(screen.getByText('Verifying Payment...')).toBeInTheDocument();
 
-    // Wait for the SUCCESS text
+    // Wait for SUCCESS state and navigation redirect
     await waitFor(() => {
       expect(screen.getByText('Payment Successful!')).toBeInTheDocument();
+      expect(mockNavigate).toHaveBeenCalledWith('/tracking/ORD-999', { replace: true });
     });
-
-    // Now advance the timer for navigation (3500ms)
-    act(() => {
-      vi.advanceTimersByTime(3500);
-    });
-
-    expect(mockNavigate).toHaveBeenCalledWith('/tracking/ORD-999', { replace: true });
   });
 
   it('renders error state if orderId is missing', () => {
