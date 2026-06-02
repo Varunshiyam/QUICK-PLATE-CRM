@@ -44,13 +44,18 @@ vi.mock('../../../store/useAppStore', () => {
 import PaymentSuccess from '../PaymentSuccess';
 import axiosMock from 'axios';
 
+const originalSetTimeout = global.setTimeout;
+
 describe('PaymentSuccess Component Tests', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockSearchParams = new URLSearchParams('orderId=ORD-999');
-    vi.spyOn(global, 'setTimeout').mockImplementation((cb) => {
-      cb();
-      return 123;
+    vi.spyOn(global, 'setTimeout').mockImplementation((cb, delay) => {
+      if (delay === 3500) {
+        cb();
+        return 123;
+      }
+      return originalSetTimeout(cb, delay);
     });
   });
 
