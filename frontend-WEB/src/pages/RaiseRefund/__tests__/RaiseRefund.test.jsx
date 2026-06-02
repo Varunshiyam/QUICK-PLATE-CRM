@@ -53,14 +53,14 @@ describe('RaiseRefund Component Tests', () => {
 
     axiosMock.post.mockResolvedValueOnce({ data: { success: true } });
 
-    render(
+    const { container } = render(
       <MemoryRouter>
         <RaiseRefund />
       </MemoryRouter>
     );
 
     // Enter email and description
-    const emailInput = screen.getByLabelText(/Contact Email/i);
+    const emailInput = container.querySelector('input[name="contactEmail"]');
     fireEvent.change(emailInput, { target: { value: 'user@test.com' } });
 
     const descTextarea = screen.getByPlaceholderText(/Tell us what happened/i);
