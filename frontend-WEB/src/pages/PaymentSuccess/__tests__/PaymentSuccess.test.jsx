@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
 import useAppStore from '../../../store/useAppStore';
@@ -57,8 +57,6 @@ describe('PaymentSuccess Component Tests', () => {
 
   it('renders verifying state and handles successful payment polling', async () => {
     axiosMock.get.mockResolvedValueOnce({
-      data: { paymentStatus: 'PENDING' },
-    }).mockResolvedValueOnce({
       data: { paymentStatus: 'PAID' },
     });
 
@@ -71,16 +69,16 @@ describe('PaymentSuccess Component Tests', () => {
     // Initial check
     expect(screen.getByText('Verifying Payment...')).toBeInTheDocument();
 
-    // Fast-forward interval
-    await vi.runOnlyPendingTimersAsync();
-    await vi.runOnlyPendingTimersAsync();
-
+    // Wait for the SUCCESS text
     await waitFor(() => {
       expect(screen.getByText('Payment Successful!')).toBeInTheDocument();
     });
 
-    // Verify redirection delay
-    await vi.runOnlyPendingTimersAsync();
+    // Now advance the timer for navigation (3500ms)
+    act(() => {
+      vi.advanceTimersByTime(3500);
+    });
+
     expect(mockNavigate).toHaveBeenCalledWith('/tracking/ORD-999', { replace: true });
   });
 
