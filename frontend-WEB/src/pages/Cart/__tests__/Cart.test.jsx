@@ -2,10 +2,6 @@ import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-
-// Define API base url before importing Cart
-import.meta.env.VITE_API_BASE_URL = 'https://api.quickplate.com';
-
 import Cart from '../Cart';
 import useAppStore from '../../../store/useAppStore';
 import axios from 'axios';
@@ -20,11 +16,14 @@ vi.mock('framer-motion', () => ({
   AnimatePresence: ({ children }) => <>{children}</>,
 }));
 
-vi.mock('../../../services/firebase', () => ({
-  auth: {
-    currentUser: null,
-  },
-}));
+vi.mock('../../../services/firebase', () => {
+  import.meta.env.VITE_API_BASE_URL = 'https://api.quickplate.com';
+  return {
+    auth: {
+      currentUser: null,
+    },
+  };
+});
 
 vi.mock('../../../hooks/useHaptic', () => ({
   default: () => ({
