@@ -1043,3 +1043,73 @@
 .filter-apply-btn:active {
   transform: scale(0.98);
 }
+
+/* ─── Recently Ordered Section ─── */
+.home-recent-orders {
+  padding: 1.5rem 1rem 0;
+}
+
+.home-recent-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.home-recent-card {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  background: #ffffff;
+  border-radius: 1.25rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid rgba(251, 126, 24, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.home-recent-img {
+  width: 52px;
+  height: 52px;
+  border-radius: 0.75rem;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+}
+
+.home-recent-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.home-recent-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home-recent-meta {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.home-recent-reorder-btn {
+  flex-shrink: 0;
+  background: var(--color-primary);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(251, 126, 24, 0.2);
+  transition: transform 0.15s;
+}
+
+.home-recent-reorder-btn:active {
+  transform: scale(0.95);
+}

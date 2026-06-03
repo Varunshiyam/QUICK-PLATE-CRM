@@ -6,6 +6,7 @@ import useAppStore from '../../store/useAppStore';
 import { logoutUser, getStoredUser } from '../../services/firebase';
 import { fetchRestaurants } from '../../services/restaurantService';
 import './Home.css';
+import RecentOrders from '../../components/ui/RecentOrders';
 
 /* ─── Mock Data ─── */
 import userEmoji from '../../assets/images/Emoji.avif';
@@ -490,6 +491,8 @@ const Home = () => {
             </AnimatePresence>
           </div>
         </motion.section>
+        {/* ─── Recently Ordered ─── */}
+        <RecentOrders onHaptic={lightTap} />
 
         {/* ─── Premium Selections ─── */}
         <motion.section
