@@ -119,14 +119,90 @@ const fadeUp = {
   }),
 };
 
+const sort_by = [
+  {
+    name: "Recommended",
+    icon: "star",
+    details: "Top picks for you"
+  },
+  {
+    name: "Rating",
+    icon: "grade",
+    details: "High to low"
+  },
+  {
+    name: "Delivery Time",
+    icon: "schedule",
+    details: "Fastest First"
+  },
+  {
+    name: "Offers",
+    icon: "local_offer",
+    details: "Best offers first"
+  },
+  {
+    name: "Popularity",
+    icon: "local_fire_department",
+    details: "Most popular"
+  },
+]
+
+const cuisines = [
+  { name: "All", icon: "apps" },
+  { name: "Modern American", icon: "restaurant" },
+  { name: "Indian Fusion", icon: "rice_bowl" },
+  { name: "Japanese", icon: "ramen_dining" },
+  { name: "BBQ & Grill", icon: "outdoor_grill" },
+  { name: "Mediterranean", icon: "local_florist" },
+  { name: "Bakery & Pastry", icon: "bakery_dining" },
+  { name: "Desserts & Cakes", icon: "cake" },
+  { name: "Italian Pizza", icon: "local_pizza" },
+  { name: "Pizza", icon: "local_pizza" },
+  { name: "Japanese Sushi", icon: "set_meal" },
+  { name: "American Burgers", icon: "lunch_dining" },
+  { name: "American BBQ", icon: "outdoor_grill" },
+]
+
+const DEFAULT_PRICE_RANGE = {
+  min: 5,
+  max: 50,
+};
+
+const getRestaurantPriceValue = (price = '$$') => {
+  const priceMap = {
+    '$': 5,
+    '$$': 10,
+    '$$$': 25,
+    '$$$$': 50,
+  };
+
+  return priceMap[price] ?? 10;
+};
+
+const getReviewCount = (reviews = '0') => {
+  const value = String(reviews).toLowerCase();
+  const number = parseFloat(value);
+
+  if (Number.isNaN(number)) return 0;
+  return value.includes('k') ? number * 1000 : number;
+};
+
 const Home = () => {
   const { lightTap, mediumTap } = useHaptic();
   const navigate = useNavigate();
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCuisine, setActiveCuisine] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   
   const [restaurants, setRestaurants] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [priceRange, setPriceRange] = useState({
+    ...DEFAULT_PRICE_RANGE,
+  });
+
+  const MIN_PRICE = 5;
+  const MAX_PRICE = 50;
+  const getPricePercent = (value) => ((value - MIN_PRICE) / (MAX_PRICE - MIN_PRICE)) * 100;
 
   // Fetch from Salesforce on mount
   useEffect(() => {
@@ -181,6 +257,9 @@ const Home = () => {
   const cartItemCount = getCartItemCount();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [activeSort, setActiveSort] = useState('Recommended');
+  const [draftSort, setDraftSort] = useState(activeSort);
+  const [draftCuisine, setDraftCuisine] = useState(activeCuisine);
+  const [draftPriceRange, setDraftPriceRange] = useState(priceRange);
   const [currentBanner, setCurrentBanner] = useState(0);
 
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
@@ -211,6 +290,31 @@ const Home = () => {
     return () => clearInterval(timer);
   }, []);
 
+  const openFilterSheet = () => {
+    setDraftSort(activeSort);
+    setDraftCuisine(activeCuisine);
+    setDraftPriceRange(priceRange);
+    setIsFilterOpen(true);
+  };
+
+  const applyFilters = () => {
+    setActiveSort(draftSort);
+    setActiveCuisine(draftCuisine);
+    setPriceRange(draftPriceRange);
+    setIsFilterOpen(false);
+    mediumTap();
+  };
+
+  const resetFilters = () => {
+    setDraftSort('Recommended');
+    setDraftCuisine('All');
+    setDraftPriceRange(DEFAULT_PRICE_RANGE);
+    setActiveSort('Recommended');
+    setActiveCuisine('All');
+    setPriceRange(DEFAULT_PRICE_RANGE);
+    mediumTap();
+  };
+
   // Filter & Sort Logic
   const filteredRestaurants = useMemo(() => {
     let result = restaurants;
@@ -220,31 +324,51 @@ const Home = () => {
       result = result.filter(r => r.name.toLowerCase().includes(q) || r.cuisine.toLowerCase().includes(q));
     }
     
-    if (activeCategory !== 'All') {
+    if (activeCuisine !== 'All') {
       result = result.filter(r => {
         const c = r.cuisine.toLowerCase();
-        if (activeCategory === 'Bakery') return c.includes('bakery') || c.includes('dessert') || r.name.toLowerCase().includes('sweet');
-        if (activeCategory === 'Pizza') return c.includes('pizza') || c.includes('italian');
-        if (activeCategory === 'Sushi') return c.includes('sushi') || c.includes('japanese');
-        if (activeCategory === 'Burgers') return c.includes('burger') || c.includes('american') || c.includes('bbq');
-        return true;
+        if (activeCuisine === 'Bakery') return c.includes('bakery') || c.includes('dessert') || r.name.toLowerCase().includes('sweet');
+        if (activeCuisine === 'Pizza') return c.includes('pizza') || c.includes('italian');
+        if (activeCuisine === 'Sushi') return c.includes('sushi') || c.includes('japanese');
+        if (activeCuisine === 'Burgers') return c.includes('burger') || c.includes('american') || c.includes('bbq');
+        return c.includes(activeCuisine.toLowerCase());
       });
     }
+
+    result = result.filter(r => {
+      const priceValue = getRestaurantPriceValue(r.price);
+      return priceValue >= priceRange.min && priceValue <= priceRange.max;
+    });
 
     if (activeSort === 'Rating') {
       result = [...result].sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
     } else if (activeSort === 'Delivery Time') {
       result = [...result].sort((a, b) => parseInt(a.time) - parseInt(b.time));
+    } else if (activeSort === 'Offers') {
+      result = [...result].sort((a, b) => (b.offer ? 1 : 0) - (a.offer ? 1 : 0));
+    } else if (activeSort === 'Popularity') {
+      result = [...result].sort((a, b) => getReviewCount(b.reviews) - getReviewCount(a.reviews));
     }
     
     return result;
-  }, [restaurants, searchQuery, activeCategory, activeSort]);
+  }, [restaurants, searchQuery, activeCuisine, activeSort, priceRange]);
 
   const filteredTrending = useMemo(() => {
     if (!searchQuery) return TRENDING;
     const q = searchQuery.toLowerCase();
     return TRENDING.filter(item => item.name.toLowerCase().includes(q) || item.badge.toLowerCase().includes(q));
   }, [searchQuery]);
+
+  const activeFilterCount = (
+    (activeCuisine !== 'All' ? 1 : 0) +
+    (activeSort !== 'Recommended' ? 1 : 0) +
+    (
+      priceRange.min !== DEFAULT_PRICE_RANGE.min ||
+      priceRange.max !== DEFAULT_PRICE_RANGE.max
+        ? 1
+        : 0
+    )
+  );
 
   return (
     <div className="home-page">
@@ -374,8 +498,11 @@ const Home = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button className="home-search-filter" onClick={() => { mediumTap(); setIsFilterOpen(true); }}>
+            <button className="home-search-filter" onClick={() => { mediumTap(); openFilterSheet(); }}>
               <span className="material-symbols-outlined">tune</span>
+              {activeFilterCount > 0 && (
+                <span className="home-filter-count">{activeFilterCount}</span>
+              )}
             </button>
           </div>
         </div>
@@ -440,12 +567,12 @@ const Home = () => {
             <div
               key={cat.label}
               className="home-cat-item"
-              onClick={() => { setActiveCategory(cat.label); lightTap(); }}
+              onClick={() => { setActiveCuisine(cat.label); lightTap(); }}
             >
-              <div className={`home-cat-icon ${activeCategory === cat.label ? 'active' : 'inactive'}`}>
+              <div className={`home-cat-icon ${activeCuisine === cat.label ? 'active' : 'inactive'}`}>
                 <span className="material-symbols-outlined">{cat.icon}</span>
               </div>
-              <span className={`home-cat-label ${activeCategory === cat.label ? 'active' : 'inactive'}`}>
+              <span className={`home-cat-label ${activeCuisine === cat.label ? 'active' : 'inactive'}`}>
                 {cat.label}
               </span>
             </div>
@@ -652,32 +779,115 @@ const Home = () => {
               
               <div className="filter-section">
                 <h4>Sort By</h4>
-                <div className="filter-chips">
-                  {['Recommended', 'Rating', 'Delivery Time'].map(sort => (
+                <div className="sort-grid">
+                  {sort_by.map(sort => (
                     <button 
-                      key={sort} 
-                      className={`filter-chip ${activeSort === sort ? 'active' : ''}`}
-                      onClick={() => { setActiveSort(sort); lightTap(); }}
+                      key={sort.name} 
+                      className={`sort-card ${draftSort === sort.name ? 'active' : ''}`}
+                      onClick={() => { setDraftSort(sort.name); lightTap(); }}
                     >
-                      {sort}
+                      <div className='sort-icon'>
+                        <span className='material-symbols-outlined'>{sort.icon}</span>
+                      </div>
+                      <div className="sort-content">
+                        <h3>{sort.name}</h3>
+                        <p>{sort.details}</p>
+                      </div>
                     </button>
                   ))}
                 </div>
               </div>
 
+              <div className='partition'></div>
+
               <div className="filter-section">
                 <h4>Price Range</h4>
-                <div className="filter-chips">
-                  {['$', '$$', '$$$', '$$$$'].map(price => (
-                    <button key={price} className="filter-chip">{price}</button>
+                <div className="price-slider-container">
+                  <div className="slider-wrapper">
+                    <div className="slider-track"></div>
+
+                    <div className="slider-range"
+                      style={{
+                        left: `${getPricePercent(draftPriceRange.min)}%`,
+                        width: `${getPricePercent(draftPriceRange.max) - getPricePercent(draftPriceRange.min)}%`
+                      }}
+                    />
+
+                    <input 
+                      type="range" 
+                      min={MIN_PRICE}
+                      max={MAX_PRICE}
+                      value={draftPriceRange.min}
+                      onChange={(e) => 
+                        setDraftPriceRange(prev => ({
+                          ...prev, min: Math.min(Number(e.target.value), prev.max - 1)
+                        }))
+                      } 
+                      className='thumb thumb-left'
+                      aria-label="Minimum price"
+                    />
+                    
+                    <input 
+                      type="range" 
+                      min={MIN_PRICE}
+                      max={MAX_PRICE}
+                      value={draftPriceRange.max}
+                      onChange={(e) => 
+                        setDraftPriceRange(prev => ({
+                          ...prev, max: Math.max(Number(e.target.value), prev.min + 1)
+                        }))
+                      } 
+                      className='thumb thumb-right'
+                      aria-label="Maximum price"
+                    />
+                  </div>
+                  <div className="price-scale">
+                    <div>
+                      <span>Min</span>
+                    </div>
+                    <div>
+                      <span>$10</span>
+                    </div>
+                    <div>
+                      <span>$25</span>
+                    </div>
+                    <div>
+                      <span>$50+</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="partition"></div>
+              
+              <div className="filter-section">
+                <h4>Cuisines</h4>
+                <div className='cuisines'>
+                  {cuisines.map(cuisine => (
+                    <button
+                      key={cuisine.name}
+                      className={`cuisine-chip ${draftCuisine === cuisine.name ? 'active' : ''}`}
+                      onClick={() => { setDraftCuisine(cuisine.name); lightTap(); }}
+                    >
+                      <span className='material-symbols-outlined'>{cuisine.icon}</span>
+                      {cuisine.name}
+                    </button>
                   ))}
                 </div>
               </div>
 
               <div className="filter-actions">
                 <button 
+                  className="filter-reset-btn"
+                  onClick={() => { 
+                    resetFilters();
+                  }}
+                >
+                  Reset All
+                </button>
+                <button 
                   className="filter-apply-btn"
-                  onClick={() => { setIsFilterOpen(false); mediumTap(); }}
+                  onClick={applyFilters}
                 >
                   Apply Filters
                 </button>
