@@ -92,6 +92,18 @@ const TRENDING = [
   { img: IMG.grill,   badge: 'Hot Seller',     name: 'Truffle Burger Series', price: 'Exclusive menu items' },
 ];
 
+// Fallback mock restaurants (used when API is unavailable)
+const MOCK_RESTAURANTS = [
+  { id: 'm1', name: 'Morning Bliss Bakery',    img: imgMorningBliss,    cuisine: 'Bakery & Pastry',   price: '$$',  distance: '0.9 mi', time: '15-25 min', rating: '4.9', reviews: '1.5k', offer: 'FRESH OUT THE OVEN',       offerColor: 'orange' },
+  { id: 'm2', name: 'Sweet Tooth Confections', img: imgSweetTooth,      cuisine: 'Desserts & Cakes',  price: '$$$', distance: '1.2 mi', time: '20-30 min', rating: '4.8', reviews: '950',  offer: 'BUY 1 GET 1 HALF OFF',    offerColor: 'indigo' },
+  { id: 'm3', name: 'Napoli Woodfired Pizza',  img: imgNapoliWoodfired, cuisine: 'Italian Pizza',     price: '$$',  distance: '1.8 mi', time: '25-40 min', rating: '4.7', reviews: '3.2k', offer: 'FREE GARLIC KNOTS',        offerColor: 'orange' },
+  { id: 'm4', name: 'Slice & Stone',           img: imgSliceStone,      cuisine: 'Pizza',             price: '$$$', distance: '2.1 mi', time: '30-45 min', rating: '4.9', reviews: '2.8k', offer: '20% OFF PREMIUM',          offerColor: 'indigo' },
+  { id: 'm5', name: 'Zen Sushi Lounge',        img: imgZenSushi,        cuisine: 'Japanese Sushi',    price: '$$$$',distance: '3.5 mi', time: '35-50 min', rating: '4.9', reviews: '1.1k', offer: 'COMPLIMENTARY MISO',       offerColor: 'orange' },
+  { id: 'm6', name: 'Tokyo Nights Rollhouse',  img: imgTokyoNights,     cuisine: 'Japanese',          price: '$$$', distance: '1.4 mi', time: '20-35 min', rating: '4.8', reviews: '890',  offer: 'LATE NIGHT DEALS',         offerColor: 'indigo' },
+  { id: 'm7', name: 'Smash & Stack Burgers',   img: imgSmashStack,      cuisine: 'American Burgers',  price: '$$',  distance: '0.6 mi', time: '15-20 min', rating: '4.6', reviews: '4.5k', offer: 'FREE FRIES W/ COMBO',      offerColor: 'orange' },
+  { id: 'm8', name: 'The Meltdown Grill',      img: imgMeltdownGrill,   cuisine: 'American BBQ',      price: '$$$', distance: '1.9 mi', time: '25-30 min', rating: '4.8', reviews: '750',  offer: 'DOUBLE CHEESE FREE',       offerColor: 'indigo' },
+];
+
 // RESTAURANTS fetched dynamically
 
 const RESTAURANT_METADATA = {
@@ -157,7 +169,7 @@ const Home = () => {
             id: r.id,
             name: r.name,
             img: mappedImg,
-            cuisine: meta.cuisine || r.city || 'Local',
+            cuisine: meta.cuisine || 'Local Cuisine',
             price: meta.price || '$$',
             distance: meta.distance || '1.5 mi',
             time: meta.time || (r.avgPrepTime ? `${r.avgPrepTime} min` : '20-30 min'),
@@ -169,7 +181,8 @@ const Home = () => {
         });
         setRestaurants(formatted);
       } catch (err) {
-        console.error('Failed to load restaurants:', err);
+        console.error('Failed to load restaurants, using mock data:', err);
+        setRestaurants(MOCK_RESTAURANTS);
       } finally {
         setIsLoading(false);
       }

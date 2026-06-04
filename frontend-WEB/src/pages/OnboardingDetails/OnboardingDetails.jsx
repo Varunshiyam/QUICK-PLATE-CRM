@@ -95,12 +95,14 @@ const OnboardingDetails = () => {
     try {
       const idToken = await currentUser.getIdToken(true);
       
-      await axios.patch(`${API_BASE_URL}/services/apexrest/customer/profile`, {
-        idToken,
-        fullName: form.fullName.trim(),
-        phone: form.phone.trim(),
-        address: address
-      });
+      if (API_BASE_URL) {
+        await axios.patch(`${API_BASE_URL}/services/apexrest/customer/profile`, {
+          idToken,
+          fullName: form.fullName.trim(),
+          phone: form.phone.trim(),
+          address: address
+        });
+      }
 
       const storedRaw = localStorage.getItem('quickplate_user');
       if (storedRaw) {

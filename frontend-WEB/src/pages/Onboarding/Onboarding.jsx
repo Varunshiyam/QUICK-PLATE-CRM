@@ -4,8 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import useHaptic from '../../hooks/useHaptic';
 import useAppStore from '../../store/useAppStore';
-import { signInWithGoogleAndSync } from '../../services/firebase';
+import { signInWithGoogleAndSync, isFirebaseConfigured } from '../../services/firebase';
 import './Onboarding.css';
+
+const DEV_USER = {
+  firebaseUid: 'dev-001',
+  customerId: null,
+  name: 'Dev User',
+  email: 'dev@quickplate.com',
+  photoURL: null,
+  profileComplete: true,
+};
 
 /* ─── Mock Food Images for Carousel ─── */
 const FOOD_IMAGES = [
@@ -40,6 +49,22 @@ const Onboarding = () => {
 
   const handleGoogleLogin = async () => {
     mediumTap();
+
+    // Dev mode: no Firebase credentials → skip auth entirely
+    if (!isFirebaseConfigured) {
+      setUser({
+        uid: DEV_USER.firebaseUid,
+        customerId: DEV_USER.customerId,
+        displayName: DEV_USER.name,
+        email: DEV_USER.email,
+        photoURL: DEV_USER.photoURL,
+        method: 'dev',
+        profileComplete: DEV_USER.profileComplete,
+      });
+      navigate('/home');
+      return;
+    }
+
     try {
       const dbUser = await signInWithGoogleAndSync();
       setUser({
@@ -52,7 +77,6 @@ const Onboarding = () => {
         profileComplete: dbUser.profileComplete,
       });
       toast.success('Successfully logged in with Google!');
-      
       if (dbUser.profileComplete) {
         navigate('/home');
       } else {
