@@ -32,6 +32,8 @@ const Restaurant = () => {
   const RESTAURANT_INFO = { ...restaurantData, heroImg };
 
   const [activeTab, setActiveTab] = useState(MENU[0]?.category || 'Starters');
+
+  const [foodFilter, setFoodFilter] = useState('all');
   
   const { addToCart, getCartItemCount, getCartTotal, cartRestaurantId, cartRestaurant } = useAppStore();
 
@@ -181,6 +183,29 @@ const Restaurant = () => {
         ))}
       </div>
 
+<div className="food-filter">
+  <button
+    className={foodFilter === 'all' ? 'active' : ''}
+    onClick={() => setFoodFilter('all')}
+  >
+    All
+  </button>
+
+  <button
+    className={foodFilter === 'veg' ? 'active' : ''}
+    onClick={() => setFoodFilter('veg')}
+  >
+    🟢 Veg
+  </button>
+
+  <button
+    className={foodFilter === 'nonveg' ? 'active' : ''}
+    onClick={() => setFoodFilter('nonveg')}
+  >
+    🔴 Non-Veg
+  </button>
+</div>
+
       {/* ─── Menu Items Flow ─── */}
       <div className="rest-content">
         {MENU.map((section, sectionIdx) => (
@@ -197,9 +222,15 @@ const Restaurant = () => {
           >
             <h2 className="rest-section-title">{section.category}</h2>
             
+            
             <div className="rest-menu-list">
-              {section.items.map((item, itemIdx) => (
-                <div key={item.id} className="rest-menu-card">
+{section.items
+  .filter(
+    (item) =>
+      foodFilter === 'all' ||
+      item.foodType === foodFilter
+  )
+  .map((item, itemIdx) => (                <div key={item.id} className="rest-menu-card">
                   
                   <div className="rest-menu-info">
                     {item.badge && (
