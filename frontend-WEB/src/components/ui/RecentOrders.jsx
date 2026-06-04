@@ -16,7 +16,7 @@ const RecentOrders = ({ onHaptic }) => {
       const stored = JSON.parse(localStorage.getItem('quickplate_orders') || '[]');
       const past = stored
         .filter(o =>
-          ['DELIVERED', 'Delivered', 'REFUNDED'].includes(o.status)
+          ['DELIVERED', 'Delivered', 'REFUNDED', 'Refunded'].includes(o.status)
         )
         .slice(0, 3);
       setRecentOrders(past);
@@ -57,7 +57,18 @@ const RecentOrders = ({ onHaptic }) => {
             {order.status !== 'REFUNDED' && (
               <button
                 className="home-recent-reorder-btn"
-                onClick={() => { onHaptic?.(); navigate('/restaurant'); }}
+                onClick={() => { 
+                  onHaptic?.(); 
+                  navigate('/restaurant', { 
+                    state: { 
+                      restaurant: { 
+                        id: order.restaurantId || order.id, 
+                        name: order.restaurantName,
+                        img: order.image 
+                    } 
+                } 
+            }); 
+        }}
               >
                 Reorder
               </button>
