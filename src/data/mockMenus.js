@@ -7,7 +7,7 @@ export const mockMenus = {
       category: 'Starters',
       items: [
         { id: 'bks1', title: 'Warm Cinnamon Pecan Roll', desc: 'Fresh out the oven, coated in sweet cream cheese glaze and toasted pecans.', price: '$5.50', badge: 'Best Seller', img: menuAssets.bks1_cinnamon_roll,foodType: 'veg' },
-        { id: 'bks2', title: 'Blueberry Scones', desc: 'Buttery, flakey, loaded with wild blueberries.', price: '$4.00', img: menuAssets.bks2_scones },
+        { id: 'bks2', title: 'Blueberry Scones', desc: 'Buttery, flakey, loaded with wild blueberries.', price: '$4.00', img: menuAssets.bks2_scones,foodType: 'veg' },
       ]
     },
     {

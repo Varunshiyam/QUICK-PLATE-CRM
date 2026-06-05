@@ -263,8 +263,8 @@
   width: 100%;
   border-radius: 4px;
   margin-top: 4px;
-  background: transparent;
-  transition: background 0.2s;
+  background-color: transparent;
+transition: background-color 0.2s;
 }
 
 .rest-tab-item.active .rest-tab-indicator {
@@ -383,8 +383,7 @@
   align-items: center;
   gap: 2px;
   cursor: pointer;
-  transition: transform 0.15s, background0.15s;
-}
+transition: transform 0.15s ease, background-color 0.15s ease;}
 
 .rest-add-btn .material-symbols-outlined {
   font-size: 14px;
