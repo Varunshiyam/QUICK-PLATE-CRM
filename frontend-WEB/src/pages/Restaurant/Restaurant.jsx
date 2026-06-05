@@ -146,25 +146,25 @@ const Restaurant = () => {
 
 <div className="food-filter">
   <button
-    className={foodFilter === 'all' ? 'active' : ''}
-    onClick={() => setFoodFilter('all')}
-  >
-    All
-  </button>
+  className={`all-btn ${foodFilter === 'all' ? 'active' : ''}`}
+  onClick={() => setFoodFilter('all')}
+>
+  All
+</button>
 
   <button
-    className={foodFilter === 'veg' ? 'active' : ''}
-    onClick={() => setFoodFilter('veg')}
-  >
-    🟢 Veg
-  </button>
+  className={`veg-btn ${foodFilter === 'veg' ? 'active' : ''}`}
+  onClick={() => setFoodFilter('veg')}
+>
+  🟢 Veg
+</button>
 
   <button
-    className={foodFilter === 'nonveg' ? 'active' : ''}
-    onClick={() => setFoodFilter('nonveg')}
-  >
-    🔴 Non-Veg
-  </button>
+  className={`nonveg-btn ${foodFilter === 'nonveg' ? 'active' : ''}`}
+  onClick={() => setFoodFilter('nonveg')}
+>
+  🔴 Non-Veg
+</button>
 </div>
 
       {/* ─── Menu Items Flow ─── */}
