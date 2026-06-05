@@ -191,14 +191,14 @@ const Restaurant = () => {
   All
 </button>
 
-  <button
+<button
   className={`veg-btn ${foodFilter === 'veg' ? 'active' : ''}`}
   onClick={() => setFoodFilter('veg')}
 >
   🟢 Veg
 </button>
 
-  <button
+<button
   className={`nonveg-btn ${foodFilter === 'nonveg' ? 'active' : ''}`}
   onClick={() => setFoodFilter('nonveg')}
 >
