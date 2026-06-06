@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useHaptic from '../../hooks/useHaptic';
+import { formatPrice } from '../../utils/helpers';
 import { getStoredUser } from '../../services/firebase';
 import './CustomerWallet.css';
 
@@ -91,7 +92,7 @@ const CustomerWallet = () => {
           custom={0}
         >
           <p className="balance-label">Available Balance</p>
-          <h2 className="balance-amount">${balance.toFixed(2)}</h2>
+          <h2 className="balance-amount">{formatPrice(balance)}</h2>
         </motion.div>
 
         <motion.div 
@@ -149,7 +150,7 @@ const CustomerWallet = () => {
                     </span>
                   </div>
                   <div className="txn-amount" style={{ fontSize: '14px', fontWeight: 'bold', color: parseFloat(tx.amount) >= 0 ? '#00B894' : '#FF7675' }}>
-                    {parseFloat(tx.amount) >= 0 ? '+' : '-'}${Math.abs(parseFloat(tx.amount)).toFixed(2)}
+                    {parseFloat(tx.amount) >= 0 ? '+' : '-'}{formatPrice(Math.abs(parseFloat(tx.amount)))}
                   </div>
                 </div>
               ))}

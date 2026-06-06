@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import useHaptic from '../../hooks/useHaptic';
+import { formatPrice } from '../../utils/helpers';
 import '../Home/Home.css';
 import './Orders.css';
 
@@ -213,7 +214,7 @@ const Orders = () => {
                         <div className="flex-1">
                           <div className="order-flex-between items-start">
                             <h3 className="font-bold text-lg leading-tight" style={{ color: '#1e293b' }}>{order.restaurantName}</h3>
-                            <span className="text-sm font-bold" style={{ color: '#0f172a' }}>${typeof order.total === 'number' ? order.total.toFixed(2) : order.total}</span>
+                            <span className="text-sm font-bold" style={{ color: '#0f172a' }}>{formatPrice(typeof order.total === 'number' ? order.total : parseFloat(order.total))}</span>
                           </div>
                           <p className="text-xs text-slate-500 mt-1">Order #{order.id} • {order.date}</p>
                           
@@ -279,7 +280,7 @@ const Orders = () => {
                               CASE-{String(tid).replace('CASE-', '').replace('ORD-', '')}
                             </p>
                           </div>
-                          {totalVal && <span className="font-bold text-primary">${typeof totalVal === 'number' ? totalVal.toFixed(2) : totalVal}</span>}
+                          {totalVal && <span className="font-bold text-primary">{formatPrice(typeof totalVal === 'number' ? totalVal : parseFloat(totalVal))}</span>}
                         </div>
                         <div className="status-pill status-orange">
                           <span className="material-symbols-outlined text-14">support_agent</span>
@@ -306,7 +307,7 @@ const Orders = () => {
                             </div>
                           </div>
                         </div>
-                        <span className="font-bold text-primary">${typeof order.total === 'number' ? order.total.toFixed(2) : order.total}</span>
+                        <span className="font-bold text-primary">{formatPrice(typeof order.total === 'number' ? order.total : parseFloat(order.total))}</span>
                       </div>
 
                       {order.ticket && (
@@ -360,7 +361,7 @@ const Orders = () => {
                       <div className="flex-1">
                         <div className="order-flex-between items-center">
                           <h3 className="font-bold text-sm" style={{ color: '#1e293b' }}>{tc.restaurantName}</h3>
-                          <span className="text-xs font-bold text-slate-500">${tc.price.toFixed(2)}</span>
+                          <span className="text-xs font-bold text-slate-500">{formatPrice(tc.price)}</span>
                         </div>
                         <div className="mt-1 flex items-center gap-2">
                           <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Case #{tc.id}</span>
@@ -388,7 +389,7 @@ const Orders = () => {
                             <div className="flex-1">
                               <div className="order-flex-between items-start">
                                 <h3 className="font-bold text-lg leading-tight" style={{ color: '#1e293b' }}>{order.restaurantName}</h3>
-                                <span className="text-sm font-bold" style={{ color: '#0f172a' }}>${typeof order.total === 'number' ? order.total.toFixed(2) : order.total}</span>
+                                <span className="text-sm font-bold" style={{ color: '#0f172a' }}>{formatPrice(typeof order.total === 'number' ? order.total : parseFloat(order.total))}</span>
                               </div>
                               <p className="text-slate-500 text-xs mt-1">{order.date}</p>
                               
@@ -414,7 +415,7 @@ const Orders = () => {
                             <div className="flex-1">
                               <div className="order-flex-between items-start">
                                 <h3 className="font-bold text-lg leading-tight" style={{ color: '#1e293b' }}>{order.restaurantName}</h3>
-                                <span className="text-sm font-bold line-through text-slate-400">${typeof order.total === 'number' ? order.total.toFixed(2) : order.total}</span>
+                                <span className="text-sm font-bold line-through text-slate-400">{formatPrice(typeof order.total === 'number' ? order.total : parseFloat(order.total))}</span>
                               </div>
                               <p className="text-slate-500 text-xs mt-1">{order.date}</p>
                               

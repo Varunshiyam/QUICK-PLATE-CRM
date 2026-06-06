@@ -5,6 +5,7 @@ import axios from 'axios';
 import useAppStore from '../../store/useAppStore';
 import useHaptic from '../../hooks/useHaptic';
 import { getStoredUser } from '../../services/firebase';
+import { formatPrice } from '../../utils/helpers';
 import './Cart.css';
 import '../Home/Home.css'; // Required for shared bottom nav classes during hard-reloads
 import { menuAssets } from '../../assets/images/menu-items';
@@ -206,7 +207,7 @@ const Cart = () => {
                     <div className="cart-item-info">
                       <div className="cart-item-top">
                         <h3 className="cart-item-title">{item.title}</h3>
-                        <p className="cart-item-price">{item.price}</p>
+                        <p className="cart-item-price">{formatPrice(parseFloat(item.price))}</p>
                       </div>
                       <p className="cart-item-meta">{item.desc ? item.desc.slice(0, 35) + '...' : 'Freshly prepared for you'}</p>
                       <div className="cart-item-actions">
@@ -255,7 +256,7 @@ const Cart = () => {
                     )}
                     <h5 className="addon-name">{addon.title}</h5>
                     <div className="addon-bottom">
-                      <span className="addon-price">{addon.price}</span>
+                      <span className="addon-price">{formatPrice(parseFloat(addon.price))}</span>
                       <button className="addon-add-btn" onClick={() => handleAddAddon(addon)}>
                         <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>add</span>
                       </button>
@@ -283,7 +284,7 @@ const Cart = () => {
                 <div className="bill-details">
                   <div className="bill-row">
                     <span>Subtotal</span>
-                    <span>${subtotal.toFixed(2)}</span>
+                    <span>{formatPrice(subtotal)}</span>
                   </div>
                   <div className="bill-row">
                     <span>Delivery Fee</span>
@@ -291,17 +292,17 @@ const Cart = () => {
                   </div>
                   <div className="bill-row">
                     <span>Taxes & Charges</span>
-                    <span>${taxes.toFixed(2)}</span>
+                    <span>{formatPrice(taxes)}</span>
                   </div>
                   {useWallet && (
                     <div className="bill-row">
                       <span>Wallet Applied</span>
-                      <span style={{ color: 'var(--color-primary)', fontWeight: 600 }}>- ${walletApplied.toFixed(2)}</span>
+                      <span style={{ color: 'var(--color-primary)', fontWeight: 600 }}>- {formatPrice(walletApplied)}</span>
                     </div>
                   )}
                   <div className="bill-row total">
                     <span>Total Pay</span>
-                    <span>${Math.max(0, totalPay).toFixed(2)}</span>
+                    <span>{formatPrice(Math.max(0, totalPay))}</span>
                   </div>
                 </div>
               </div>
@@ -317,7 +318,7 @@ const Cart = () => {
                   <span>Proceed to Checkout</span>
                   <div className="checkout-btn-right">
                     <div className="checkout-divider" />
-                    <span>${Math.max(0, totalPay).toFixed(2)}</span>
+                    <span>{formatPrice(Math.max(0, totalPay))}</span>
                   </div>
                 </>
               )}

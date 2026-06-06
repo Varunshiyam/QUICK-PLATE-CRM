@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
 import useAppStore from '../../store/useAppStore';
+import { formatPrice } from '../../utils/helpers';
 import './Restaurant.css';
 
 import { getRestaurantMenu } from '../../data/mockMenus';
@@ -210,7 +211,7 @@ const Restaurant = () => {
                     )}
                     <h3 className="rest-item-title">{item.title}</h3>
                     <p className="rest-item-desc">{item.desc}</p>
-                    <div className="rest-item-price">{item.price}</div>
+                    <div className="rest-item-price">{formatPrice(item.price)}</div>
                   </div>
 
                   <div className="rest-menu-img-wrap">
@@ -242,7 +243,7 @@ const Restaurant = () => {
                 <span className="rest-cart-badge">{totalItemCount} {totalItemCount === 1 ? 'Item' : 'Items'}</span>
                 <span className="rest-cart-action">• View Cart</span>
               </div>
-              <span className="rest-cart-price">${totalCartPrice.toFixed(2)}</span>
+              <span className="rest-cart-price">{formatPrice(totalCartPrice)}</span>
             </button>
           </motion.div>
         )}

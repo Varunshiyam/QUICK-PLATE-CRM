@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { formatPrice } from '../../utils/helpers';
 import useHaptic from '../../hooks/useHaptic';
 import '../Home/Home.css';
 import './Support.css';
@@ -324,7 +325,7 @@ const Support = () => {
                        <div className="st-details">
                          <div className="st-title-row">
                            <h4 className="st-title">{ticket.restaurantName || ticket.issueType}</h4>
-                           {ticket.total && <span className="st-price">${Number(ticket.total).toFixed(2)}</span>}
+                           {ticket.total && <span className="st-price">{formatPrice(Number(ticket.total))}</span>}
                          </div>
                          <p className="st-meta">{ticket.ticketNumber || ticket.ticketId} • {ticket.createdAt || 'Recently'}</p>
                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginTop: '4px' }}>

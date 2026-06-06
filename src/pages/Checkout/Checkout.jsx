@@ -6,6 +6,7 @@ import axios from 'axios';
 import useAppStore from '../../store/useAppStore';
 import useHaptic from '../../hooks/useHaptic';
 import { getStoredUser } from '../../services/firebase';
+import { formatPrice } from '../../utils/helpers';
 import './Checkout.css';
 
 // ─── Environment & Configuration ───
@@ -356,7 +357,7 @@ const CheckoutForm = () => {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div className="co-pay-left">
                     <div className="amount-label">Amount to Pay</div>
-                    <div className="amount-value">${totalPayStr}</div>
+                    <div className="amount-value">{formatPrice(parseFloat(totalPayStr))}</div>
                   </div>
                   <div className="co-pay-icon">
                     <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>receipt_long</span>
@@ -374,14 +375,14 @@ const CheckoutForm = () => {
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', color: '#4a5568' }}>
                       <span>Subtotal & Taxes</span>
-                      <span>${(subtotal + deliveryFee + taxesPreWallet).toFixed(2)}</span>
+                      <span>{formatPrice(subtotal + deliveryFee + taxesPreWallet)}</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', color: '#00B894', fontWeight: '500' }}>
                       <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                         <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>account_balance_wallet</span>
                         Wallet Applied
                       </span>
-                      <span>- ${walletApplied.toFixed(2)}</span>
+                      <span>- {formatPrice(walletApplied)}</span>
                     </div>
                   </div>
                 )}
