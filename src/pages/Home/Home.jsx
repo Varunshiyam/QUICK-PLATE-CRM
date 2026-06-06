@@ -119,14 +119,90 @@ const fadeUp = {
   }),
 };
 
+const sort_by = [
+  {
+    name: "Recommended",
+    icon: "star",
+    details: "Top picks for you"
+  },
+  {
+    name: "Rating",
+    icon: "grade",
+    details: "High to low"
+  },
+  {
+    name: "Delivery Time",
+    icon: "schedule",
+    details: "Fastest First"
+  },
+  {
+    name: "Offers",
+    icon: "local_offer",
+    details: "Best offers first"
+  },
+  {
+    name: "Popularity",
+    icon: "local_fire_department",
+    details: "Most popular"
+  },
+]
+
+const cuisines = [
+  { name: "All", icon: "apps" },
+  { name: "Modern American", icon: "restaurant" },
+  { name: "Indian Fusion", icon: "rice_bowl" },
+  { name: "Japanese", icon: "ramen_dining" },
+  { name: "BBQ & Grill", icon: "outdoor_grill" },
+  { name: "Mediterranean", icon: "local_florist" },
+  { name: "Bakery & Pastry", icon: "bakery_dining" },
+  { name: "Desserts & Cakes", icon: "cake" },
+  { name: "Italian Pizza", icon: "local_pizza" },
+  { name: "Pizza", icon: "local_pizza" },
+  { name: "Japanese Sushi", icon: "set_meal" },
+  { name: "American Burgers", icon: "lunch_dining" },
+  { name: "American BBQ", icon: "outdoor_grill" },
+]
+
+const DEFAULT_PRICE_RANGE = {
+  min: 5,
+  max: 50,
+};
+
+const getRestaurantPriceValue = (price = '$$') => {
+  const priceMap = {
+    '$': 5,
+    '$$': 10,
+    '$$$': 25,
+    '$$$$': 50,
+  };
+
+  return priceMap[price] ?? 10;
+};
+
+const getReviewCount = (reviews = '0') => {
+  const value = String(reviews).toLowerCase();
+  const number = parseFloat(value);
+
+  if (Number.isNaN(number)) return 0;
+  return value.includes('k') ? number * 1000 : number;
+};
+
 const Home = () => {
   const { lightTap, mediumTap } = useHaptic();
   const navigate = useNavigate();
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCuisine, setActiveCuisine] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   
   const [restaurants, setRestaurants] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [priceRange, setPriceRange] = useState({
+    ...DEFAULT_PRICE_RANGE,
+  });
+
+  const MIN_PRICE = 5;
+  const MAX_PRICE = 50;
+  const getPricePercent = (value) => ((value - MIN_PRICE) / (MAX_PRICE - MIN_PRICE)) * 100;
 
   // Fetch from Salesforce on mount
   useEffect(() => {
@@ -181,98 +257,18 @@ const Home = () => {
   const cartItemCount = getCartItemCount();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [activeSort, setActiveSort] = useState('Recommended');
+  const [draftSort, setDraftSort] = useState(activeSort);
+  const [draftCuisine, setDraftCuisine] = useState(activeCuisine);
+  const [draftPriceRange, setDraftPriceRange] = useState(priceRange);
   const [currentBanner, setCurrentBanner] = useState(0);
 
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  const [isAddAddressFormOpen, setIsAddAddressFormOpen] = useState(false);
-  const [newAddressForm, setNewAddressForm] = useState({ label: 'Home', street: '', city: '', pincode: '' });
-  const [formError, setFormError] = useState('');
-
-  // Load saved addresses from localStorage
-  const [savedAddresses, setSavedAddresses] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem('quickplate_addresses') || '[]');
-    } catch { return []; }
-  });
-  const [activeAddressIdx, setActiveAddressIdx] = useState(() => {
-    try { return parseInt(localStorage.getItem('quickplate_active_addr_idx') || '0', 10); } catch { return 0; }
-  });
-
-  const persistAddresses = (list, idx) => {
-    localStorage.setItem('quickplate_addresses', JSON.stringify(list));
-    localStorage.setItem('quickplate_active_addr_idx', String(idx));
-  };
-
- const handleSaveNewAddress = () => {
-  const { label, street, city, pincode } = newAddressForm;
-
-  if (!street.trim() || !city.trim() || !pincode.trim()) {
-    setFormError('Street, city and pincode are required.');
-    return;
-  }
-
-  if (!/^\d+$/.test(pincode.trim())) {
-    setFormError('Pincode must contain only numbers.');
-    return;
-  }
-
-  if (pincode.trim().length < 4) {
-    setFormError('Pincode must be at least 4 digits.');
-    return;
-  }
-
-  const newAddr = {
-    label: label || 'Other',
-    street: street.trim(),
-    city: city.trim(),
-    pincode: pincode.trim()
-  };
-
-  const updated = [...savedAddresses, newAddr];
-
-  const newActiveIdx = updated.length - 1;
-
-  setSavedAddresses(updated);
-  setActiveAddressIdx(newActiveIdx);
-
-  persistAddresses(updated, newActiveIdx);
-
-  setNewAddressForm({
-    label: 'Home',
-    street: '',
-    city: '',
-    pincode: ''
-  });
-
-  setFormError('');
-  setIsAddAddressFormOpen(false);
-
-  mediumTap();
-};
-
-  const handleDeleteAddress = (idx) => {
-    const updated = savedAddresses.filter((_, i) => i !== idx);
-    const newActive = activeAddressIdx >= updated.length ? Math.max(0, updated.length - 1) : activeAddressIdx;
-    setSavedAddresses(updated);
-    setActiveAddressIdx(newActive);
-    persistAddresses(updated, newActive);
-    lightTap();
-  };
-
-  const handleSelectAddress = (idx) => {
-    setActiveAddressIdx(idx);
-    localStorage.setItem('quickplate_active_addr_idx', String(idx));
-    lightTap();
-    setIsAddressModalOpen(false);
-  };
-
+  
   const { logout, user } = useAppStore();
   
   const storedUser = getStoredUser();
-  const defaultAddress = storedUser?.address || 'KCE, Coimbatore';
-  const activeAddr = savedAddresses[activeAddressIdx];
-  const deliveryAddress = activeAddr ? `${activeAddr.street}, ${activeAddr.city}` : defaultAddress;
+  const deliveryAddress = storedUser?.address || 'KCE, Coimbatore';
 
   const handleLogoutDropdown = async () => {
     setIsProfileModalOpen(false);
@@ -294,6 +290,31 @@ const Home = () => {
     return () => clearInterval(timer);
   }, []);
 
+  const openFilterSheet = () => {
+    setDraftSort(activeSort);
+    setDraftCuisine(activeCuisine);
+    setDraftPriceRange(priceRange);
+    setIsFilterOpen(true);
+  };
+
+  const applyFilters = () => {
+    setActiveSort(draftSort);
+    setActiveCuisine(draftCuisine);
+    setPriceRange(draftPriceRange);
+    setIsFilterOpen(false);
+    mediumTap();
+  };
+
+  const resetFilters = () => {
+    setDraftSort('Recommended');
+    setDraftCuisine('All');
+    setDraftPriceRange(DEFAULT_PRICE_RANGE);
+    setActiveSort('Recommended');
+    setActiveCuisine('All');
+    setPriceRange(DEFAULT_PRICE_RANGE);
+    mediumTap();
+  };
+
   // Filter & Sort Logic
   const filteredRestaurants = useMemo(() => {
     let result = restaurants;
@@ -303,31 +324,51 @@ const Home = () => {
       result = result.filter(r => r.name.toLowerCase().includes(q) || r.cuisine.toLowerCase().includes(q));
     }
     
-    if (activeCategory !== 'All') {
+    if (activeCuisine !== 'All') {
       result = result.filter(r => {
         const c = r.cuisine.toLowerCase();
-        if (activeCategory === 'Bakery') return c.includes('bakery') || c.includes('dessert') || r.name.toLowerCase().includes('sweet');
-        if (activeCategory === 'Pizza') return c.includes('pizza') || c.includes('italian');
-        if (activeCategory === 'Sushi') return c.includes('sushi') || c.includes('japanese');
-        if (activeCategory === 'Burgers') return c.includes('burger') || c.includes('american') || c.includes('bbq');
-        return true;
+        if (activeCuisine === 'Bakery') return c.includes('bakery') || c.includes('dessert') || r.name.toLowerCase().includes('sweet');
+        if (activeCuisine === 'Pizza') return c.includes('pizza') || c.includes('italian');
+        if (activeCuisine === 'Sushi') return c.includes('sushi') || c.includes('japanese');
+        if (activeCuisine === 'Burgers') return c.includes('burger') || c.includes('american') || c.includes('bbq');
+        return c.includes(activeCuisine.toLowerCase());
       });
     }
+
+    result = result.filter(r => {
+      const priceValue = getRestaurantPriceValue(r.price);
+      return priceValue >= priceRange.min && priceValue <= priceRange.max;
+    });
 
     if (activeSort === 'Rating') {
       result = [...result].sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
     } else if (activeSort === 'Delivery Time') {
       result = [...result].sort((a, b) => parseInt(a.time) - parseInt(b.time));
+    } else if (activeSort === 'Offers') {
+      result = [...result].sort((a, b) => (b.offer ? 1 : 0) - (a.offer ? 1 : 0));
+    } else if (activeSort === 'Popularity') {
+      result = [...result].sort((a, b) => getReviewCount(b.reviews) - getReviewCount(a.reviews));
     }
     
     return result;
-  }, [restaurants, searchQuery, activeCategory, activeSort]);
+  }, [restaurants, searchQuery, activeCuisine, activeSort, priceRange]);
 
   const filteredTrending = useMemo(() => {
     if (!searchQuery) return TRENDING;
     const q = searchQuery.toLowerCase();
     return TRENDING.filter(item => item.name.toLowerCase().includes(q) || item.badge.toLowerCase().includes(q));
   }, [searchQuery]);
+
+  const activeFilterCount = (
+    (activeCuisine !== 'All' ? 1 : 0) +
+    (activeSort !== 'Recommended' ? 1 : 0) +
+    (
+      priceRange.min !== DEFAULT_PRICE_RANGE.min ||
+      priceRange.max !== DEFAULT_PRICE_RANGE.max
+        ? 1
+        : 0
+    )
+  );
 
   return (
     <div className="home-page">
@@ -389,119 +430,28 @@ const Home = () => {
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
-              {/* Default address */}
-              {savedAddresses.length === 0 && (
-                <div className="address-slot active" onClick={() => { lightTap(); setIsAddressModalOpen(false); }}>
-                  <div className="address-icon"><span className="material-symbols-outlined">home</span></div>
-                  <div className="address-details">
-                    <h4>Home (Default)</h4>
-                    <p>{defaultAddress.length > 35 ? `${defaultAddress.substring(0, 35)}...` : defaultAddress}</p>
-                  </div>
-                  <span className="material-symbols-outlined check">check_circle</span>
+              <div className="address-slot active" onClick={() => { lightTap(); setIsAddressModalOpen(false); }}>
+                <div className="address-icon"><span className="material-symbols-outlined">home</span></div>
+                <div className="address-details">
+                  <h4>Home (Default)</h4>
+                  <p>{deliveryAddress.length > 35 ? `${deliveryAddress.substring(0, 35)}...` : deliveryAddress}</p>
                 </div>
-              )}
-              {/* Saved addresses */}
-              {savedAddresses.map((addr, idx) => {
-                const iconMap = { Home: 'home', Work: 'work', Office: 'work', Hotel: 'hotel', Other: 'location_on' };
-                const icon = iconMap[addr.label] || 'location_on';
-                const isActive = idx === activeAddressIdx;
-                return (
-                  <div key={idx} className={`address-slot${isActive ? ' active' : ''}`} onClick={() => handleSelectAddress(idx)}>
-                    <div className="address-icon"><span className="material-symbols-outlined">{icon}</span></div>
-                    <div className="address-details">
-                      <h4>{addr.label}</h4>
-                      <p>{`${addr.street}, ${addr.city}${addr.pincode ? ' ' + addr.pincode : ''}`}</p>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginLeft: 'auto' }}>
-                      {isActive && <span className="material-symbols-outlined check">check_circle</span>}
-                      <button
-                        className="addr-delete-btn"
-                        onClick={e => { e.stopPropagation(); handleDeleteAddress(idx); }}
-                        title="Remove address"
-                      >
-                        <span className="material-symbols-outlined">delete</span>
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-              <button className="address-add-btn" onClick={() => { mediumTap(); setIsAddAddressFormOpen(true); setIsAddressModalOpen(false); }}>
+                <span className="material-symbols-outlined check">check_circle</span>
+              </div>
+              <div className="address-slot" onClick={() => { lightTap(); setIsAddressModalOpen(false); }}>
+                <div className="address-icon"><span className="material-symbols-outlined">work</span></div>
+                <div className="address-details">
+                  <h4>Office</h4>
+                  <p>456 Market St, SF, CA</p>
+                </div>
+              </div>
+              <button className="address-add-btn" onClick={mediumTap}>
                 <span className="material-symbols-outlined">add</span>
                 Add new address
               </button>
             </motion.div>
           )}
-
-          {/* ─── Add New Address Form Modal ─── */}
-          {isAddAddressFormOpen && (
-            <motion.div
-              className="home-address-dropdown dropdown-glass add-address-form"
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-            >
-              <div className="add-addr-header">
-                <span className="add-addr-title">New Address</span>
-                <button className="add-addr-close" onClick={() => { setIsAddAddressFormOpen(false); setFormError(''); }}>
-                  <span className="material-symbols-outlined">close</span>
-                </button>
-              </div>
-
-              <div className="add-addr-label-row">
-                {['Home', 'Work', 'Hotel', 'Other'].map(lbl => (
-                  <button
-                    key={lbl}
-                    className={`addr-label-chip${newAddressForm.label === lbl ? ' selected' : ''}`}
-                    onClick={() => setNewAddressForm(f => ({ ...f, label: lbl }))}
-                  >
-                    {lbl}
-                  </button>
-                ))}
-              </div>
-
-              <div className="add-addr-fields">
-                <div className="add-addr-field">
-                  <span className="material-symbols-outlined">signpost</span>
-                  <input
-                    type="text"
-                    placeholder="Street / Area *"
-                    value={newAddressForm.street}
-                    onChange={e => setNewAddressForm(f => ({ ...f, street: e.target.value }))}
-                  />
-                </div>
-                <div className="add-addr-field">
-                  <span className="material-symbols-outlined">location_city</span>
-                  <input
-                    type="text"
-                    placeholder="City *"
-                    value={newAddressForm.city}
-                    onChange={e => setNewAddressForm(f => ({ ...f, city: e.target.value }))}
-                  />
-                </div>
-                <div className="add-addr-field">
-                  <span className="material-symbols-outlined">markunread_mailbox</span>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    placeholder="Pincode *"
-                    maxLength={10}
-                    value={newAddressForm.pincode}
-                    onChange={e => setNewAddressForm(f => ({ ...f, pincode: e.target.value.replace(/\D/g, '') }))}
-                  />
-                </div>
-              </div>
-
-              {formError && <p className="add-addr-error">{formError}</p>}
-
-              <button className="add-addr-save-btn" onClick={handleSaveNewAddress}>
-                <span className="material-symbols-outlined">check</span>
-                Save Address
-              </button>
-            </motion.div>
-          )}
-
+          
           {isProfileModalOpen && (
             <motion.div
               className="home-profile-dropdown dropdown-glass"
@@ -548,8 +498,11 @@ const Home = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button className="home-search-filter" onClick={() => { mediumTap(); setIsFilterOpen(true); }}>
+            <button className="home-search-filter" onClick={() => { mediumTap(); openFilterSheet(); }}>
               <span className="material-symbols-outlined">tune</span>
+              {activeFilterCount > 0 && (
+                <span className="home-filter-count">{activeFilterCount}</span>
+              )}
             </button>
           </div>
         </div>
@@ -614,12 +567,12 @@ const Home = () => {
             <div
               key={cat.label}
               className="home-cat-item"
-              onClick={() => { setActiveCategory(cat.label); lightTap(); }}
+              onClick={() => { setActiveCuisine(cat.label); lightTap(); }}
             >
-              <div className={`home-cat-icon ${activeCategory === cat.label ? 'active' : 'inactive'}`}>
+              <div className={`home-cat-icon ${activeCuisine === cat.label ? 'active' : 'inactive'}`}>
                 <span className="material-symbols-outlined">{cat.icon}</span>
               </div>
-              <span className={`home-cat-label ${activeCategory === cat.label ? 'active' : 'inactive'}`}>
+              <span className={`home-cat-label ${activeCuisine === cat.label ? 'active' : 'inactive'}`}>
                 {cat.label}
               </span>
             </div>
@@ -826,32 +779,115 @@ const Home = () => {
               
               <div className="filter-section">
                 <h4>Sort By</h4>
-                <div className="filter-chips">
-                  {['Recommended', 'Rating', 'Delivery Time'].map(sort => (
+                <div className="sort-grid">
+                  {sort_by.map(sort => (
                     <button 
-                      key={sort} 
-                      className={`filter-chip ${activeSort === sort ? 'active' : ''}`}
-                      onClick={() => { setActiveSort(sort); lightTap(); }}
+                      key={sort.name} 
+                      className={`sort-card ${draftSort === sort.name ? 'active' : ''}`}
+                      onClick={() => { setDraftSort(sort.name); lightTap(); }}
                     >
-                      {sort}
+                      <div className='sort-icon'>
+                        <span className='material-symbols-outlined'>{sort.icon}</span>
+                      </div>
+                      <div className="sort-content">
+                        <h3>{sort.name}</h3>
+                        <p>{sort.details}</p>
+                      </div>
                     </button>
                   ))}
                 </div>
               </div>
 
+              <div className='partition'></div>
+
               <div className="filter-section">
                 <h4>Price Range</h4>
-                <div className="filter-chips">
-                  {['$', '$$', '$$$', '$$$$'].map(price => (
-                    <button key={price} className="filter-chip">{price}</button>
+                <div className="price-slider-container">
+                  <div className="slider-wrapper">
+                    <div className="slider-track"></div>
+
+                    <div className="slider-range"
+                      style={{
+                        left: `${getPricePercent(draftPriceRange.min)}%`,
+                        width: `${getPricePercent(draftPriceRange.max) - getPricePercent(draftPriceRange.min)}%`
+                      }}
+                    />
+
+                    <input 
+                      type="range" 
+                      min={MIN_PRICE}
+                      max={MAX_PRICE}
+                      value={draftPriceRange.min}
+                      onChange={(e) => 
+                        setDraftPriceRange(prev => ({
+                          ...prev, min: Math.min(Number(e.target.value), prev.max - 1)
+                        }))
+                      } 
+                      className='thumb thumb-left'
+                      aria-label="Minimum price"
+                    />
+                    
+                    <input 
+                      type="range" 
+                      min={MIN_PRICE}
+                      max={MAX_PRICE}
+                      value={draftPriceRange.max}
+                      onChange={(e) => 
+                        setDraftPriceRange(prev => ({
+                          ...prev, max: Math.max(Number(e.target.value), prev.min + 1)
+                        }))
+                      } 
+                      className='thumb thumb-right'
+                      aria-label="Maximum price"
+                    />
+                  </div>
+                  <div className="price-scale">
+                    <div>
+                      <span>Min</span>
+                    </div>
+                    <div>
+                      <span>$10</span>
+                    </div>
+                    <div>
+                      <span>$25</span>
+                    </div>
+                    <div>
+                      <span>$50+</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="partition"></div>
+              
+              <div className="filter-section">
+                <h4>Cuisines</h4>
+                <div className='cuisines'>
+                  {cuisines.map(cuisine => (
+                    <button
+                      key={cuisine.name}
+                      className={`cuisine-chip ${draftCuisine === cuisine.name ? 'active' : ''}`}
+                      onClick={() => { setDraftCuisine(cuisine.name); lightTap(); }}
+                    >
+                      <span className='material-symbols-outlined'>{cuisine.icon}</span>
+                      {cuisine.name}
+                    </button>
                   ))}
                 </div>
               </div>
 
               <div className="filter-actions">
                 <button 
+                  className="filter-reset-btn"
+                  onClick={() => { 
+                    resetFilters();
+                  }}
+                >
+                  Reset All
+                </button>
+                <button 
                   className="filter-apply-btn"
-                  onClick={() => { setIsFilterOpen(false); mediumTap(); }}
+                  onClick={applyFilters}
                 >
                   Apply Filters
                 </button>
