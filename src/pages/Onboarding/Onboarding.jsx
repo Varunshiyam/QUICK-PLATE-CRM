@@ -124,7 +124,7 @@ const Onboarding = () => {
                     }}
                     transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
                   >
-                    <img src={imgUrl} alt={`Food ${index}`} />
+                    <img src={imgUrl} alt={['Fresh salad bowl', 'Margherita pizza', 'Grilled meat platter', 'Gourmet crust dish'][index] || `Food ${index}`} />
                   </motion.div>
                 );
               })}
