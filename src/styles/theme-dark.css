@@ -1,0 +1,175 @@
+/* ═══════════════════════════════════════════════════════════════
+   Quick Plate — Dark theme overrides for page-specific styles
+   ═══════════════════════════════════════════════════════════════ */
+
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* ─── Page backgrounds ─── */
+[data-theme="dark"] .home-page,
+[data-theme="dark"] .profile-page,
+[data-theme="dark"] .discover-page,
+[data-theme="dark"] .features-page,
+[data-theme="dark"] .checkout-page,
+[data-theme="dark"] .cart-page,
+[data-theme="dark"] .rest-page,
+[data-theme="dark"] .wallet-page,
+[data-theme="dark"] .obd-page {
+  background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-muted) 100%);
+  color: var(--color-text-primary);
+}
+
+[data-theme="dark"] .orders-layout,
+[data-theme="dark"] .orders-page-bg {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+}
+
+[data-theme="dark"] .support-container,
+[data-theme="dark"] .rr-container,
+[data-theme="dark"] .order-issue-container,
+[data-theme="dark"] .payment-issue-container,
+[data-theme="dark"] .rzp-container {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+}
+
+/* ─── Sticky headers & glass surfaces ─── */
+[data-theme="dark"] .home-header,
+[data-theme="dark"] .profile-header-main,
+[data-theme="dark"] .orders-header {
+  background: var(--color-header-glass);
+  border-bottom-color: var(--color-border);
+}
+
+[data-theme="dark"] .landing-nav,
+[data-theme="dark"] .landing-feature-inner,
+[data-theme="dark"] .dropdown-glass,
+[data-theme="dark"] .glass-card,
+[data-theme="dark"] .glass-nav-override {
+  background: var(--color-surface-glass);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .home-bottom-nav,
+[data-theme="dark"] .orders-bottom-nav,
+[data-theme="dark"] .track-bottom-nav {
+  background: var(--color-surface-elevated);
+  border-top-color: var(--color-border);
+}
+
+[data-theme="dark"] .home-nav-item {
+  color: var(--color-text-muted);
+}
+
+[data-theme="dark"] .home-nav-item.active {
+  color: var(--color-primary);
+}
+
+[data-theme="dark"] .home-nav-item.active::before {
+  background: var(--color-primary);
+}
+
+/* ─── Common text & controls (shared class patterns) ─── */
+[data-theme="dark"] .home-location-label,
+[data-theme="dark"] .home-location-city,
+[data-theme="dark"] .profile-page-title,
+[data-theme="dark"] .orders-header h1,
+[data-theme="dark"] .discover-section-title,
+[data-theme="dark"] .home-restaurant-name {
+  color: var(--color-text-primary);
+}
+
+[data-theme="dark"] .profile-back-btn,
+[data-theme="dark"] .profile-edit-btn,
+[data-theme="dark"] .orders-back-btn,
+[data-theme="dark"] .orders-search-btn,
+[data-theme="dark"] .discover-icon-btn {
+  background: var(--color-surface-muted);
+  color: var(--color-text-primary);
+}
+
+[data-theme="dark"] .profile-back-btn:active,
+[data-theme="dark"] .profile-edit-btn:active {
+  background: var(--color-gray-300);
+}
+
+/* ─── Cards, lists, inputs ─── */
+[data-theme="dark"] .home-restaurant-card,
+[data-theme="dark"] .home-restaurant-info,
+[data-theme="dark"] .discover-new-card,
+[data-theme="dark"] .discover-offer-card,
+[data-theme="dark"] .orders-card-premium,
+[data-theme="dark"] .address-slot,
+[data-theme="dark"] .profile-menu button,
+[data-theme="dark"] .glass-card {
+  background: var(--color-surface-elevated);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+[data-theme="dark"] .home-search-input {
+  background: var(--color-surface-muted);
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .home-search-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+[data-theme="dark"] .home-cat-icon.inactive,
+[data-theme="dark"] .discover-cat-btn {
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .home-cat-icon.active,
+[data-theme="dark"] .discover-cat-btn.active {
+  background: rgba(251, 126, 24, 0.15);
+  color: var(--color-primary);
+  border-color: rgba(251, 126, 24, 0.35);
+}
+
+[data-theme="dark"] .home-cat-label.inactive {
+  color: var(--color-text-muted);
+}
+
+[data-theme="dark"] .home-restaurant-meta,
+[data-theme="dark"] .discover-new-cuisine,
+[data-theme="dark"] .profile-info p {
+  color: var(--color-text-muted);
+}
+
+/* ─── Onboarding (already dark-ish — tune for consistency) ─── */
+[data-theme="dark"] .onboarding-page {
+  background: var(--color-bg);
+}
+
+[data-theme="dark"] .landing-btn-outline {
+  border-color: var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+[data-theme="dark"] .landing-btn-outline:hover {
+  background: var(--color-surface-muted);
+}
+
+[data-theme="dark"] .landing-feature-icon {
+  background: rgba(251, 126, 24, 0.12);
+}
+
+/* ─── Tracking & payment flows ─── */
+[data-theme="dark"] .track-loading-screen,
+[data-theme="dark"] .track-panel {
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+}
+
+[data-theme="dark"] .track-status-card {
+  background: var(--color-surface-elevated);
+  border-color: var(--color-border);
+}
