@@ -183,7 +183,7 @@ const Restaurant = () => {
 
       {/* ─── Menu Items Flow ─── */}
       <div className="rest-content">
-        {MENU.map((section, sectionIdx) => (
+        {MENU.filter(section => section.category === activeTab).map((section, sectionIdx) => (
           <motion.div 
             key={section.category}
             className="rest-section"
