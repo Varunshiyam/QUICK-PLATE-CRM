@@ -88,6 +88,9 @@ const Discover = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedSort, setSelectedSort] = useState('rating');
+  const [selectedPrices, setSelectedPrices] = useState([]);
+  const [selectedCuisines, setSelectedCuisines] = useState([]);
 
   useEffect(() => {
     const loadRestaurants = async () => {
@@ -165,29 +168,7 @@ const Discover = () => {
       (r.cuisine && r.cuisine.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const categoryRestaurants = restaurants.filter((r) => {
-  const text = `${r.name} ${r.cuisine}`.toLowerCase();
-
-  if (activeCategory === 'Trending') {
-    return r.rating >= 4.8 || text.includes('japanese') || text.includes('pizza');
-  }
-
-  if (activeCategory === 'Healthy') {
-    return text.includes('healthy') || text.includes('salad') || text.includes('vegan') || text.includes('mediterranean') || text.includes('green');
-  }
-
-  if (activeCategory === 'Fast Food') {
-    return text.includes('burger') || text.includes('pizza') || text.includes('fast food') || text.includes('american');
-  }
-
-  if (activeCategory === 'Bakery') {
-    return text.includes('bakery') || text.includes('pastry') || text.includes('dessert') || text.includes('cake');
-  }
-
-  return true;
-});
-
-const displayList = searchQuery ? searchResults : categoryRestaurants;
+  const displayList = searchQuery ? searchResults : newOnQuickPlate;
 
   return (
     <div className="discover-page">
@@ -264,6 +245,50 @@ const displayList = searchQuery ? searchResults : categoryRestaurants;
                 <span>{cat.label}</span>
               </button>
             ))}
+          </div>
+        </div>
+
+        {/* Filter Bar */}
+        <div className="discover-filters hide-scrollbar">
+          <div className="discover-filters-inner">
+            <div className="filter-group">
+              <label className="filter-label">Sort By</label>
+              <div className="filter-pills">
+                <button className={`filter-pill ${selectedSort === 'rating' ? 'active' : ''}`} onClick={() => setSelectedSort('rating')}>Rating</button>
+                <button className={`filter-pill ${selectedSort === 'time' ? 'active' : ''}`} onClick={() => setSelectedSort('time')}>Delivery Time</button>
+                <button className={`filter-pill ${selectedSort === 'distance' ? 'active' : ''}`} onClick={() => setSelectedSort('distance')}>Distance</button>
+              </div>
+            </div>
+
+            <div className="filter-group">
+              <label className="filter-label">Price</label>
+              <div className="filter-pills">
+                {['$', '$$', '$$$', '$$$$'].map(p => (
+                  <button
+                    key={p}
+                    className={`filter-pill ${selectedPrices.includes(p) ? 'active' : ''}`}
+                    onClick={() => {
+                      setSelectedPrices(prev => prev.includes(p) ? prev.filter(x => x !== p) : [...prev, p]);
+                    }}
+                  >{p}</button>
+                ))}
+              </div>
+            </div>
+
+            <div className="filter-group">
+              <label className="filter-label">Cuisine</label>
+              <div className="filter-pills">
+                {['Fast Food', 'Healthy', 'Bakery', 'Japanese', 'Italian', 'Indian'].map(c => (
+                  <button
+                    key={c}
+                    className={`filter-pill ${selectedCuisines.includes(c) ? 'active' : ''}`}
+                    onClick={() => {
+                      setSelectedCuisines(prev => prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c]);
+                    }}
+                  >{c}</button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 

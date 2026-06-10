@@ -4,10 +4,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AnimatePresence } from 'framer-motion';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
-
-// Hooks & Components
 import useOnlineStatus from './hooks/useOnlineStatus';
 import Offline from './components/Offline';
+
+import ThemeToggle from './components/ThemeToggle/ThemeToggle';
+import { useTheme } from './context/ThemeContext';
 
 // Pages
 import Landing from './pages/Landing/Landing';
@@ -32,56 +33,64 @@ const PaymentIssue = lazy(() => import('./pages/PaymentIssue/PaymentIssue'));
 const OrderIssue = lazy(() => import('./pages/OrderIssue/OrderIssue'));
 const CustomerWallet = lazy(() => import('./pages/CustomerWallet/CustomerWallet'));
 const WalletPayment = lazy(() => import('./pages/WalletPayment/WalletPayment'));
+const Contact = lazy(() => import('./pages/Contact/Contact'));
 
 /** Loading fallback */
-const LoadingScreen = () => (
-  <div style={{
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100dvh',
-    gap: '1rem',
-    background: '#FDFCFB',
-  }}>
-    <div style={{
-      width: 48,
-      height: 48,
-      border: '3px solid #f1f3f5',
-      borderTopColor: '#fb7e18',
-      borderRadius: '50%',
-      animation: 'spin 0.8s linear infinite',
-    }} />
-    <p style={{
-      fontFamily: 'Epilogue, sans-serif',
-      fontWeight: 700,
-      color: '#2D3134',
-      fontSize: '0.875rem',
-    }}>
-      Loading Quick Plate...
-    </p>
-    <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-  </div>
-);
-
-function App() {
-  const isOnline = useOnlineStatus();
+const LoadingScreen = () => {
+  const { isDark } = useTheme();
 
   return (
-    <BrowserRouter>
-      {!isOnline && <Offline />}
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100dvh',
+      gap: '1rem',
+      background: isDark ? '#0f1117' : '#FDFCFB',
+    }}>
+      <div style={{
+        width: 48,
+        height: 48,
+        border: `3px solid ${isDark ? '#2d333d' : '#f1f3f5'}`,
+        borderTopColor: '#fb7e18',
+        borderRadius: '50%',
+        animation: 'spin 0.8s linear infinite',
+      }} />
+      <p style={{
+        fontFamily: 'Epilogue, sans-serif',
+        fontWeight: 700,
+        color: isDark ? '#f1f5f9' : '#2D3134',
+        fontSize: '0.875rem',
+      }}>
+        Loading Quick Plate...
+      </p>
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    </div>
+  );
+};
+
+function App() {
+const isOnline = useOnlineStatus();
+const { isDark } = useTheme();
+
+return (
+  <BrowserRouter>
+    {!isOnline && <Offline />}
+    <ThemeToggle />
       <Toaster
         position="top-center"
         toastOptions={{
           duration: 3000,
           style: {
             borderRadius: '12px',
-            background: '#2D3134',
+            background: isDark ? '#1a1d23' : '#2D3134',
             color: '#fff',
             fontSize: '0.875rem',
             fontFamily: 'Outfit, sans-serif',
             fontWeight: 500,
             padding: '12px 20px',
+            border: isDark ? '1px solid rgba(255,255,255,0.1)' : 'none',
           },
           success: {
             iconTheme: { primary: '#00B894', secondary: '#fff' },
@@ -114,6 +123,7 @@ function App() {
             <Route path="/order-issue" element={<OrderIssue />} />
             <Route path="/customerwallet" element={<CustomerWallet />} />
             <Route path="/wallet-payment" element={<WalletPayment />} />
+            <Route path="/contact" element={<Contact />} />
             {/* More routes will be added as pages are built */}
           </Routes>
         </AnimatePresence>

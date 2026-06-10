@@ -32,6 +32,8 @@ const Restaurant = () => {
   const RESTAURANT_INFO = { ...restaurantData, heroImg };
 
   const [activeTab, setActiveTab] = useState(MENU[0]?.category || 'Starters');
+
+  const [foodFilter, setFoodFilter] = useState('all');
   
   const { addToCart, getCartItemCount, getCartTotal, cartRestaurantId, cartRestaurant } = useAppStore();
 
@@ -141,7 +143,16 @@ const Restaurant = () => {
           {restaurantBanners.map((banner) => (
             <div key={banner.id} className={`rest-banner-card theme-${banner.theme}`}>
               <div className="rest-banner-bg-img">
-                 <img src={banner.img} alt="" />
+                <img
+                  src={banner.img}
+                  alt={[
+                    RESTAURANT_INFO.name,
+                    banner.supertitle,
+                    banner.title,
+                    banner.subtitle,
+                    'promotion',
+                  ].filter(Boolean).join(' ')}
+                />
               </div>
               <div className="rest-banner-content">
                 <div>
@@ -172,9 +183,32 @@ const Restaurant = () => {
         ))}
       </div>
 
+<div className="food-filter">
+  <button
+  className={`all-btn ${foodFilter === 'all' ? 'active' : ''}`}
+  onClick={() => setFoodFilter('all')}
+>
+  All
+</button>
+
+<button
+  className={`veg-btn ${foodFilter === 'veg' ? 'active' : ''}`}
+  onClick={() => setFoodFilter('veg')}
+>
+  🟢 Veg
+</button>
+
+<button
+  className={`nonveg-btn ${foodFilter === 'nonveg' ? 'active' : ''}`}
+  onClick={() => setFoodFilter('nonveg')}
+>
+  🔴 Non-Veg
+</button>
+</div>
+
       {/* ─── Menu Items Flow ─── */}
       <div className="rest-content">
-        {MENU.map((section, sectionIdx) => (
+        {MENU.filter(section => section.category === activeTab).map((section, sectionIdx) => (
           <motion.div 
             key={section.category}
             className="rest-section"
@@ -188,9 +222,15 @@ const Restaurant = () => {
           >
             <h2 className="rest-section-title">{section.category}</h2>
             
+            
             <div className="rest-menu-list">
-              {section.items.map((item, itemIdx) => (
-                <div key={item.id} className="rest-menu-card">
+{section.items
+  .filter(
+    (item) =>
+      foodFilter === 'all' ||
+      item.foodType === foodFilter
+  )
+  .map((item, itemIdx) => (                <div key={item.id} className="rest-menu-card">
                   
                   <div className="rest-menu-info">
                     {item.badge && (

@@ -22,13 +22,49 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+const isConfigValid = 
+  firebaseConfig.apiKey && 
+  firebaseConfig.apiKey !== 'your_firebase_api_key' &&
+  !firebaseConfig.apiKey.startsWith('your_') &&
+  firebaseConfig.apiKey !== 'undefined' &&
+  firebaseConfig.apiKey.trim() !== '';
 
-export const googleProvider = new GoogleAuthProvider();
-googleProvider.setCustomParameters({
-  prompt: 'select_account'
-});
+let app;
+let realAuth;
+let isFirebaseMocked = false;
+
+if (isConfigValid) {
+  try {
+    app = initializeApp(firebaseConfig);
+    realAuth = getAuth(app);
+  } catch (error) {
+    console.error("Firebase initialization failed, enabling Mock Auth mode:", error);
+    isFirebaseMocked = true;
+  }
+} else {
+  console.warn("⚠️ Firebase credentials missing or invalid in environment. Enabling Auth Mock Mode.");
+  isFirebaseMocked = true;
+}
+
+export const auth = isFirebaseMocked ? {
+  currentUser: {
+    uid: 'mock_uid_123',
+    displayName: 'John Doe (Demo)',
+    email: 'john.doe@example.com',
+    photoURL: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCxxnLZB4L4bLxchHeLZCCq3Lvq6vr4bzfPUp8VTZQ1gAfTTrCvF9aS3hIvFSSIw1ic8QXQ2xlKR4XrB3_rDYjHaPQvjTucWE22lkmXd2OIWXGGXANk5z4j6JKEmQRuP0sZcYHjAafhHfbgJqaB2Lcf-zQ4llzoKpkxiGMr_37Edrqf2chGZ-yfZXcy-5sUl1L_VLZA549jFBmkyUmR80Jr8fsLJRAMBLMq1fBZh9ADsDTa-fAYcZH-HEnjfUnfBHuWcxT6QaCUniXf',
+    getIdToken: async () => 'mock_firebase_id_token'
+  }
+} : realAuth;
+
+export const googleProvider = isFirebaseMocked ? {
+  setCustomParameters: () => {}
+} : new GoogleAuthProvider();
+
+if (!isFirebaseMocked) {
+  googleProvider.setCustomParameters({
+    prompt: 'select_account'
+  });
+}
 
 // ─────────────────────────────────────────────
 // Salesforce Public API Base URL
@@ -61,6 +97,20 @@ const formatError = (error) => {
 // ─────────────────────────────────────────────
 
 export const signInWithGoogleAndSync = async () => {
+  if (isFirebaseMocked) {
+    console.log('Sign in triggered in Mock Auth mode');
+    const sessionUser = {
+      customerId: 'mock_customer_id',
+      name: 'John Doe (Demo)',
+      email: 'john.doe@example.com',
+      profileComplete: true,
+      firebaseUid: 'mock_uid_123',
+      photoURL: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCxxnLZB4L4bLxchHeLZCCq3Lvq6vr4bzfPUp8VTZQ1gAfTTrCvF9aS3hIvFSSIw1ic8QXQ2xlKR4XrB3_rDYjHaPQvjTucWE22lkmXd2OIWXGGXANk5z4j6JKEmQRuP0sZcYHjAafhHfbgJqaB2Lcf-zQ4llzoKpkxiGMr_37Edrqf2chGZ-yfZXcy-5sUl1L_VLZA549jFBmkyUmR80Jr8fsLJRAMBLMq1fBZh9ADsDTa-fAYcZH-HEnjfUnfBHuWcxT6QaCUniXf'
+    };
+    localStorage.setItem('quickplate_user', JSON.stringify(sessionUser));
+    return sessionUser;
+  }
+
   try {
     if (!API_BASE_URL) {
       throw new Error('API base URL not configured.');
@@ -132,7 +182,11 @@ export const signInWithGoogleAndSync = async () => {
 export const logoutUser = async () => {
   try {
     localStorage.removeItem('quickplate_user');
-    await signOut(auth);
+    if (!isFirebaseMocked) {
+      await signOut(auth);
+    } else {
+      console.log('Mock user logged out');
+    }
   } catch (error) {
     console.error('Logout Error:', error);
     throw error;

@@ -46,6 +46,7 @@
   cursor: pointer;
   transition: background 0.2s;
 }
+
 .cart-icon-btn:active {
   background: #e2e8f0;
 }
@@ -186,6 +187,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .cart-delete-btn:hover {
   color: #ef4444;
 }
@@ -454,6 +456,7 @@
   color: #cbd5e1;
   margin-bottom: 1rem;
 }
+
 .empty-cart-view h2 {
   font-size: 1.25rem;
   font-weight: 700;

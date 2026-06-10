@@ -109,6 +109,72 @@
   --header-height: 56px;
   --bottom-nav-height: 64px;
   --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* Semantic (theme-aware) */
+  --color-text-primary: var(--color-slate-900);
+  --color-text-secondary: var(--color-slate-700);
+  --color-text-muted: var(--color-slate-500);
+  --color-surface-elevated: var(--color-white);
+  --color-surface-muted: var(--color-gray-100);
+  --color-surface-glass: rgba(255, 255, 255, 0.85);
+  --color-header-glass: rgba(252, 251, 250, 0.8);
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-bg-muted: #f1efed;
+}
+
+/* ─── Dark theme tokens ─── */
+[data-theme="dark"] {
+  --color-bg: #0f1117;
+  --color-bg-muted: #161a22;
+  --color-secondary: #e8eaed;
+
+  --color-gray-50: #1a1d23;
+  --color-gray-100: #22262e;
+  --color-gray-200: #2d333d;
+  --color-gray-300: #3a4150;
+  --color-gray-400: #5c6678;
+  --color-gray-500: #8b95a8;
+  --color-gray-600: #a8b0bf;
+  --color-gray-700: #c5cad4;
+  --color-gray-800: #e2e5eb;
+  --color-gray-900: #f4f5f7;
+
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #a8b4c4;
+  --color-slate-600: #c5ced9;
+  --color-slate-700: #dce3ec;
+  --color-slate-900: #f1f5f9;
+
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #dce3ec;
+  --color-text-muted: #94a3b8;
+  --color-surface-elevated: #1a1d23;
+  --color-surface-muted: #22262e;
+  --color-surface-glass: rgba(26, 29, 35, 0.9);
+  --color-header-glass: rgba(15, 17, 23, 0.88);
+  --color-border: rgba(255, 255, 255, 0.1);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.35), 0 2px 4px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.25);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.45), 0 10px 10px rgba(0, 0, 0, 0.3);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* ─── Smooth theme transitions (applied briefly on toggle) ─── */
+html.theme-transition body,
+html.theme-transition #root,
+html.theme-transition [class*="-page"],
+html.theme-transition [class*="-header"],
+html.theme-transition [class*="-nav"],
+html.theme-transition [class*="-card"],
+html.theme-transition [class*="-btn"] {
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 /* ─── CSS Reset & Base ─── */
@@ -131,12 +197,13 @@ html {
 body {
   font-family: var(--font-sans);
   font-weight: var(--fw-regular);
-  color: var(--color-secondary);
+  color: var(--color-text-primary);
   background-color: var(--color-bg);
   line-height: 1.5;
   overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
   min-height: 100dvh;
+  transition: background-color var(--transition-base), color var(--transition-base);
 }
 
 #root {
