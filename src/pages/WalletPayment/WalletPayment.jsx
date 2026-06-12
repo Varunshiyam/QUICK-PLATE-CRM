@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import useHaptic from '../../hooks/useHaptic';
+import { formatPrice } from '../../utils/helpers';
 import { getStoredUser } from '../../services/firebase';
 import './WalletPayment.css';
 
@@ -211,7 +212,7 @@ const WalletPayment = () => {
                 {isProcessing ? (
                   <div className="rzp-spinner"></div>
                 ) : (
-                  `Pay $${amount ? parseFloat(amount).toFixed(2) : '0.00'}`
+                  `Pay ${formatPrice(amount ? parseFloat(amount) : 0)}`
                 )}
               </button>
               
@@ -237,7 +238,7 @@ const WalletPayment = () => {
               <span className="material-symbols-outlined">check</span>
             </motion.div>
             <h3>Payment Successful</h3>
-            <p>Your wallet has been credited with ${parseFloat(amount).toFixed(2)}</p>
+            <p>Your wallet has been credited with {formatPrice(parseFloat(amount))}</p>
           </motion.div>
         )}
       </AnimatePresence>

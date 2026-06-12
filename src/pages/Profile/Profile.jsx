@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { formatPrice } from '../../utils/helpers';
 import useHaptic from '../../hooks/useHaptic';
 import useAppStore from '../../store/useAppStore';
 import { logoutUser } from '../../services/firebase';
@@ -185,7 +186,7 @@ const Profile = () => {
               return {
                 title: wt.description || 'Added to Wallet',
                 date: new Date(wt.date).toLocaleDateString(),
-                amount: `${isCredit ? '+' : '-'}$${Math.abs(amt).toFixed(2)}`,
+                amount: `${isCredit ? '+' : '-'}${formatPrice(Math.abs(amt))}`,
                 type: isCredit ? 'credit' : 'debit',
                 icon: isCredit ? 'account_balance_wallet' : 'shopping_bag',
                 tag: 'Wallet'
@@ -246,7 +247,7 @@ const Profile = () => {
   const dynamicStats = [
     { label: 'Total Orders', value: totalOrdersCount.toString(), icon: 'local_mall', color: 'indigo', action: null },
     { label: 'Favorites', value: '12', icon: 'favorite', color: 'red', action: null },
-    { label: 'Wallet', value: `$${walletBalance.toFixed(2)}`, icon: 'account_balance_wallet', color: 'orange', action: () => { mediumTap(); navigate('/customerwallet'); } },
+    { label: 'Wallet', value: formatPrice(walletBalance), icon: 'account_balance_wallet', color: 'orange', action: () => { mediumTap(); navigate('/customerwallet'); } },
   ];
 
   return (
@@ -322,7 +323,7 @@ const Profile = () => {
                       <h4>{order.restaurantName || order.restaurant}</h4>
                       <p>{order.date} • {String(order.id).startsWith('#') ? order.id : `#${order.id}`}</p>
                     </div>
-                    <div className="order-price">${typeof order.total === 'number' ? order.total.toFixed(2) : order.total || order.amount}</div>
+                    <div className="order-price">{formatPrice(typeof order.total === 'number' ? order.total : parseFloat(order.total || order.amount))}</div>
                   </div>
                   <div className="order-card-bottom">
                     <span className="order-items">{order.items || "Standard Order"}</span>

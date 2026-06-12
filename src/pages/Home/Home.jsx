@@ -5,6 +5,7 @@ import useHaptic from '../../hooks/useHaptic';
 import useAppStore from '../../store/useAppStore';
 import { logoutUser, getStoredUser } from '../../services/firebase';
 import { fetchRestaurants } from '../../services/restaurantService';
+import { formatPrice } from '../../utils/helpers';
 import './Home.css';
 
 /* ─── Mock Data ─── */
@@ -85,11 +86,11 @@ const BANNERS = [
 ];
 
 const TRENDING = [
-  { img: IMG.dessert, badge: '#1 Trending',    name: 'Chocolate Lava Dream',  price: 'Starting at $9.99' },
-  { img: IMG.pastry,  badge: 'Fresh Baked',    name: 'Glazed Berry Danish',   price: 'Starting at $5.99' },
-  { img: IMG.tart,    badge: 'Delightful',     name: 'Summer Fruit Tart',     price: 'Starting at $12.99' },
-  { img: IMG.cake,    badge: 'Limited Time',   name: 'Red Velvet Supreme',    price: 'Starting at $8.99' },
-  { img: IMG.grill,   badge: 'Hot Seller',     name: 'Truffle Burger Series', price: 'Exclusive menu items' },
+  { img: IMG.dessert, badge: '#1 Trending',    name: 'Chocolate Lava Dream',  price: 9.99, priceLabel: null },
+  { img: IMG.pastry,  badge: 'Fresh Baked',    name: 'Glazed Berry Danish',   price: 5.99, priceLabel: null },
+  { img: IMG.tart,    badge: 'Delightful',     name: 'Summer Fruit Tart',     price: 12.99, priceLabel: null },
+  { img: IMG.cake,    badge: 'Limited Time',   name: 'Red Velvet Supreme',    price: 8.99, priceLabel: null },
+  { img: IMG.grill,   badge: 'Hot Seller',     name: 'Truffle Burger Series', price: null, priceLabel: 'Exclusive menu items' },
 ];
 
 // RESTAURANTS fetched dynamically
@@ -619,7 +620,7 @@ const Home = () => {
                     <div className="home-trending-badge">{item.badge}</div>
                   </div>
                   <h4 className="home-trending-name">{item.name}</h4>
-                  <p className="home-trending-price">{item.price}</p>
+                  <p className="home-trending-price">{item.priceLabel ? item.priceLabel : `Starting at ${formatPrice(item.price)}`}</p>
                 </motion.div>
               ))}
             </AnimatePresence>
