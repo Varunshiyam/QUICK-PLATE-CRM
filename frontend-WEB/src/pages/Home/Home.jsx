@@ -181,6 +181,7 @@ const Home = () => {
   const cartItemCount = getCartItemCount();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [activeSort, setActiveSort] = useState('Recommended');
+  const [activePrice, setActivePrice] = useState(null);
   const [currentBanner, setCurrentBanner] = useState(0);
 
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
@@ -227,6 +228,18 @@ const Home = () => {
         if (activeCategory === 'Pizza') return c.includes('pizza') || c.includes('italian');
         if (activeCategory === 'Sushi') return c.includes('sushi') || c.includes('japanese');
         if (activeCategory === 'Burgers') return c.includes('burger') || c.includes('american') || c.includes('bbq');
+        return true;
+      });
+    }
+
+    if (activePrice) {
+      const priceLevel = { '$': 1, '$$': 2, '$$$': 3, '$$$$': 4 }[activePrice] || 0;
+      result = result.filter(r => {
+        const itemPrice = parseFloat(r.price) || 0;
+        if (activePrice === '$') return itemPrice <= 10;
+        if (activePrice === '$$') return itemPrice > 10 && itemPrice <= 20;
+        if (activePrice === '$$$') return itemPrice > 20 && itemPrice <= 35;
+        if (activePrice === '$$$$') return itemPrice > 35;
         return true;
       });
     }
@@ -669,7 +682,13 @@ const Home = () => {
                 <h4>Price Range</h4>
                 <div className="filter-chips">
                   {['$', '$$', '$$$', '$$$$'].map(price => (
-                    <button key={price} className="filter-chip">{price}</button>
+                    <button
+                      key={price}
+                      className={`filter-chip ${activePrice === price ? 'active' : ''}`}
+                      onClick={() => { setActivePrice(activePrice === price ? null : price); lightTap(); }}
+                    >
+                      {price}
+                    </button>
                   ))}
                 </div>
               </div>
