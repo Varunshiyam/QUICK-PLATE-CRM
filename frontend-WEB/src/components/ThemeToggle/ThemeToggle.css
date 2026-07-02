@@ -14,6 +14,11 @@
   background-color: var(--color-gray-200);
 }
 
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 .theme-toggle:active {
   transform: scale(0.92);
 }

@@ -168,6 +168,12 @@ body {
   min-height: 100dvh;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  body {
+    transition: none;
+  }
+}
+
 #root {
   max-width: var(--max-width);
   margin: 0 auto;
