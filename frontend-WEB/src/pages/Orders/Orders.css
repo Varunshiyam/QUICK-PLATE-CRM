@@ -562,3 +562,24 @@
   padding: 0.125rem 0.5rem;
   border-radius: 0.25rem;
 }
+.orders-pagination{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:16px;
+    margin-top:24px;
+}
+
+.orders-pagination button{
+    padding:8px 16px;
+    border:none;
+    border-radius:8px;
+    background:var(--color-primary);
+    color:white;
+    cursor:pointer;
+}
+
+.orders-pagination button:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
