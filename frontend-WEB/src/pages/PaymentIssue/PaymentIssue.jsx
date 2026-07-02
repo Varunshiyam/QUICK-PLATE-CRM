@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getStoredUser } from '../../services/firebase';
 import useHaptic from '../../hooks/useHaptic';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 import './PaymentIssue.css';
 import '../OrderIssue/OrderIssue.css'; // For order selection slider styles
 
@@ -128,6 +129,9 @@ const PaymentIssue = () => {
           <span className="material-symbols-outlined">arrow_back</span>
         </div>
         <h2 className="payment-issue-title">Report Payment Issue</h2>
+        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+          <ThemeToggle />
+        </div>
       </div>
 
       <div className="payment-issue-content">

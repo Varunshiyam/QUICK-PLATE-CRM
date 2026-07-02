@@ -5,6 +5,7 @@ import {
   FiClock, FiLayers, FiSearch, FiLock,
   FiTerminal, FiFileText, FiZap, FiServer
 } from 'react-icons/fi';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 import useHaptic from '../../hooks/useHaptic';
 import './Features.css';
 
@@ -40,10 +41,13 @@ const Features = () => {
       <header className="landing-header">
         <nav className="landing-nav">
           <div className="landing-logo">QP</div>
-          <div className="landing-nav-links">
-            <Link to="/" className="landing-nav-link" onClick={lightTap}>Home</Link>
-            <Link to="/features" className="landing-nav-link active" onClick={lightTap}>Features</Link>
-            <Link to="/" className="landing-nav-link" onClick={lightTap}>Contact</Link>
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            <div className="landing-nav-links">
+              <Link to="/" className="landing-nav-link" onClick={lightTap}>Home</Link>
+              <Link to="/features" className="landing-nav-link active" onClick={lightTap}>Features</Link>
+              <Link to="/" className="landing-nav-link" onClick={lightTap}>Contact</Link>
+            </div>
+            <ThemeToggle />
           </div>
         </nav>
       </header>

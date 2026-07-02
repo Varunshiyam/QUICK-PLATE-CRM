@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
 import useAppStore from '../../store/useAppStore';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 import './Restaurant.css';
 
 import { getRestaurantMenu } from '../../data/mockMenus';
@@ -71,6 +72,7 @@ const Restaurant = () => {
           </button>
           
           <div className="rest-top-actions">
+            <ThemeToggle />
             <button className="rest-glass-btn" onClick={lightTap}>
               <span className="material-symbols-outlined">search</span>
             </button>

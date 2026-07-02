@@ -85,7 +85,7 @@ const PaymentSuccess = () => {
       alignItems: 'center',
       justifyContent: 'center',
       height: '100dvh',
-      background: '#FDFCFB',
+      background: 'var(--color-bg)',
       padding: '24px',
       textAlign: 'center'
     }}>

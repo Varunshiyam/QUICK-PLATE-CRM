@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getStoredUser } from '../../services/firebase';
 import useHaptic from '../../hooks/useHaptic';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 import './RaiseRefund.css';
 
 const getInitialOrders = () => {
@@ -117,6 +118,9 @@ const RaiseRefund = () => {
           <span className="material-symbols-outlined">arrow_back_ios_new</span>
         </button>
         <h1 className="rr-title">Raise Refund Ticket</h1>
+        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="rr-main">

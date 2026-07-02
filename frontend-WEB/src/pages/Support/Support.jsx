@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import useHaptic from '../../hooks/useHaptic';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 import '../Home/Home.css';
 import './Support.css';
 
@@ -156,6 +157,8 @@ const Support = () => {
         <h1 className="support-title">Support Center</h1>
 
         <div className="support-badge-container">
+
+          <ThemeToggle />
 
           <button
             className="support-icon-btn"

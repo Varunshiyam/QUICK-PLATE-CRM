@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import useHaptic from '../../hooks/useHaptic';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 import './Tracking.css';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
@@ -245,9 +246,12 @@ const Tracking = () => {
           <h2 className="track-h2">Order #{order.id}</h2>
           <p className="track-subtitle">Live Updates</p>
         </div>
-        <button className="track-icon-btn" onClick={lightTap}>
-          <span className="material-symbols-outlined">support_agent</span>
-        </button>
+        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+          <ThemeToggle />
+          <button className="track-icon-btn" onClick={lightTap}>
+            <span className="material-symbols-outlined">support_agent</span>
+          </button>
+        </div>
       </header>
 
       {/* ─── Progress Bar ─── */}

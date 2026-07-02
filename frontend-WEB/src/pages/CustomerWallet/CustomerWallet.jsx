@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useHaptic from '../../hooks/useHaptic';
 import { getStoredUser } from '../../services/firebase';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 import './CustomerWallet.css';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
@@ -79,7 +80,10 @@ const CustomerWallet = () => {
           <span className="material-symbols-outlined">arrow_back_ios_new</span>
         </button>
         <h1 className="wallet-title">My Wallet</h1>
-        <div style={{ width: 24 }} /> {/* Spacer for alignment */}
+        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+          <ThemeToggle />
+          <div style={{ width: 24 }} /> {/* Spacer for alignment */}
+        </div>
       </header>
 
       <main className="wallet-main">
