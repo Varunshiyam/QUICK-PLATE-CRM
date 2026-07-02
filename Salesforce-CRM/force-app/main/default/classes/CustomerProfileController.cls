@@ -90,7 +90,9 @@ global without sharing class CustomerProfileController {
 
         } catch (Exception e) {
 
-            sendError('Profile update failed: ' + e.getMessage(), 500);
+            System.debug('Profile Update Error: ' + e.getMessage());
+
+            sendError('Profile update failed. Please try again later.', 500);
         }
     }
 

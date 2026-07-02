@@ -156,7 +156,7 @@ global without sharing class WalletAddFundsController {
 
             return error(
                 res,
-                'Failed to add funds: ' + e.getMessage(),
+                'Failed to add funds. Please try again later.',
                 500
             );
         }

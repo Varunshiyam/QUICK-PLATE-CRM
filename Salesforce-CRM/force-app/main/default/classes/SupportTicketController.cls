@@ -195,7 +195,7 @@ global without sharing class SupportTicketController {
 
             System.debug('Ticket Error: ' + e.getMessage() + ' | Stack: ' + e.getStackTraceString());
 
-            return buildError(res,'Ticket creation failed: ' + e.getMessage(),500);
+            return buildError(res,'Ticket creation failed. Please try again later.',500);
         }
     }
 
