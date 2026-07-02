@@ -187,7 +187,7 @@ const CheckoutForm = () => {
       } else if (paymentMethod === 'card') {
         const response = await axios.post(
           `${API_BASE_URL}/services/apexrest/checkout/create-session`,
-          { orderId },
+          { orderId, idToken: storedUser?.firebaseIdToken },
           {
             headers: {
               'Content-Type': 'application/json'

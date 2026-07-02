@@ -2,6 +2,7 @@
 global without sharing class StripeCheckoutController {
 
     global class SessionRequest {
+        public String idToken; // 🔥 REQUIRED
         public String orderId;
     }
 
@@ -37,12 +38,42 @@ global without sharing class StripeCheckoutController {
                 return error(res, 'Invalid orderId.', 400);
             }
 
+            if (String.isBlank(input.idToken)) {
+                return error(res, 'Authentication required.', 401);
+            }
+
+            // ===============================
+            // 🔐 VERIFY FIREBASE TOKEN
+            // ===============================
+            String firebaseUid =
+                FirebaseAuthUtil.verifyToken(input.idToken);
+
+            if (String.isBlank(firebaseUid)) {
+                return error(res, 'Invalid authentication.', 401);
+            }
+
+            // ===============================
+            // ✅ RESOLVE CUSTOMER FROM UID
+            // ===============================
+            List<Customer__c> customers = [
+                SELECT Id
+                FROM Customer__c
+                WHERE Firebase_UID__c = :firebaseUid
+                LIMIT 1
+            ];
+
+            if (customers.isEmpty()) {
+                return error(res, 'Customer not found.', 404);
+            }
+
+            Id customerId = customers[0].Id;
+
             // ===============================
             // ✅ SAFE ORDER FETCH
             // ===============================
             List<Order__c> orders = [
                 SELECT Id, Order_Total__c, Payment_Status__c, Order_Number__c,
-                       Payment_Transaction__c
+                       Payment_Transaction__c, Customer__c
                 FROM Order__c
                 WHERE Id = :input.orderId
                 LIMIT 1
@@ -53,6 +84,12 @@ global without sharing class StripeCheckoutController {
             }
 
             Order__c order = orders[0];
+
+            // 🔥 CRITICAL SECURITY CHECK
+            // Only the customer who owns the order may initiate its payment.
+            if (order.Customer__c != customerId) {
+                return error(res, 'You are not authorized to pay for this order.', 403);
+            }
 
             // ===============================
             // ✅ VALIDATION
