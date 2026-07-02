@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import useAppStore from '../../store/useAppStore';
 import useHaptic from '../../hooks/useHaptic';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 import { getStoredUser } from '../../services/firebase';
 import './Checkout.css';
 
@@ -477,7 +478,10 @@ const Checkout = () => {
           <div className="checkout-header-title">
             <h1>Checkout</h1>
           </div>
-          <div style={{ width: 40 }} /> {/* Spacer */}
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            <ThemeToggle />
+            <div style={{ width: 40 }} /> {/* Spacer */}
+          </div>
         </div>
       </header>
 

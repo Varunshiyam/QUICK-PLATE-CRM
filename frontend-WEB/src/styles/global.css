@@ -111,6 +111,34 @@
   --safe-area-bottom: env(safe-area-inset-bottom, 0px);
 }
 
+/* ─── Dark Theme Overrides ─── */
+[data-theme='dark'] {
+  --color-secondary: #F1F3F5;
+  --color-bg: #17191B;
+
+  --color-white: #1F2225;
+  --color-gray-50: #2A2D30;
+  --color-gray-100: #33373A;
+  --color-gray-200: #3D4144;
+  --color-gray-300: #4A4E52;
+  --color-gray-400: #5C6165;
+  --color-gray-500: #7A8085;
+  --color-gray-600: #9CA1A5;
+  --color-gray-700: #BEC2C5;
+  --color-gray-800: #DADDDF;
+  --color-gray-900: #F1F3F5;
+  --color-slate-400: #6B7A90;
+  --color-slate-500: #8A98AC;
+  --color-slate-600: #AAB6C6;
+  --color-slate-700: #CBD3DE;
+  --color-slate-900: #E8EBEF;
+}
+
+[data-theme='dark'] body,
+[data-theme='dark'] #root {
+  background-color: var(--color-bg);
+}
+
 /* ─── CSS Reset & Base ─── */
 *,
 *::before,
@@ -133,10 +161,17 @@ body {
   font-weight: var(--fw-regular);
   color: var(--color-secondary);
   background-color: var(--color-bg);
+  transition: background-color var(--transition-base), color var(--transition-base);
   line-height: 1.5;
   overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
   min-height: 100dvh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    transition: none;
+  }
 }
 
 #root {

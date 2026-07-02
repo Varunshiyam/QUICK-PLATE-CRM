@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import useHaptic from '../../hooks/useHaptic';
 import { getStoredUser } from '../../services/firebase';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 import './WalletPayment.css';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
@@ -123,9 +124,12 @@ const WalletPayment = () => {
                   <p>Wallet Payment</p>
                 </div>
               </div>
-              <button className="rzp-close" onClick={() => navigate(-1)}>
-                <span className="material-symbols-outlined">close</span>
-              </button>
+              <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                <ThemeToggle />
+                <button className="rzp-close" onClick={() => navigate(-1)}>
+                  <span className="material-symbols-outlined">close</span>
+                </button>
+              </div>
             </div>
 
             <form className="rzp-form" onSubmit={handlePayment}>

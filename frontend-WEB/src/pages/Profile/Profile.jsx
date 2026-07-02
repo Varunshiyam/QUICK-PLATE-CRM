@@ -6,6 +6,7 @@ import useHaptic from '../../hooks/useHaptic';
 import useAppStore from '../../store/useAppStore';
 import { logoutUser } from '../../services/firebase';
 import './Profile.css';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 const isMockMode = !API_BASE_URL;
@@ -227,9 +228,12 @@ const Profile = () => {
           <span className="material-symbols-outlined">arrow_back_ios_new</span>
         </button>
         <h1 className="profile-page-title">My Profile</h1>
-        <button className="profile-edit-btn" onClick={lightTap}>
-          <span className="material-symbols-outlined">edit</span>
-        </button>
+        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+          <button className="profile-edit-btn" onClick={lightTap}>
+            <span className="material-symbols-outlined">edit</span>
+          </button>
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="profile-main-scroll">

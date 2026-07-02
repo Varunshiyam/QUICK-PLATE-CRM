@@ -6,6 +6,7 @@ import useHaptic from '../../hooks/useHaptic';
 import useAppStore from '../../store/useAppStore';
 import { signInWithGoogleAndSync } from '../../services/firebase';
 import './Onboarding.css';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 
 /* ─── Mock Food Images for Carousel ─── */
 const FOOD_IMAGES = [
@@ -75,6 +76,18 @@ const Onboarding = () => {
       </div>
 
       <div className="onboard-content">
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            width: '100%',
+            marginBottom: '0.75rem'
+          }}
+        >
+          <ThemeToggle />
+        </div>
+
         
         {/* Header Content */}
         <motion.div

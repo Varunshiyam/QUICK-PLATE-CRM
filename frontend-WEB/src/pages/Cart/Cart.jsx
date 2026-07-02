@@ -8,6 +8,7 @@ import axios from 'axios';
 
 import useAppStore from '../../store/useAppStore';
 import useHaptic from '../../hooks/useHaptic';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 
 import { auth } from '../../services/firebase';
 
@@ -584,7 +585,10 @@ const Cart = () => {
 
           {/* CONTENT */}
 
-          <div className="cart-content">
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            <ThemeToggle />
+            <div style={{ width: 40 }} /> {/* Spacer */}
+          </div>
 
             {/* CART ITEMS */}
 

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getStoredUser } from '../../services/firebase';
 import useHaptic from '../../hooks/useHaptic';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 import './OrderIssue.css';
 
 const MOCK_ORDERS = [
@@ -139,7 +140,10 @@ const OrderIssue = () => {
           <span className="material-symbols-outlined">arrow_back_ios_new</span>
         </button>
         <h1 className="order-issue-title" style={{ fontWeight: 800 }}>Order Issue</h1>
-        <div className="w-10"></div>
+        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+          <ThemeToggle />
+          <div className="w-10"></div>
+        </div>
       </header>
       
       <main className="order-issue-main">
