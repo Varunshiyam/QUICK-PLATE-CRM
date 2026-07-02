@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
 import './Landing.css';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 
 /* ─── Image URLs ─── */
 const FOOD_IMAGES = {
@@ -103,6 +104,7 @@ const Landing = () => {
               Contact
             </Link>
           </div>
+          <ThemeToggle />
         </motion.nav>
       </header>
 

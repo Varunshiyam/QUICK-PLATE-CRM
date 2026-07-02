@@ -5,6 +5,7 @@ import axios from 'axios';
 import { auth } from '../../services/firebase';
 import useHaptic from '../../hooks/useHaptic';
 import './OnboardingDetails.css';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 
 const OnboardingDetails = () => {
   const navigate = useNavigate();
@@ -130,6 +131,18 @@ const OnboardingDetails = () => {
       </div>
 
       <div className="obd-content">
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            width: '100%',
+            marginBottom: '0.75rem'
+          }}
+        >
+          <ThemeToggle />
+        </div>
+
         <div className="obd-header">
           <div className="obd-icon-badge">
             <span className="material-symbols-outlined">restaurant_menu</span>

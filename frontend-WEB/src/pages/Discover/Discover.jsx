@@ -8,6 +8,7 @@ import { fetchRestaurants } from '../../services/restaurantService';
 import toast from 'react-hot-toast';
 import '../Home/Home.css';
 import './Discover.css';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 
 import sakuraDiscoverImg from '../../assets/images/Discover_Page_Pic/Sakura Omakase_Discover.webp';
 import smokeHouseDiscoverImg from '../../assets/images/Discover_Page_Pic/Smoke_House_Discover.webp';
@@ -182,16 +183,17 @@ const Discover = () => {
             </div>
           </div>
           <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-            <div className="discover-icon-btn" onClick={() => { lightTap(); setIsSearchOpen(!isSearchOpen); }}>
-              <span className="material-symbols-outlined">{isSearchOpen ? 'close' : 'search'}</span>
-            </div>
-            <div className="discover-icon-btn home-cart-icon" onClick={() => { lightTap(); navigate('/cart'); }}>
-              <span className="material-symbols-outlined">shopping_bag</span>
-              {cartItemCount > 0 && (
-                <span className="cart-badge">{cartItemCount}</span>
-              )}
-            </div>
-          </div>
+  <ThemeToggle />
+  <div className="discover-icon-btn" onClick={() => { lightTap(); setIsSearchOpen(!isSearchOpen); }}>
+    <span className="material-symbols-outlined">{isSearchOpen ? 'close' : 'search'}</span>
+  </div>
+  <div className="discover-icon-btn home-cart-icon" onClick={() => { lightTap(); navigate('/cart'); }}>
+    <span className="material-symbols-outlined">shopping_bag</span>
+    {cartItemCount > 0 && (
+      <span className="cart-badge">{cartItemCount}</span>
+    )}
+  </div>
+</div>
         </div>
 
         <AnimatePresence>

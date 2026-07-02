@@ -4,6 +4,7 @@ import axios from 'axios';
 import useHaptic from '../../hooks/useHaptic';
 import '../Home/Home.css';
 import './Orders.css';
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle';
 
 import imgMorningBliss from '../../assets/images/MissMatched_Pics/Morning Bliss Bakery.avif';
 import imgNapoliWoodfired from '../../assets/images/MissMatched_Pics/Napoli Woodfired Pizza.avif';
@@ -169,16 +170,19 @@ const Orders = () => {
     <div className="orders-layout orders-page-bg">
       {/* ─── Header ─── */}
       <header className="orders-glass-header">
-        <div className="orders-header-left">
-          <button className="orders-back-btn" onClick={() => { lightTap(); navigate(-1); }}>
-            <span className="material-symbols-outlined text-primary font-bold">arrow_back_ios</span>
-          </button>
-          <h1>{activeTab === 'orders' ? 'Order History' : 'Support Tickets'}</h1>
-        </div>
-        <button className="orders-search-btn" onClick={lightTap}>
-          <span className="material-symbols-outlined text-primary text-[22px]">search</span>
-        </button>
-      </header>
+  <div className="orders-header-left">
+    <button className="orders-back-btn" onClick={() => { lightTap(); navigate(-1); }}>
+      <span className="material-symbols-outlined text-primary font-bold">arrow_back_ios</span>
+    </button>
+    <h1>{activeTab === 'orders' ? 'Order History' : 'Support Tickets'}</h1>
+  </div>
+  <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+    <ThemeToggle />
+    <button className="orders-search-btn" onClick={lightTap}>
+      <span className="material-symbols-outlined text-primary text-[22px]">search</span>
+    </button>
+  </div>
+</header>
 
       <div className="orders-toggle-wrap">
         <div className="orders-toggle-box">
