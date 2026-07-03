@@ -190,7 +190,7 @@
   flex-direction: column;
   align-items: center;
   padding: 1rem;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   border-radius: 1rem;
   margin: 0 1rem 1rem 1rem;
   border: 1px solid #f1f5f9;
@@ -267,7 +267,7 @@
 .light-bubble {
   width: 40px;
   height: 40px;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   border: 2px solid #e2e8f0;
 }
 
@@ -324,7 +324,7 @@
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   border-radius: 1rem;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   border: 1px solid #f1f5f9;

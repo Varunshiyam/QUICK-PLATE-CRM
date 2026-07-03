@@ -8,6 +8,10 @@ import { persist } from 'zustand/middleware';
 const useAppStore = create(
   persist(
     (set, get) => ({
+  // ─── Theme State ───
+  theme: 'light',
+  toggleTheme: () => set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
+
   // ─── User State ───
   user: null,
   isAuthenticated: false,
@@ -99,7 +103,8 @@ const useAppStore = create(
         isAuthenticated: state.isAuthenticated, 
         cart: state.cart, 
         cartRestaurantId: state.cartRestaurantId,
-        cartRestaurant: state.cartRestaurant
+        cartRestaurant: state.cartRestaurant,
+        theme: state.theme
       }),
     }
   )

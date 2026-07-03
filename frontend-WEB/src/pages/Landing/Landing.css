@@ -45,12 +45,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--color-glass);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   padding: 0.75rem 1.5rem;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--color-gray-200);
   box-shadow: var(--shadow-sm);
 }
 
@@ -332,12 +332,12 @@
 }
 
 .landing-feature-inner {
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--color-glass);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: var(--radius-3xl);
   padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 1);
+  border: 1px solid var(--color-gray-200);
   box-shadow: var(--shadow-lg);
   display: flex;
   align-items: center;
@@ -348,7 +348,7 @@
   width: 56px;
   height: 56px;
   min-width: 56px;
-  background: #FFF7ED;
+  background: var(--color-gray-50);
   border-radius: var(--radius-2xl);
   display: flex;
   align-items: center;

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import ThemeToggle from '../../components/ThemeToggle';
 import {
   FiShield, FiCreditCard, FiTruck, FiActivity,
   FiClock, FiLayers, FiSearch, FiLock,
@@ -44,6 +45,7 @@ const Features = () => {
             <Link to="/" className="landing-nav-link" onClick={lightTap}>Home</Link>
             <Link to="/features" className="landing-nav-link active" onClick={lightTap}>Features</Link>
             <Link to="/" className="landing-nav-link" onClick={lightTap}>Contact</Link>
+            <ThemeToggle />
           </div>
         </nav>
       </header>
