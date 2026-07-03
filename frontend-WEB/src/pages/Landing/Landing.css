@@ -54,13 +54,10 @@
   box-shadow: var(--shadow-sm);
 }
 
-.landing-logo {
-  font-family: var(--font-display);
-  font-weight: var(--fw-bold);
-  font-size: var(--fs-xl);
-  color: var(--color-primary);
-  letter-spacing: -0.05em;
-  line-height: 1;
+.landing-logo-img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
 }
 
 .landing-nav-links {

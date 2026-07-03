@@ -117,7 +117,7 @@ const WalletPayment = () => {
             {/* Header / Logo section */}
             <div className="rzp-header">
               <div className="rzp-logo-container">
-                <span className="material-symbols-outlined" style={{ fontSize: '40px', color: '#fb7e18' }}>fastfood</span>
+                <img src={logo} alt="Quick Plate Logo" className="rzp-brand-icon-img" />
                 <div className="rzp-brand">
                   <h2>QUICK PLATE</h2>
                   <p>Wallet Payment</p>
