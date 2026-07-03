@@ -7,6 +7,7 @@ import { AnimatePresence } from 'framer-motion';
 import Landing from './pages/Landing/Landing';
 import Features from './pages/Features/Features';
 import Onboarding from './pages/Onboarding/Onboarding';
+const Contact = lazy(() => import("./pages/Contact/Contact"));
 
 // Lazy-loaded pages (will be created as mockups arrive)
 const Home = lazy(() => import('./pages/Home/Home'));
@@ -87,6 +88,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/features" element={<Features />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/onboarding" element={<Onboarding />} />
             <Route path="/onboarding-details" element={<OnboardingDetails />} />
             <Route path="/home" element={<Home />} />
