@@ -73,18 +73,18 @@ const Support = () => {
           setTickets(userTickets);
 
         } else {
-
           const storedUser =
             JSON.parse(localStorage.getItem('quickplate_user') || '{}');
+          const idToken = storedUser?.firebaseIdToken;
 
-          if (!storedUser.customerId) {
-            console.warn("No customerId found. Cannot fetch tickets.");
+          if (!idToken) {
+            console.warn("No authentication token found. Cannot fetch tickets.");
             setTickets([]);
             return;
           }
 
           const res = await axios.get(
-            `${API_BASE_URL}/services/apexrest/case/list?customerId=${storedUser.customerId}`
+            `${API_BASE_URL}/services/apexrest/case/list?idToken=${encodeURIComponent(idToken)}`
           );
 
           if (res.data && res.data.tickets) {
@@ -92,7 +92,6 @@ const Support = () => {
           } else {
             setTickets([]);
           }
-
         }
 
       } catch (err) {

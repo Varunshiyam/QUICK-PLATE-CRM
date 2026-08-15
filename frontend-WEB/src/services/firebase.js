@@ -166,6 +166,8 @@ export const signInWithGoogleAndSync = async () => {
       name: data.name,
       email: data.email,
       profileComplete: data.profileComplete,
+      address: data.address,
+      phone: data.phone,
       firebaseUid: user.uid,
       photoURL: user.photoURL,
       firebaseIdToken: idToken
