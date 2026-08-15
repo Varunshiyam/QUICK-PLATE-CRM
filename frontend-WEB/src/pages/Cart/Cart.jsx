@@ -34,13 +34,14 @@ const Cart = () => {
   // ========================================
 
   const {
-    cart,
-    removeFromCart,
-    addToCart,
-    getCartTotal,
-    cartRestaurant,
-    cartRestaurantId
-  } = useAppStore();
+  cart,
+  removeFromCart,
+  addToCart,
+  getCartTotal,
+  cartRestaurant,
+  cartRestaurantId,
+  lastCartInteraction
+} = useAppStore();
 
   // ========================================
   // HAPTICS
@@ -69,7 +70,39 @@ const Cart = () => {
 
   const [isWalletLoading, setWalletLoading] =
     useState(true);
+  const [showRecoveryBanner, setShowRecoveryBanner] =
+  useState(false);
 
+const [cartRecoveryMessage, setCartRecoveryMessage] =
+  useState('');
+  const [purchaseInsights, setPurchaseInsights] = useState({
+  probability: 0,
+  riskLevel: 'High',
+  recommendation: '',
+});
+const getRecoveryMessage = () => {
+  if (purchaseInsights.probability >= 80) {
+    return {
+      title: '🚀 Your order is almost ready',
+      message:
+        'You were very close to checkout. Complete your order before your items become unavailable.',
+    };
+  }
+
+  if (purchaseInsights.probability >= 50) {
+    return {
+      title: '🔥 Your cart is waiting',
+      message:
+        'Finish your order now and enjoy a faster checkout experience.',
+    };
+  }
+
+  return {
+    title: '🍔 Still deciding?',
+    message:
+      'Explore more dishes and discover popular customer favorites.',
+  };
+};
   // ========================================
   // RESTAURANT CONTEXT
   // ========================================
@@ -274,7 +307,110 @@ const Cart = () => {
   // ========================================
   // CHECKOUT
   // ========================================
+  useEffect(() => {
 
+  if (
+    !cart.length ||
+    !lastCartInteraction
+  ) {
+    return;
+  }
+
+  const inactivityTime =
+    Date.now() - lastCartInteraction;
+  const inactiveMinutes =
+  Math.floor(
+    inactivityTime / 60000
+  );
+  const FIFTEEN_MINUTES =
+    15 * 60 * 1000;
+
+  if (
+    inactivityTime >
+    FIFTEEN_MINUTES
+  ) {
+
+    setShowRecoveryBanner(true);
+
+    const cartValue =
+      getCartTotal();
+
+    if (cartValue > 50) {
+
+      setCartRecoveryMessage(
+        '🔥 Your premium order is still waiting for checkout.'
+      );
+
+    } else if (cartValue > 20) {
+
+      setCartRecoveryMessage(
+        '🍔 Looks like you left some delicious items behind.'
+      );
+
+    } else {
+
+      setCartRecoveryMessage(
+        '🛒 Continue where you left off.'
+      );
+    }
+  }
+
+}, [
+  cart,
+  lastCartInteraction,
+  getCartTotal
+]);
+useEffect(() => {
+  if (!cart.length) return;
+
+  const total = getCartTotal();
+
+  let probability = 30;
+
+  probability += Math.min(cart.length * 8, 25);
+
+  probability += Math.min(total / 15, 25);
+
+  if (lastCartInteraction) {
+    const minutesSinceInteraction =
+      (Date.now() - lastCartInteraction) / 60000;
+
+    probability -= Math.min(
+      Math.floor(minutesSinceInteraction / 10) * 3,
+      20
+    );
+  }
+
+  probability = Math.max(
+    5,
+    Math.min(95, Math.round(probability))
+  );
+
+  let riskLevel = 'High';
+  let recommendation =
+    'Try exploring similar menu items';
+
+  if (probability >= 80) {
+    riskLevel = 'Low';
+    recommendation =
+      'Continue to checkout';
+  } else if (probability >= 50) {
+    riskLevel = 'Medium';
+    recommendation =
+      'Complete your order soon';
+  }
+
+  setPurchaseInsights({
+    probability,
+    riskLevel,
+    recommendation,
+  });
+
+}, [
+  cart,
+  lastCartInteraction,
+  getCartTotal,
+]);
   const handleCheckout =
     async () => {
 
@@ -491,6 +627,37 @@ const Cart = () => {
   return (
 
     <div className="cart-page">
+    {showRecoveryBanner && (
+
+  <motion.div
+    initial={{ opacity: 0, y: -15 }}
+    animate={{ opacity: 1, y: 0 }}
+    className="cart-recovery-banner"
+  >
+
+    <div>
+
+      <strong>
+        Welcome Back!
+      </strong>
+
+      <p>
+        {cartRecoveryMessage}
+      </p>
+
+    </div>
+
+    <button
+      onClick={() =>
+        setShowRecoveryBanner(false)
+      }
+    >
+      Continue
+    </button>
+
+  </motion.div>
+
+)}
 
       {/* HEADER */}
 
@@ -726,6 +893,64 @@ const Cart = () => {
             {/* BILL */}
 
             <div className="bill-section">
+            <div className="purchase-insights-card">
+
+  <div className="purchase-insights-header">
+    <span className="material-symbols-outlined">
+      analytics
+    </span>
+
+    <h4>Purchase Insights</h4>
+  </div>
+
+  <div className="purchase-score">
+
+    <strong>
+      {purchaseInsights.probability}%
+    </strong>
+    <div className="purchase-score-bar">
+  <div
+    className="purchase-score-fill"
+    style={{
+      width: `${purchaseInsights.probability}%`,
+    }}
+  />
+</div>
+    <span>
+      Completion Probability
+    </span>
+
+  </div>
+
+  <div className="purchase-meta">
+
+    <p>
+      Risk Level:
+      <strong>
+        {' '}
+        {purchaseInsights.riskLevel}
+      </strong>
+    </p>
+
+   <p>
+  Suggested Action:
+  <strong>
+    {' '}
+    {purchaseInsights.recommendation}
+  </strong>
+</p>
+
+<div className="purchase-recommendation-chip">
+  {purchaseInsights.probability >= 80
+    ? '🚀 Ready to checkout'
+    : purchaseInsights.probability >= 50
+    ? '🔥 Complete order soon'
+    : '🍔 Explore more menu items'}
+</div>
+
+  </div>
+
+</div>
 
               <div className="bill-card">
 
