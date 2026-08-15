@@ -758,6 +758,7 @@ Content-Type: application/json
 ```bash
 Node.js >= 18.x
 npm >= 9.x
+Salesforce CLI (sfdx)
 Salesforce Developer Account
 Firebase Project
 Stripe Account
