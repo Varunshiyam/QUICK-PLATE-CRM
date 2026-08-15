@@ -297,6 +297,190 @@
 .bill-section {
   padding: 0 1.5rem 1.5rem 1.5rem;
 }
+/* ========================================
+   PURCHASE INSIGHTS
+======================================== */
+
+.purchase-insights-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    rgba(251, 126, 24, 0.12),
+    rgba(251, 126, 24, 0.04)
+  );
+  border: 1px solid rgba(251, 126, 24, 0.15);
+  border-radius: 1.5rem;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  backdrop-filter: blur(12px);
+}
+
+.purchase-insights-card::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(251, 126, 24, 0.08);
+}
+
+.purchase-insights-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.purchase-insights-header .material-symbols-outlined {
+  color: var(--color-primary);
+  font-size: 20px;
+}
+
+.purchase-insights-header h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.purchase-score {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.purchase-score strong {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-primary);
+}
+
+.purchase-score span {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.purchase-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.purchase-meta p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.purchase-meta strong {
+  color: #0f172a;
+}
+.purchase-recommendation-chip {
+  margin-top: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(251, 126, 24, 0.1);
+  color: var(--color-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+/* ========================================
+   PURCHASE INSIGHTS
+======================================== */
+
+.purchase-insights-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+}
+
+.purchase-insights-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.purchase-insights-header span {
+  color: var(--color-primary);
+}
+
+.purchase-insights-header h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.purchase-score strong {
+  font-size: 2rem;
+  color: var(--color-primary);
+}
+
+.purchase-score span {
+  display: block;
+  margin-top: 6px;
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.purchase-score-bar {
+  width: 100%;
+  height: 10px;
+  background: #f1f5f9;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.purchase-score-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    #fb7e18,
+    #ff9d4d
+  );
+  transition: width 0.5s ease;
+}
+
+.purchase-meta {
+  margin-top: 1rem;
+}
+
+.purchase-meta p {
+  margin: 6px 0;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.purchase-meta strong {
+  color: #0f172a;
+}
+
+.purchase-recommendation-chip {
+  margin-top: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(251, 126, 24, 0.1);
+  color: var(--color-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
 
 .bill-card {
   background: #fff;
@@ -474,4 +658,23 @@
   font-weight: 600;
   border: none;
   cursor: pointer;
+}
+.purchase-score-bar {
+  width: 100%;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.purchase-score-fill {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #fb7e18,
+    #ffb347
+  );
+  border-radius: 999px;
+  transition: width 0.4s ease;
 }

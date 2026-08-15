@@ -5,6 +5,8 @@ import useHaptic from '../../hooks/useHaptic';
 import useAppStore from '../../store/useAppStore';
 import { logoutUser, getStoredUser } from '../../services/firebase';
 import { fetchRestaurants } from '../../services/restaurantService';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 import './Home.css';
 
 /* ─── Mock Data ─── */
@@ -181,15 +183,62 @@ const Home = () => {
   const cartItemCount = getCartItemCount();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [activeSort, setActiveSort] = useState('Recommended');
+  const [activePrice, setActivePrice] = useState(null);
   const [currentBanner, setCurrentBanner] = useState(0);
 
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [isEditingAddress, setIsEditingAddress] = useState(false);
+  const [newAddressVal, setNewAddressVal] = useState('');
+  const [isSavingAddress, setIsSavingAddress] = useState(false);
   
-  const { logout, user } = useAppStore();
+  const { logout, user, setUser } = useAppStore();
   
   const storedUser = getStoredUser();
   const deliveryAddress = storedUser?.address || 'KCE, Coimbatore';
+
+  const handleSaveAddress = async () => {
+    mediumTap();
+    if (!newAddressVal.trim()) {
+      toast.error('Address cannot be empty.');
+      return;
+    }
+    setIsSavingAddress(true);
+    try {
+      const idToken = storedUser?.firebaseIdToken;
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, '');
+      
+      if (!idToken) {
+        throw new Error('User token not found. Please log in again.');
+      }
+
+      await axios.patch(`${API_BASE_URL}/services/apexrest/customer/profile`, {
+        idToken,
+        fullName: storedUser?.name || user?.displayName || 'Customer',
+        phone: storedUser?.phone || '',
+        address: newAddressVal.trim()
+      });
+
+      // Update local storage
+      const updatedUser = { ...storedUser, address: newAddressVal.trim() };
+      localStorage.setItem('quickplate_user', JSON.stringify(updatedUser));
+      
+      // Update Zustand store
+      setUser({
+        ...user,
+        address: newAddressVal.trim()
+      });
+
+      toast.success('Address updated successfully!');
+      setIsEditingAddress(false);
+      setIsAddressModalOpen(false);
+    } catch (err) {
+      console.error('Failed to update address:', err);
+      toast.error(err.response?.data?.message || err.message || 'Failed to update address.');
+    } finally {
+      setIsSavingAddress(false);
+    }
+  };
 
   const handleLogoutDropdown = async () => {
     setIsProfileModalOpen(false);
@@ -227,6 +276,18 @@ const Home = () => {
         if (activeCategory === 'Pizza') return c.includes('pizza') || c.includes('italian');
         if (activeCategory === 'Sushi') return c.includes('sushi') || c.includes('japanese');
         if (activeCategory === 'Burgers') return c.includes('burger') || c.includes('american') || c.includes('bbq');
+        return true;
+      });
+    }
+
+    if (activePrice) {
+      const priceLevel = { '$': 1, '$$': 2, '$$$': 3, '$$$$': 4 }[activePrice] || 0;
+      result = result.filter(r => {
+        const itemPrice = parseFloat(r.price) || 0;
+        if (activePrice === '$') return itemPrice <= 10;
+        if (activePrice === '$$') return itemPrice > 10 && itemPrice <= 20;
+        if (activePrice === '$$$') return itemPrice > 20 && itemPrice <= 35;
+        if (activePrice === '$$$$') return itemPrice > 35;
         return true;
       });
     }
@@ -306,25 +367,83 @@ const Home = () => {
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
-              <div className="address-slot active" onClick={() => { lightTap(); setIsAddressModalOpen(false); }}>
-                <div className="address-icon"><span className="material-symbols-outlined">home</span></div>
-                <div className="address-details">
-                  <h4>Home (Default)</h4>
-                  <p>{deliveryAddress.length > 35 ? `${deliveryAddress.substring(0, 35)}...` : deliveryAddress}</p>
+              {!isEditingAddress ? (
+                <>
+                  <div className="address-slot active" onClick={() => { lightTap(); setIsAddressModalOpen(false); }}>
+                    <div className="address-icon"><span className="material-symbols-outlined">home</span></div>
+                    <div className="address-details">
+                      <h4>Home (Default)</h4>
+                      <p>{deliveryAddress.length > 35 ? `${deliveryAddress.substring(0, 35)}...` : deliveryAddress}</p>
+                    </div>
+                    <span className="material-symbols-outlined check">check_circle</span>
+                  </div>
+                  <div className="address-slot" onClick={() => { lightTap(); setIsAddressModalOpen(false); }}>
+                    <div className="address-icon"><span className="material-symbols-outlined">work</span></div>
+                    <div className="address-details">
+                      <h4>Office</h4>
+                      <p>456 Market St, SF, CA</p>
+                    </div>
+                  </div>
+                  <button className="address-add-btn" onClick={() => { mediumTap(); setIsEditingAddress(true); setNewAddressVal(deliveryAddress); }}>
+                    <span className="material-symbols-outlined">edit</span>
+                    Edit / Add address
+                  </button>
+                </>
+              ) : (
+                <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <h4 style={{ margin: 0, fontSize: '14px', fontWeight: 600, color: '#2D3134' }}>Update Address</h4>
+                  <input
+                    type="text"
+                    value={newAddressVal}
+                    onChange={(e) => setNewAddressVal(e.target.value)}
+                    placeholder="Enter new delivery address"
+                    style={{
+                      padding: '8px 12px',
+                      borderRadius: '8px',
+                      border: '1px solid #E2E8F0',
+                      fontSize: '13px',
+                      fontFamily: 'inherit',
+                      width: '100%',
+                      outline: 'none',
+                      boxSizing: 'border-box'
+                    }}
+                    autoFocus
+                  />
+                  <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+                    <button
+                      onClick={() => { lightTap(); setIsEditingAddress(false); }}
+                      style={{
+                        padding: '6px 12px',
+                        borderRadius: '6px',
+                        border: '1px solid #CBD5E1',
+                        background: 'transparent',
+                        fontSize: '12px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleSaveAddress}
+                      disabled={isSavingAddress}
+                      style={{
+                        padding: '6px 12px',
+                        borderRadius: '6px',
+                        border: 'none',
+                        background: '#FB7E18',
+                        color: '#fff',
+                        fontSize: '12px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px'
+                      }}
+                    >
+                      {isSavingAddress ? 'Saving...' : 'Save'}
+                    </button>
+                  </div>
                 </div>
-                <span className="material-symbols-outlined check">check_circle</span>
-              </div>
-              <div className="address-slot" onClick={() => { lightTap(); setIsAddressModalOpen(false); }}>
-                <div className="address-icon"><span className="material-symbols-outlined">work</span></div>
-                <div className="address-details">
-                  <h4>Office</h4>
-                  <p>456 Market St, SF, CA</p>
-                </div>
-              </div>
-              <button className="address-add-btn" onClick={mediumTap}>
-                <span className="material-symbols-outlined">add</span>
-                Add new address
-              </button>
+              )}
             </motion.div>
           )}
           
@@ -669,7 +788,13 @@ const Home = () => {
                 <h4>Price Range</h4>
                 <div className="filter-chips">
                   {['$', '$$', '$$$', '$$$$'].map(price => (
-                    <button key={price} className="filter-chip">{price}</button>
+                    <button
+                      key={price}
+                      className={`filter-chip ${activePrice === price ? 'active' : ''}`}
+                      onClick={() => { setActivePrice(activePrice === price ? null : price); lightTap(); }}
+                    >
+                      {price}
+                    </button>
                   ))}
                 </div>
               </div>
