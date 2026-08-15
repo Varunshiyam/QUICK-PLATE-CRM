@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import useHaptic from '../../hooks/useHaptic';
+import ThemeToggle from '../../components/ThemeToggle';
 import './Landing.css';
 
 /* ─── Image URLs ─── */
@@ -102,6 +103,7 @@ const Landing = () => {
             <Link to="/contact" className="landing-nav-link" onClick={lightTap}>
               Contact
             </Link>
+            <ThemeToggle />
           </div>
         </motion.nav>
       </header>

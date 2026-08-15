@@ -299,7 +299,7 @@
 
 /* ─── Premium Upgrades ─── */
 .orders-page-bg {
-  background-color: #fdfcfb;
+  background-color: var(--color-bg);
 }
 
 .orders-glass-header {
@@ -447,7 +447,7 @@
   margin-top: 0.5rem;
 }
 
-.status-orange { background-color: #fff7ed; color: #ea580c; }
+.status-orange { background-color: var(--color-gray-50); color: #ea580c; }
 .status-blue { background-color: #eff6ff; color: #2563eb; }
 .status-slate { background-color: #f8fafc; color: #64748b; }
 .status-slate .material-symbols-outlined { color: #22c55e; }

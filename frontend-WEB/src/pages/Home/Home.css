@@ -315,7 +315,7 @@
 }
 
 .home-search-input:focus {
-  background: #FFFFFF;
+  background: var(--color-white);
   box-shadow: 0 0 0 2px rgba(251, 126, 24, 0.2);
 }
 
@@ -430,7 +430,7 @@
   height: 32px;
   padding: 0 16px;
   border-radius: 999px;
-  background: #FFFFFF;
+  background: var(--color-white);
   color: #1E293B;
   font-size: 11px;
   font-weight: 800;
@@ -515,7 +515,7 @@
 }
 
 .home-cat-icon.inactive {
-  background: #FFFFFF;
+  background: var(--color-white);
   color: #475569;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   border: 1px solid #FFFFFF;
@@ -779,7 +779,7 @@
 }
 
 .home-protection-card {
-  background: #FFFFFF;
+  background: var(--color-white);
   border: 1px solid #F1F5F9;
   border-radius: 2rem;
   padding: 1.5rem;
@@ -945,7 +945,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: #FFFFFF;
+  background: var(--color-white);
   border-radius: 2rem 2rem 0 0;
   padding: 1.5rem 1.5rem 3rem;
   z-index: 101;

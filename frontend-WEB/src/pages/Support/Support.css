@@ -231,7 +231,7 @@
   position: relative;
   overflow: hidden;
   border-radius: 1rem;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   border: 1px solid rgba(226, 232, 240, 0.8);
   box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
   padding: 1.25rem;

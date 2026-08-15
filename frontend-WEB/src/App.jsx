@@ -1,9 +1,10 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AnimatePresence } from 'framer-motion';
 import CartRecoveryBanner from './components/ui/CartRecoveryBanner';
 // Pages
+import useAppStore from './store/useAppStore';
 import Landing from './pages/Landing/Landing';
 import Features from './pages/Features/Features';
 import Onboarding from './pages/Onboarding/Onboarding';
@@ -60,6 +61,12 @@ const LoadingScreen = () => (
 );
 
 function App() {
+  const { theme } = useAppStore();
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
   return (
     <BrowserRouter>
       <Toaster

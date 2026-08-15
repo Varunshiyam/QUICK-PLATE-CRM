@@ -2,7 +2,7 @@
 .checkout-page {
   position: relative;
   min-height: 100dvh;
-  background-color: #FFFFFF;
+  background-color: var(--color-white);
   font-family: var(--font-sans, 'Outfit', 'Inter', sans-serif);
   padding-bottom: 8rem;
 }
@@ -13,7 +13,7 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  border-bottom: 1px solid rgba(0,0,0,0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .checkout-header-inner {
@@ -32,21 +32,21 @@
 .checkout-header-title h1 {
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--color-gray-900, #111827);
+  color: var(--color-gray-900, #6d6f75);
   margin: 0;
 }
 
 .header-back-btn {
   width: 44px;
   height: 44px;
-  background-color: var(--color-gray-50, #F3F4F6);
+  background-color: var(--color-gray-50, #dbdcde);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
   cursor: pointer;
-  color: var(--color-gray-700, #374151);
+  color: var(--color-gray-700, #b9babb);
   transition: transform 0.15s;
 }
 
@@ -70,7 +70,7 @@
 .co-section-title {
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--color-slate-500, #6B7280);
+  color: var(--color-slate-500, #919295);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 0.75rem;
@@ -78,12 +78,14 @@
 }
 
 /* Shared Card Styles */
-.co-address-card, .co-pay-card, .co-method-row {
+.co-address-card,
+.co-pay-card,
+.co-method-row {
   background: var(--color-white, #FFFFFF);
   border-radius: 1.25rem;
   padding: 1.25rem;
   border: 1px solid var(--color-gray-200, #E5E7EB);
-  box-shadow: 0 4px 12px -8px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px -8px rgba(0, 0, 0, 0.05);
 }
 
 /* Address Card */
@@ -117,7 +119,7 @@
 
 .co-address-title {
   font-weight: 700;
-  color: var(--color-gray-900, #111827);
+  color: var(--color-gray-900, #ffffff);
   font-size: 1.05rem;
   margin: 0;
 }
@@ -132,7 +134,7 @@
 }
 
 .co-address-text {
-  color: var(--color-slate-500, #6B7280);
+  color: var(--color-slate-500, #c1c1c1);
   font-size: 0.85rem;
   margin-top: 0.35rem;
   line-height: 1.5;
@@ -212,7 +214,7 @@
 
 .co-method-title {
   font-weight: 700;
-  color: var(--color-gray-900, #111827);
+  color: var(--color-gray-900, #a5a8af);
   font-size: 1.05rem;
   margin-bottom: 0.15rem;
 }
@@ -298,13 +300,16 @@
 .checkout-fixed-bottom::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(to top, rgba(255,255,255,1) 50%, rgba(255,255,255,0));
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0));
   z-index: -1;
   pointer-events: none;
 }
 
-.checkout-fixed-bottom > div {
+.checkout-fixed-bottom>div {
   max-width: var(--max-width, 480px);
   margin: 0 auto;
 }
@@ -347,18 +352,31 @@
   padding: 3rem 1.5rem;
   background: var(--color-white, #FFFFFF);
   border-radius: 1.5rem;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
-.state-icon-large { font-size: 4rem; margin-bottom: 1rem; }
-.state-icon-large.pulsing { animation: icon-pulse 2s infinite ease-in-out; color: var(--color-primary, #FB7E18); }
-.state-icon-large.success { color: #22c55e; }
-.state-icon-large.error { color: #ef4444; }
+.state-icon-large {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.state-icon-large.pulsing {
+  animation: icon-pulse 2s infinite ease-in-out;
+  color: var(--color-primary, #FB7E18);
+}
+
+.state-icon-large.success {
+  color: #22c55e;
+}
+
+.state-icon-large.error {
+  color: #ef4444;
+}
 
 .checkout-state-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-gray-900, #111827);
+  color: var(--color-gray-900, #808080);
   margin-bottom: 0.5rem;
 }
 
@@ -386,20 +404,36 @@
 .spinner {
   width: 24px;
   height: 24px;
-  border: 3px solid rgba(255,255,255,0.3);
+  border: 3px solid rgba(255, 255, 255, 0.3);
   border-top-color: #fff;
   border-radius: 50%;
   animation: stripe-spin 0.8s linear infinite;
 }
 
 .spinner.dark {
-  border: 4px solid rgba(0,0,0,0.1);
+  border: 4px solid rgba(0, 0, 0, 0.1);
   border-top-color: var(--color-primary, #FB7E18);
 }
 
-@keyframes stripe-spin { to { transform: rotate(360deg); } }
+@keyframes stripe-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes icon-pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.1); opacity: 0.8; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
