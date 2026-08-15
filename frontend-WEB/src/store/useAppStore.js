@@ -27,13 +27,14 @@ const useAppStore = create(
     
     // If adding from a different restaurant, clear cart first
     if (cartRestaurantId && cartRestaurantId !== restId) {
-      set({ 
-        cart: [{ ...item, quantity: 1 }], 
-        cartRestaurantId: restId,
-        cartRestaurant: isObj ? restaurantPayload : null
-      });
-      return;
-    }
+  set({
+    cart: [{ ...item, quantity: 1 }],
+    cartRestaurantId: restId,
+    cartRestaurant: isObj ? restaurantPayload : null,
+    lastCartInteraction: Date.now(),
+  });
+  return;
+}
 
     const existingIndex = cart.findIndex((i) => i.id === item.id);
     if (existingIndex >= 0) {
@@ -42,16 +43,25 @@ const useAppStore = create(
         ...updated[existingIndex],
         quantity: updated[existingIndex].quantity + 1,
       };
-      set({ cart: updated });
+      set({
+  cart: updated,
+  lastCartInteraction: Date.now(),
+});
     } else {
-      set({ 
-        cart: [...cart, { ...item, quantity: 1 }], 
-        cartRestaurantId: restId,
-        ...(isObj && { cartRestaurant: restaurantPayload })
-      });
+      set({
+  cart: [...cart, { ...item, quantity: 1 }],
+  cartRestaurantId: restId,
+  ...(isObj && { cartRestaurant: restaurantPayload }),
+  lastCartInteraction: Date.now(),
+});
     }
   },
+   lastCartInteraction: null,
 
+updateCartInteraction: () =>
+  set({
+    lastCartInteraction: Date.now(),
+  }),
   removeFromCart: (itemId) => {
     const { cart } = get();
     const existingIndex = cart.findIndex((i) => i.id === itemId);
@@ -62,14 +72,26 @@ const useAppStore = create(
           ...updated[existingIndex],
           quantity: updated[existingIndex].quantity - 1,
         };
-        set({ cart: updated });
+        set({
+  cart: updated,
+  lastCartInteraction: Date.now(),
+});
       } else {
-        set({ cart: cart.filter((i) => i.id !== itemId) });
+        set({
+  cart: cart.filter((i) => i.id !== itemId),
+  lastCartInteraction: Date.now(),
+});
       }
     }
   },
 
-  clearCart: () => set({ cart: [], cartRestaurantId: null, cartRestaurant: null }),
+  clearCart: () =>
+  set({
+    cart: [],
+    cartRestaurantId: null,
+    cartRestaurant: null,
+    lastCartInteraction: null,
+  }),
 
   getCartTotal: () => {
     const { cart } = get();
@@ -94,13 +116,14 @@ const useAppStore = create(
     }),
     {
       name: 'quick-plate-storage', // key in localStorage
-      partialize: (state) => ({ 
-        user: state.user, 
-        isAuthenticated: state.isAuthenticated, 
-        cart: state.cart, 
-        cartRestaurantId: state.cartRestaurantId,
-        cartRestaurant: state.cartRestaurant
-      }),
+      partialize: (state) => ({
+  user: state.user,
+  isAuthenticated: state.isAuthenticated,
+  cart: state.cart,
+  cartRestaurantId: state.cartRestaurantId,
+  cartRestaurant: state.cartRestaurant,
+  lastCartInteraction: state.lastCartInteraction,
+}),
     }
   )
 );

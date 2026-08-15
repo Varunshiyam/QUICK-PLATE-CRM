@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AnimatePresence } from 'framer-motion';
-
+import CartRecoveryBanner from './components/ui/CartRecoveryBanner';
 // Pages
 import Landing from './pages/Landing/Landing';
 import Features from './pages/Features/Features';
@@ -83,6 +83,7 @@ function App() {
           },
         }}
       />
+      <CartRecoveryBanner />
       <Suspense fallback={<LoadingScreen />}>
         <AnimatePresence mode="wait">
           <Routes>
