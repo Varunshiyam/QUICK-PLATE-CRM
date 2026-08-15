@@ -43,7 +43,7 @@ const Features = () => {
           <div className="landing-nav-links">
             <Link to="/" className="landing-nav-link" onClick={lightTap}>Home</Link>
             <Link to="/features" className="landing-nav-link active" onClick={lightTap}>Features</Link>
-            <Link to="/" className="landing-nav-link" onClick={lightTap}>Contact</Link>
+            <Link to="/contact" className="landing-nav-link" onClick={lightTap}>Contact</Link>
           </div>
         </nav>
       </header>
