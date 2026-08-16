@@ -194,7 +194,7 @@ global without sharing class StripeCheckoutController {
 
             System.debug('Stripe Error: ' + e.getMessage());
 
-            return error(res, 'Checkout failed: ' + e.getMessage(), 500);
+            return error(res, 'Checkout failed. Please try again later.', 500);
         }
     }
 
