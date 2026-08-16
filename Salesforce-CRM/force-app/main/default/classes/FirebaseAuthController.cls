@@ -19,6 +19,8 @@ global with sharing class FirebaseAuthController {
         public String customerId;
         public String name;
         public String email;
+        public String address;
+        public String phone;
         public String message;
     }
 
@@ -271,6 +273,12 @@ global with sharing class FirebaseAuthController {
             response.email =
                 customer.Email__c;
 
+            response.address =
+                customer.Address__c;
+
+            response.phone =
+                customer.Phone__c;
+
             response.message =
                 'Authentication successful.';
 
@@ -346,7 +354,8 @@ global with sharing class FirebaseAuthController {
                        Email__c,
                        Phone__c,
                        Full_Name__c,
-                       Firebase_UID__c
+                       Firebase_UID__c,
+                       Address__c
 
                 FROM Customer__c
 
@@ -373,7 +382,8 @@ global with sharing class FirebaseAuthController {
                        Email__c,
                        Phone__c,
                        Full_Name__c,
-                       Firebase_UID__c
+                       Firebase_UID__c,
+                       Address__c
 
                 FROM Customer__c
 

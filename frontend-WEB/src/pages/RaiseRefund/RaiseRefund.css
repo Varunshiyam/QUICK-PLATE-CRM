@@ -5,7 +5,7 @@
   width: 100%;
   overflow-x: hidden;
   position: relative;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   font-family: 'Inter', 'Outfit', sans-serif;
   color: #0f172a;
 }
@@ -125,7 +125,7 @@
   width: 100%;
   border-radius: 0.75rem;
   border: 1px solid rgba(249, 127, 26, 0.2);
-  background-color: #ffffff;
+  background-color: var(--color-white);
   padding: 1rem;
   font-size: 1rem;
   color: inherit;
@@ -197,7 +197,7 @@
 }
 
 .rr-upload-icon-circle {
-  background-color: #ffffff;
+  background-color: var(--color-white);
   padding: 0.75rem;
   border-radius: 9999px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -259,7 +259,7 @@
 
 .rr-footer {
   padding: 1rem;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   border-top: 1px solid rgba(249, 127, 26, 0.1);
   position: sticky;
   bottom: 0;

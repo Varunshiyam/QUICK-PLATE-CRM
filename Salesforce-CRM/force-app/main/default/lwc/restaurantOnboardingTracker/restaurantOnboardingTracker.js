@@ -37,6 +37,46 @@ export default class RestaurantOnboardingTracker extends LightningElement {
     handleSubmit(event) {
         event.preventDefault(); 
         const fields = event.detail.fields;
+
+        // Input validation
+        let isValid = true;
+        let errorMessage = '';
+
+        if (!fields.Name || fields.Name.trim() === '') {
+            isValid = false;
+            errorMessage = 'Restaurant Name is required.';
+        } else if (!fields.Restaurant_Code__c || fields.Restaurant_Code__c.trim() === '') {
+            isValid = false;
+            errorMessage = 'Restaurant Code is required.';
+        } else if (!fields.Restaurant_Owner__c) {
+            isValid = false;
+            errorMessage = 'Restaurant Owner is required.';
+        } else if (!fields.City__c) {
+            isValid = false;
+            errorMessage = 'City is required.';
+        } else if (fields.Avg_Prep_Time_Min__c === null || fields.Avg_Prep_Time_Min__c === undefined || String(fields.Avg_Prep_Time_Min__c).trim() === '') {
+            isValid = false;
+            errorMessage = 'Average Prep Time is required.';
+        } else if (Number(fields.Avg_Prep_Time_Min__c) <= 0) {
+            isValid = false;
+            errorMessage = 'Average preparation time must be greater than zero.';
+        }
+
+        // Trigger LWC validity styling
+        const inputFields = this.template.querySelectorAll('lightning-input-field');
+        if (inputFields) {
+            inputFields.forEach(field => {
+                if (typeof field.reportValidity === 'function') {
+                    field.reportValidity();
+                }
+            });
+        }
+
+        if (!isValid) {
+            this.showToast('Validation Error', errorMessage, 'error');
+            return;
+        }
+
         this.isSubmitting = true;
         this.template.querySelector('lightning-record-edit-form').submit(fields);
     }

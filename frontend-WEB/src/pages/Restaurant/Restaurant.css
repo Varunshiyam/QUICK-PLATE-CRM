@@ -294,7 +294,7 @@
 }
 
 .rest-menu-card {
-  background: #FFFFFF;
+  background: var(--color-white);
   padding: 1rem;
   border-radius: 16px;
   display: flex;
@@ -370,7 +370,7 @@
   bottom: -8px;
   left: 50%;
   transform: translateX(-50%);
-  background: #FFFFFF;
+  background: var(--color-white);
   color: var(--color-primary);
   border: 1px solid rgba(251, 126, 24, 0.2);
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
@@ -391,7 +391,7 @@
 
 .rest-add-btn:active {
   transform: translateX(-50%) scale(0.95);
-  background: #FFF7ED;
+  background: var(--color-gray-50);
 }
 
 /* ─── Floating View Cart ─── */

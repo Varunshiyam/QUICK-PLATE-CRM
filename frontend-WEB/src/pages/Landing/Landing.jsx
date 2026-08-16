@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import useHaptic from '../../hooks/useHaptic';
+import ThemeToggle from '../../components/ThemeToggle';
 import './Landing.css';
 
 /* ─── Image URLs ─── */
@@ -100,9 +101,10 @@ const Landing = () => {
             <Link to="/features" className="landing-nav-link" onClick={lightTap}>
               Features
             </Link>
-            <Link to="/" className="landing-nav-link" onClick={lightTap}>
+            <Link to="/contact" className="landing-nav-link" onClick={lightTap}>
               Contact
             </Link>
+            <ThemeToggle />
           </div>
         </motion.nav>
       </header>

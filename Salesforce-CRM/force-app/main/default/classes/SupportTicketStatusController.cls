@@ -33,27 +33,37 @@ global without sharing class SupportTicketStatusController {
         try {
 
             RestRequest req = RestContext.request;
-
-            String customerId = req.params.get('customerId');
+            String idToken = req.params.get('idToken');
 
             // ✅ Validate input
-            if(String.isBlank(customerId)){
-                return error(res, 'customerId is required.', 400);
+            if(String.isBlank(idToken)){
+                return error(res, 'Authentication required.', 401);
             }
 
             // ===============================
-            // ✅ Validate Customer
+            // 🔐 VERIFY TOKEN
+            // ===============================
+            String firebaseUid = FirebaseAuthUtil.verifyToken(idToken);
+
+            if(String.isBlank(firebaseUid)){
+                return error(res, 'Invalid authentication.', 401);
+            }
+
+            // ===============================
+            // ✅ Fetch Customer
             // ===============================
             List<Customer__c> customers = [
                 SELECT Id
                 FROM Customer__c
-                WHERE Id = :customerId
+                WHERE Firebase_UID__c = :firebaseUid
                 LIMIT 1
             ];
 
             if(customers.isEmpty()){
-                return error(res, 'Invalid customerId.', 404);
+                return error(res, 'Customer not found.', 404);
             }
+
+            Id customerId = customers[0].Id;
 
             // ===============================
             // ✅ Fetch Tickets

@@ -12,8 +12,9 @@
   --color-accent: #00B894;
   --color-accent-light: #55EFC4;
 
-  /* Background */
+  /* Background & Surfaces */
   --color-bg: #FDFCFB;
+  --color-glass: rgba(255, 255, 255, 0.8);
 
   /* Neutral Palette */
   --color-white: #FFFFFF;
@@ -109,6 +110,31 @@
   --header-height: 56px;
   --bottom-nav-height: 64px;
   --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+[data-theme="dark"] {
+  --color-bg: #121212;
+  --color-glass: rgba(0, 0, 0, 0.6);
+  --color-secondary: #F3F4F6;
+  --color-white: #1E1E1E;
+  
+  /* Invert gray scale for dark mode */
+  --color-gray-50: #212529;
+  --color-gray-100: #343A40;
+  --color-gray-200: #495057;
+  --color-gray-300: #868E96;
+  --color-gray-400: #ADB5BD;
+  --color-gray-500: #CED4DA;
+  --color-gray-600: #DEE2E6;
+  --color-gray-700: #E9ECEF;
+  --color-gray-800: #F1F3F5;
+  --color-gray-900: #F8F9FA;
+
+  /* Adjust shadows for dark mode */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.6), 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.7), 0 2px 4px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.8), 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 
 /* ─── CSS Reset & Base ─── */

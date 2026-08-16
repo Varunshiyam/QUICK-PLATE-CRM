@@ -30,7 +30,7 @@ const CheckoutForm = () => {
   
   const storedUser = getStoredUser();
   const deliveryAddress = storedUser?.address || '452 West 19th Street, Apt 4B\nChelsea, New York, NY 10011';
-
+  const [showResumeCheckout, setShowResumeCheckout] = useState(false);
   const [uiState, setUiState] = useState(UI_STATES.READY);
   const [errorMessage, setErrorMessage] = useState('');
   
@@ -92,7 +92,55 @@ const CheckoutForm = () => {
 
   const pollingTimerRef = useRef(null);
   const isSubmittingRef = useRef(false);
+   useEffect(() => {
+  if (!cart.length) return;
 
+  localStorage.setItem(
+    'qp_checkout_session',
+    JSON.stringify({
+      startedAt: Date.now(),
+      cartCount: cart.length,
+      subtotal,
+      totalPay: totalPayStr,
+    })
+  );
+
+  const abandonedCheckout =
+    localStorage.getItem('qp_checkout_abandoned');
+
+  if (abandonedCheckout === 'true') {
+    setShowResumeCheckout(true);
+  }
+
+  const handleBeforeUnload = () => {
+    if (
+      uiState !== UI_STATES.SUCCESS &&
+      uiState !== UI_STATES.WAITING
+    ) {
+      localStorage.setItem(
+        'qp_checkout_abandoned',
+        'true'
+      );
+    }
+  };
+
+  window.addEventListener(
+    'beforeunload',
+    handleBeforeUnload
+  );
+
+  return () => {
+    window.removeEventListener(
+      'beforeunload',
+      handleBeforeUnload
+    );
+  };
+}, [
+  cart,
+  subtotal,
+  totalPayStr,
+  uiState,
+]);
   useEffect(() => {
     return () => {
       if (pollingTimerRef.current) clearInterval(pollingTimerRef.current);
@@ -126,6 +174,13 @@ const CheckoutForm = () => {
           setUiState(UI_STATES.SUCCESS);
           
           setTimeout(() => {
+            localStorage.removeItem(
+  'qp_checkout_abandoned'
+);
+
+localStorage.removeItem(
+  'qp_checkout_session'
+);
             clearCart();
             navigate(`/tracking/${orderId}`, { replace: true });
           }, 2000);
@@ -288,6 +343,56 @@ const CheckoutForm = () => {
             exit={{ opacity: 0 }}
             key="checkout-flow"
           >
+          {showResumeCheckout && (
+  <div
+    style={{
+      marginBottom: '16px',
+      padding: '16px',
+      borderRadius: '18px',
+      background:
+        'linear-gradient(135deg, rgba(251,126,24,.12), rgba(251,126,24,.05))',
+      border:
+        '1px solid rgba(251,126,24,.15)',
+    }}
+  >
+    <h3
+      style={{
+        margin: 0,
+        marginBottom: '6px',
+      }}
+    >
+      ⚡ Checkout Restored
+    </h3>
+
+    <p
+      style={{
+        margin: 0,
+        color: '#64748b',
+      }}
+    >
+      Looks like your previous checkout was interrupted.
+      Your order details have been restored.
+    </p>
+
+    <button
+      style={{
+        marginTop: '12px',
+        background: 'var(--color-primary)',
+        color: '#fff',
+        border: 'none',
+        padding: '10px 14px',
+        borderRadius: '999px',
+        cursor: 'pointer',
+      }}
+      onClick={() => {
+        setShowResumeCheckout(false);
+        localStorage.removeItem('qp_checkout_abandoned');
+      }}
+    >
+      Continue Checkout
+    </button>
+  </div>
+)}
             {/* ─── Section: Delivering To ─── */}
             <div className="co-section">
               <h2 className="co-section-title">Delivering To</h2>

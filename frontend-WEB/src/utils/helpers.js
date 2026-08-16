@@ -2,11 +2,11 @@
  * Utility helper functions for Quick Plate CRM
  */
 
-/** Format price in INR */
+/** Format price in USD */
 export const formatPrice = (amount) => {
-  return new Intl.NumberFormat('en-IN', {
+  return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'INR',
+    currency: 'USD',
     minimumFractionDigits: 0,
   }).format(amount);
 };
