@@ -1,18 +1,38 @@
 <div align="center">
 
-# 🚀 QuickPlate
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF6B00,50:FF8C00,100:FFB347&height=220&section=header&text=🍽️%20QuickPlate&fontSize=72&fontColor=ffffff&fontAlignY=35&desc=Lightning-Fast%20Food%20Delivery%20·%20Enterprise%20CRM%20·%20Open%20Source&descAlignY=56&descSize=18&animation=fadeIn" width="100%" />
 
-### Lightning-Fast Food Delivery Platform
+<br/>
 
-*Revolutionizing quick commerce with real-time ordering and intelligent delivery*
+<img src="https://raw.githubusercontent.com/Varunshiyam/QUICK-PLATE-CRM/main/Quick-Plate-logo%20.png" alt="QuickPlate Logo" width="180" />
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![React](https://img.shields.io/badge/React-18.x-61DAFB?logo=react)](https://reactjs.org/)
-[![Salesforce](https://img.shields.io/badge/Salesforce-CRM-00A1E0?logo=salesforce)](https://www.salesforce.com/)
-[![Firebase](https://img.shields.io/badge/Firebase-Auth-FFCA28?logo=firebase)](https://firebase.google.com/)
-[![Stripe](https://img.shields.io/badge/Stripe-Payments-008CDD?logo=stripe)](https://stripe.com/)
+<br/><br/>
 
-[Features](#-key-features) • [Architecture](#-architecture) • [Getting Started](#-getting-started) • [API Documentation](#-api-reference) • [Contributing](#-contributing)
+<p>
+  <a href="https://quick-plate-crm.web.app/"><img src="https://img.shields.io/badge/🌐_Live_Demo-quick--plate--crm.web.app-FF6B00?style=for-the-badge" alt="Live Demo"/></a>
+  <a href="https://github.com/Varunshiyam/QUICK-PLATE-CRM/stargazers"><img src="https://img.shields.io/github/stars/Varunshiyam/QUICK-PLATE-CRM?style=for-the-badge&color=FFB347&logo=github" alt="Stars"/></a>
+  <a href="https://github.com/Varunshiyam/QUICK-PLATE-CRM/network/members"><img src="https://img.shields.io/github/forks/Varunshiyam/QUICK-PLATE-CRM?style=for-the-badge&color=FF8C00&logo=github" alt="Forks"/></a>
+  <a href="https://github.com/Varunshiyam/QUICK-PLATE-CRM/graphs/contributors"><img src="https://img.shields.io/github/contributors/Varunshiyam/QUICK-PLATE-CRM?style=for-the-badge&color=22c55e&logo=github" alt="Contributors"/></a>
+</p>
+
+<p>
+  <img src="https://img.shields.io/badge/React-18.x-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React"/>
+  <img src="https://img.shields.io/badge/Vite-Build-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite"/>
+  <img src="https://img.shields.io/badge/Salesforce-CRM-00A1E0?style=flat-square&logo=salesforce&logoColor=white" alt="Salesforce"/>
+  <img src="https://img.shields.io/badge/Firebase-Auth-FFCA28?style=flat-square&logo=firebase&logoColor=black" alt="Firebase"/>
+  <img src="https://img.shields.io/badge/Stripe-Payments-635BFF?style=flat-square&logo=stripe&logoColor=white" alt="Stripe"/>
+  <img src="https://img.shields.io/badge/License-MIT-22c55e?style=flat-square" alt="License"/>
+  <img src="https://img.shields.io/badge/GSSoC'26-Active-FF6600?style=flat-square&logo=github&logoColor=white" alt="GSSoC"/>
+  <img src="https://img.shields.io/badge/PRs-Welcome-brightgreen?style=flat-square" alt="PRs Welcome"/>
+</p>
+
+<br/>
+
+> *Revolutionizing quick commerce with real-time ordering, enterprise CRM, and intelligent delivery — built by the community, for the community.*
+
+<br/>
+
+[🌟 Overview](#-overview) · [✨ Features](#-key-features) · [🏗️ Architecture](#%EF%B8%8F-system-architecture) · [☁️ Salesforce Deep Dive](#%EF%B8%8F-salesforce-architecture--teams) · [💻 Tech Stack](#-technology-stack) · [📊 Data Model](#-data-model) · [🔐 Security](#-authentication--security) · [🔌 APIs](#-api-reference) · [🚀 Get Started](#-getting-started) · [🤝 Contributing](#-gssoc26-open-source-program) · [👨‍💻 Contributors](#-contributors--credits)
 
 </div>
 
@@ -20,46 +40,45 @@
 
 ## 📖 Table of Contents
 
+<details>
+<summary>🗂️ Click to expand full navigation</summary>
+
 - [Overview](#-overview)
+  - [Vision](#-vision)
+  - [What Makes QuickPlate Different?](#-what-makes-quickplate-different)
 - [Key Features](#-key-features)
-- [System Architecture](#-system-architecture)
+- [System Architecture](#%EF%B8%8F-system-architecture)
+  - [Architecture Principles](#-architecture-principles)
+- [☁️ Salesforce Architecture & Teams](#%EF%B8%8F-salesforce-architecture--teams)
+  - [Platform Teams](#-platform-teams)
+  - [Admin Dashboards (LWC)](#-admin-dashboards-salesforce-lwc)
+  - [Automation Engines](#%EF%B8%8F-automation-engines)
+  - [Security Model](#-salesforce-security-model)
+  - [Architecture Screenshots](#-architecture-screenshots)
 - [Technology Stack](#-technology-stack)
-- [Phase 1 Scope](#-phase-1-scope)
 - [Data Model](#-data-model)
+  - [Object Definitions](#%EF%B8%8F-object-definitions)
 - [Authentication & Security](#-authentication--security)
+  - [Auth Flow](#-authentication-flow)
+  - [Security Layers](#%EF%B8%8F-security-layers)
 - [Core Workflows](#-core-workflows)
+  - [Customer Onboarding](#1%EF%B8%8F⃣-customer-onboarding)
+  - [Order Creation & Payment](#2%EF%B8%8F⃣-order-creation--payment)
+  - [Automated Delivery](#3%EF%B8%8F⃣-automated-delivery-assignment)
+  - [Refund & Support](#4%EF%B8%8F⃣-refund--support-workflow)
 - [API Reference](#-api-reference)
-- [Installation & Setup](#-getting-started)
-- [Environment Configuration](#-environment-configuration)
-- [Deployment](#-deployment)
-- [Contributing](#-contributing)
+- [Getting Started](#-getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Environment Configuration](#%EF%B8%8F-environment-configuration)
+  - [Deployment](#-deployment)
+- [GSSoC'26 Open Source Program](#-gssoc26-open-source-program)
+- [Contributors & Credits](#-contributors--credits)
+- [Performance & Scalability](#-performance--scalability)
 - [License](#-license)
 - [Support](#-support)
 
----
-
-## 🌟 GSSoC'26 Contributions
-
-<div align="center">
-
-
-### 🔥 GirlScript Summer of Code 2026 — Season Open 🔥
-
-![GSSoC 2026](https://img.shields.io/badge/GSSoC'26-Open%20For%20Contributions-FF6600?style=for-the-badge&logo=github&logoColor=white)
-![Season](https://img.shields.io/badge/Season-2026-FF8C00?style=for-the-badge&logoColor=white)
-![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge&logoColor=white)
-
-**Welcome to QuickPlate's GSSoC'26 program!** 🧡 
-
-# 👇🏽
-
-
-</div>
-
-
-🔗 **[GSSoC'26 Contribution Guide](./gssoc26/Readme.md)**
-
-> 📌 If you're a contributor, please start from the guide above before raising issues or PRs.
+</details>
 
 ---
 
@@ -73,11 +92,16 @@ To create the fastest, most reliable food delivery experience by leveraging cutt
 
 ### 💡 What Makes QuickPlate Different?
 
-- **⚡ Quick Commerce Model**: Optimized for ultra-fast delivery (15-30 minutes)
-- **🧠 CRM-Powered Backend**: Enterprise-grade business logic and data management
-- **🤖 Intelligent Automation**: Smart delivery assignment and workflow automation
-- **🔐 Enterprise Security**: Multi-layered authentication and authorization
-- **📊 Real-Time Operations**: Live order tracking and status updates
+| | Capability | Description |
+|:--:|:--|:--|
+| ⚡ | **Quick Commerce Model** | Optimized for ultra-fast delivery (15–30 minutes) |
+| 🧠 | **CRM-Powered Backend** | Enterprise-grade business logic & data management via Salesforce |
+| 🤖 | **Intelligent Automation** | Smart delivery assignment & workflow automation engines |
+| 🔐 | **Enterprise Security** | Multi-layered auth with Firebase ↔ Salesforce bridge |
+| 📊 | **Real-Time Operations** | Live order tracking, status updates, & admin dashboards |
+| 💳 | **Seamless Payments** | Stripe checkout with webhook-driven reconciliation |
+
+<div align="right"><a href="#-table-of-contents">⬆️ Back to Top</a></div>
 
 ---
 
@@ -87,28 +111,34 @@ To create the fastest, most reliable food delivery experience by leveraging cutt
 <tr>
 <td width="50%">
 
-### 🎨 Customer UI-Experience
-- **Google OAuth Integration** - One-click authentication
-- **Smart Restaurant Discovery** - Location-based filtering
-- **Real-Time Order Tracking** - Live status updates
-- **Seamless Checkout** - Stripe-powered payments
-- **Instant Notifications** - Order status alerts
-- **Easy Refund Process** - Structured support workflow
+### 🎨 Customer Experience
+- **Google OAuth** — One-click sign-in via Firebase
+- **Smart Discovery** — Location & cuisine-based restaurant search
+- **Real-Time Tracking** — Live order status with animated UI
+- **Seamless Checkout** — Stripe-powered secure payments
+- **Wallet & Credits** — In-app balance & promotional credits
+- **PWA Support** — Installable, offline-ready experience
+- **Dark/Light Mode** — Theme toggle for all screens
+- **Coupon System** — Apply promo codes at checkout
 
 </td>
 <td width="50%">
 
 ### ⚙️ Platform Capabilities
-- **Automated Delivery Assignment** - Intelligent agent matching
-- **Dynamic Workload Balancing** - Optimized agent utilization
-- **Multi-City Support** - Scalable geographic expansion
-- **Webhook Integration** - Real-time payment processing
-- **CRM Business Rules** - Centralized logic enforcement
-- **Audit Trail** - Complete transaction history
+- **Automated Delivery Assignment** — Intelligent agent matching
+- **Dynamic Workload Balancing** — Optimized agent utilization
+- **Multi-City Support** — Scalable geographic expansion
+- **Webhook Integration** — Real-time payment processing
+- **11 Admin Dashboards** — Finance, Ops, Restaurant management
+- **Approval Pipelines** — Restaurant onboarding & refund workflows
+- **Audit Trail** — Complete transaction history
+- **Skeleton Loading** — Premium loading states
 
 </td>
 </tr>
 </table>
+
+<div align="right"><a href="#-table-of-contents">⬆️ Back to Top</a></div>
 
 ---
 
@@ -118,32 +148,32 @@ QuickPlate follows a **modern frontend-first architecture** with a centralized e
 
 ```mermaid
 graph TB
-    subgraph "Client Layer"
-        A[React SPA]
-        B[Firebase Auth]
+    subgraph "🖥️ Client Layer"
+        A["⚛️ React SPA<br/>Vite + Zustand"]
+        B["🔐 Firebase Auth"]
     end
     
-    subgraph "API Gateway"
-        C[Apex REST APIs]
-        D[Webhook Endpoints]
+    subgraph "🔗 API Gateway"
+        C["📡 Apex REST APIs<br/>14 Endpoints"]
+        D["🔔 Webhook Endpoints"]
     end
     
-    subgraph "Business Logic Layer"
-        E[Salesforce CRM]
-        F[Process Automation]
-        G[Workflow Rules]
+    subgraph "🧠 Business Logic Layer"
+        E["☁️ Salesforce CRM"]
+        F["⚙️ Automation Engines"]
+        G["📋 Approval Processes"]
     end
     
-    subgraph "External Services"
-        H[Stripe Payment Gateway]
-        I[Google OAuth]
+    subgraph "🔌 External Services"
+        H["💳 Stripe Gateway"]
+        I["🔑 Google OAuth"]
     end
     
-    subgraph "Data Layer"
-        J[(Customer Data)]
-        K[(Order Management)]
-        L[(Restaurant Catalog)]
-        M[(Delivery Ops)]
+    subgraph "💾 Data Layer"
+        J[("👤 Customer Data")]
+        K[("📦 Order Management")]
+        L[("🍕 Restaurant Catalog")]
+        M[("🚚 Delivery Ops")]
     end
     
     A --> B
@@ -159,21 +189,298 @@ graph TB
     E --> L
     E --> M
     
-    style A fill:#61DAFB,stroke:#333,stroke-width:2px
-    style E fill:#00A1E0,stroke:#333,stroke-width:2px
-    style H fill:#008CDD,stroke:#333,stroke-width:2px
+    style A fill:#61DAFB,stroke:#333,stroke-width:2px,color:#000
+    style E fill:#00A1E0,stroke:#333,stroke-width:2px,color:#fff
+    style H fill:#635BFF,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#FFCA28,stroke:#333,stroke-width:2px,color:#000
 ```
 
 ### 🔄 Architecture Principles
 
 | Layer | Responsibility | Technology |
-|-------|---------------|------------|
-| **Presentation** | UI/UX, User Interactions | React 18.x, TailwindCSS |
+|:------|:--------------|:-----------|
+| **Presentation** | Full UI/UX, all screen flows | React 18, Vite, Framer Motion |
+| **State Management** | Client-side store, cart, auth | Zustand |
 | **Authentication** | Identity & Access Management | Firebase Authentication |
-| **API Gateway** | Request Routing, Validation | Salesforce Apex REST |
-| **Business Logic** | Order Processing, Rules Engine | Salesforce CRM, Process Builder |
-| **Data Persistence** | Data Storage & Integrity | Salesforce Database |
-| **Payment Processing** | Transaction Management | Stripe API, Webhooks |
+| **API Gateway** | Request routing, token validation | Salesforce Apex REST |
+| **Business Logic** | Order processing, automation | Salesforce CRM, Apex |
+| **Admin Console** | Operations & finance dashboards | Lightning Web Components |
+| **Payment Processing** | Transactions & reconciliation | Stripe API + Webhooks |
+| **Data Persistence** | 8 custom objects, 100+ fields | Salesforce Database |
+
+<div align="right"><a href="#-table-of-contents">⬆️ Back to Top</a></div>
+
+---
+
+## ☁️ Salesforce Architecture & Teams
+
+> 📘 **For the complete Salesforce deep-dive** — data model, all 50 Apex classes, 11 LWC components, security audit, and roadmap — see the **[Salesforce-CRM/README.md](./Salesforce-CRM/README.md)**.
+
+QuickPlate's Salesforce backend is a **dual-interface** system powering both the customer API layer and internal admin dashboards.
+
+```
+╔══════════════════════════════════════════════════════════════╗
+║              SALESFORCE PLATFORM ARCHITECTURE                 ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                              ║
+║   ┌─────────────┐   ┌──────────────┐   ┌────────────────┐  ║
+║   │  REST APIs  │   │  Automation  │   │  LWC Admin     │  ║
+║   │  (14 endpts)│   │  Engines (3) │   │  Panels (11)   │  ║
+║   └──────┬──────┘   └──────┬───────┘   └──────┬─────────┘  ║
+║          │                 │                    │             ║
+║          └─────────────────┼────────────────────┘            ║
+║                            ▼                                 ║
+║            ┌──────────────────────────┐                      ║
+║            │    SALESFORCE DATA       │                      ║
+║            │    8 Custom Objects      │                      ║
+║            │    100+ Custom Fields    │                      ║
+║            └──────────────────────────┘                      ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+```
+
+### 👥 Platform Teams
+
+The Salesforce admin console is built for **four core operational teams**, each with purpose-built dashboards and permission-gated access:
+
+<table>
+<tr>
+<td width="50%">
+
+#### 💰 Finance Team
+> Revenue oversight, refund approvals, and financial analytics
+
+| Responsibility | Tool |
+|:--|:--|
+| Revenue & refund KPIs | Finance Dashboard (LWC) |
+| Transaction failure rates | Finance Dashboard (LWC) |
+| Refund approval/rejection | Refund Approval Console (LWC) |
+| Amount adjustments | Refund Approval Console (LWC) |
+| Leakage source analysis | Finance Dashboard (LWC) |
+
+**Permission Set:** `Finance_LWC_Components`
+
+</td>
+<td width="50%">
+
+#### 🎯 Operations Team
+> Order lifecycle, delivery logistics, and operational health
+
+| Responsibility | Tool |
+|:--|:--|
+| Ticket analytics & alerts | Operations Command Center (LWC) |
+| Active order management | Order Lifecycle (LWC) |
+| Restaurant performance | Restaurant Manager (LWC) |
+| Restaurant approvals | Restaurant Approval Console (LWC) |
+| Onboarding tracking | Onboarding Tracker (LWC) |
+
+**Permission Set:** `Operation_LWC_Components`
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+#### 🏪 Restaurant Management Team
+> Onboarding, performance monitoring, and approval pipelines
+
+| Responsibility | Tool |
+|:--|:--|
+| New restaurant submissions | Restaurant Approval Console |
+| Performance KPIs | Restaurant Manager |
+| Top/problematic restaurants | Restaurant Manager |
+| Prep time risk classification | Custom fields & formulas |
+| Owner management | Restaurant_Owners__c object |
+
+</td>
+<td width="50%">
+
+#### 🆘 Customer Support Team
+> Ticket resolution, refund processing, and customer satisfaction
+
+| Responsibility | Tool |
+|:--|:--|
+| Ticket creation & routing | Support_Ticket__c + Queues |
+| Priority classification | HIGH / MEDIUM / LOW |
+| Refund request handling | Refund Request Engine (Apex) |
+| Duplicate prevention | Engine-level validation |
+| Status tracking | NEW → IN_PROGRESS → RESOLVED → CLOSED |
+
+</td>
+</tr>
+</table>
+
+### 🖥️ Admin Dashboards (Salesforce LWC)
+
+Internal teams manage operations through **11 purpose-built Lightning Web Components**:
+
+| # | Component | Team | Key Capabilities |
+|:-:|:----------|:----:|:-----------------|
+| 1 | 📊 **Finance Dashboard** | Finance | Revenue/refund KPIs, failure rates, leakage sources, transaction trends |
+| 2 | 🎯 **Operations Command Center** | Ops | Ticket analytics, automated alerts, operational KPIs |
+| 3 | 📋 **Order Lifecycle** | Ops | Active order management with edit-access enforcement |
+| 4 | 🏪 **Restaurant Manager** | Ops | Top performers, problematic restaurants, recent approvals |
+| 5 | ✅ **Restaurant Approval Console** | Ops | Pending/past restaurant approval processing |
+| 6 | 💰 **Refund Approval Console** | Finance | Review tickets, adjust amounts, approve/reject refunds |
+| 7 | 📝 **Onboarding Tracker** | Ops | Track restaurant submissions with approval timelines |
+| 8 | 🚚 **Delivery Management** | Ops | Agent fleet monitoring, capacity management |
+| 9 | 📈 **Analytics Overview** | All | Cross-team performance metrics |
+| 10 | 👤 **Customer Management** | Support | Customer profiles, order history lookup |
+| 11 | 🔧 **System Configuration** | Admin | Platform settings, queue management |
+
+### ⚙️ Automation Engines
+
+Three **Invocable Apex Methods** power the platform's logistics and support automation:
+
+<details>
+<summary><b>🚚 Delivery Assignment Engine</b> — Auto-assigns the best available agent</summary>
+
+```
+Order CONFIRMED → Query agents (same city, ONLINE, has capacity)
+    → Sort by current load (ASC) → Assign least-loaded agent
+    → Update Order status → ASSIGNED
+    → If agent hits max load → Set status ON_BREAK
+```
+
+**Assignment Criteria:**
+1. ✅ Same city as restaurant
+2. ✅ Currently available (ONLINE)
+3. ✅ Below maximum order capacity
+4. ✅ Lowest current workload (load-balanced)
+
+</details>
+
+<details>
+<summary><b>✅ Delivery Completion Engine</b> — Handles post-delivery cleanup</summary>
+
+```
+Order OUT_FOR_DELIVERY → Mark as DELIVERED
+    → Decrement agent's active load
+    → If below max → Restore agent to ONLINE
+    → Stamp Order_Closed_At__c (idempotency)
+```
+
+</details>
+
+<details>
+<summary><b>🔄 Refund Request Engine</b> — Automates support ticket creation</summary>
+
+```
+Order flagged → Check for duplicate tickets (skip if exists)
+    → Validate order status = DELIVERED
+    → Create Support_Ticket__c (Priority: HIGH)
+    → Route to Customer Service Queue
+    → Update order → REFUND_REQUESTED
+```
+
+</details>
+
+### 🛡️ Salesforce Security Model
+
+| Feature | Implementation |
+|:--------|:--------------|
+| 🔐 Server-side token verification | All APIs verify Firebase tokens via Google Identity API |
+| 🔒 Customer data isolation | Orders scoped to authenticated customer only |
+| 🛡️ Duplicate refund prevention | Blocked at ticket and order field level |
+| ✅ Record-level access | `UserRecordAccess` verified in order management |
+| 🔑 Custom permission gates | Finance & Ops LWC controllers validate permissions |
+| 🔄 Wallet row locking | `FOR UPDATE` prevents race conditions |
+| 🆔 Webhook idempotency | Stripe events checked against transaction state |
+
+### 📸 Architecture Screenshots
+
+> **Add your Salesforce dashboard screenshots below!** Replace the placeholder comments with your images.
+
+<table>
+<tr>
+<td width="50%" align="center">
+
+**Finance Dashboard**
+
+<!-- 
+  📸 ADD YOUR SCREENSHOT HERE
+  Replace this comment with:
+  ![Finance Dashboard](./docs/screenshots/finance-dashboard.png)
+-->
+
+*Screenshot: Upload to `./docs/screenshots/finance-dashboard.png`*
+
+</td>
+<td width="50%" align="center">
+
+**Operations Command Center**
+
+<!-- 
+  📸 ADD YOUR SCREENSHOT HERE
+  Replace this comment with:
+  ![Operations Command Center](./docs/screenshots/ops-command-center.png)
+-->
+
+*Screenshot: Upload to `./docs/screenshots/ops-command-center.png`*
+
+</td>
+</tr>
+<tr>
+<td width="50%" align="center">
+
+**Order Lifecycle Manager**
+
+<!-- 
+  📸 ADD YOUR SCREENSHOT HERE
+  Replace this comment with:
+  ![Order Lifecycle](./docs/screenshots/order-lifecycle.png)
+-->
+
+*Screenshot: Upload to `./docs/screenshots/order-lifecycle.png`*
+
+</td>
+<td width="50%" align="center">
+
+**Refund Approval Console**
+
+<!-- 
+  📸 ADD YOUR SCREENSHOT HERE
+  Replace this comment with:
+  ![Refund Approval](./docs/screenshots/refund-approval.png)
+-->
+
+*Screenshot: Upload to `./docs/screenshots/refund-approval.png`*
+
+</td>
+</tr>
+<tr>
+<td width="50%" align="center">
+
+**Restaurant Manager**
+
+<!-- 
+  📸 ADD YOUR SCREENSHOT HERE
+  Replace this comment with:
+  ![Restaurant Manager](./docs/screenshots/restaurant-manager.png)
+-->
+
+*Screenshot: Upload to `./docs/screenshots/restaurant-manager.png`*
+
+</td>
+<td width="50%" align="center">
+
+**Restaurant Approval Console**
+
+<!-- 
+  📸 ADD YOUR SCREENSHOT HERE
+  Replace this comment with:
+  ![Restaurant Approval](./docs/screenshots/restaurant-approval.png)
+-->
+
+*Screenshot: Upload to `./docs/screenshots/restaurant-approval.png`*
+
+</td>
+</tr>
+</table>
+
+> 💡 **Tip:** Create a `docs/screenshots/` directory in your repo and add PNG/JPG files for each dashboard. Then uncomment the image tags above.
+
+<div align="right"><a href="#-table-of-contents">⬆️ Back to Top</a></div>
 
 ---
 
@@ -181,81 +488,53 @@ graph TB
 
 <div align="center">
 
-### Frontend Technologies
+### Frontend
 
 ![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-Build-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![TailwindCSS](https://img.shields.io/badge/Tailwind-3.x-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Firebase](https://img.shields.io/badge/Firebase-10.x-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+![Zustand](https://img.shields.io/badge/Zustand-State-443E38?style=for-the-badge&logo=react&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-Animations-0055FF?style=for-the-badge&logo=framer&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-Variables-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
-### Backend Technologies
+### Backend & CRM
 
-![Salesforce](https://img.shields.io/badge/Salesforce-API_v59-00A1E0?style=for-the-badge&logo=salesforce&logoColor=white)
+![Salesforce](https://img.shields.io/badge/Salesforce-Platform-00A1E0?style=for-the-badge&logo=salesforce&logoColor=white)
 ![Apex](https://img.shields.io/badge/Apex-REST_APIs-00A1E0?style=for-the-badge&logo=salesforce&logoColor=white)
+![LWC](https://img.shields.io/badge/LWC-11_Components-00A1E0?style=for-the-badge&logo=salesforce&logoColor=white)
 ![SOQL](https://img.shields.io/badge/SOQL-Database-00A1E0?style=for-the-badge&logo=salesforce&logoColor=white)
 
-### Integration & Services
+### Services & Integration
 
-![Stripe](https://img.shields.io/badge/Stripe-Latest-008CDD?style=for-the-badge&logo=stripe&logoColor=white)
-![REST](https://img.shields.io/badge/REST-APIs-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-Authentication-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+![Stripe](https://img.shields.io/badge/Stripe-Payments-635BFF?style=for-the-badge&logo=stripe&logoColor=white)
+![REST](https://img.shields.io/badge/REST-14_Endpoints-009688?style=for-the-badge&logo=fastapi&logoColor=white)
 ![Webhooks](https://img.shields.io/badge/Webhooks-Real--time-FF6B6B?style=for-the-badge&logo=webhook&logoColor=white)
 
 </div>
 
----
-
-## 🎯 Phase 1 Scope
-
-Phase 1 establishes the **core customer journey** and **essential platform capabilities**:
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     PHASE 1 IMPLEMENTATION                       │
-└─────────────────────────────────────────────────────────────────┘
-
-📱 User Experience                    🔧 Platform Operations
-├─ Google OAuth Login                 ├─ Restaurant Management
-├─ Customer Onboarding                ├─ Order Processing Engine
-├─ Restaurant Discovery               ├─ Payment Integration
-├─ Shopping Cart                      ├─ Delivery Assignment
-├─ Checkout & Payment                 ├─ Status Tracking System
-├─ Order Tracking                     └─ Support Ticketing
-└─ Refund Requests
-```
-
-### ✅ Deliverables
-
-- [x] Secure authentication system with Firebase
-- [x] Complete customer onboarding flow
-- [x] Restaurant catalog with search & filters
-- [x] End-to-end order placement
-- [x] Stripe payment integration
-- [x] Automated delivery agent assignment
-- [x] Real-time order status tracking
-- [x] Basic support and refund workflow
+<div align="right"><a href="#-table-of-contents">⬆️ Back to Top</a></div>
 
 ---
 
 ## 📊 Data Model
 
-The platform uses a **normalized relational model** within Salesforce CRM:
+The platform uses a **normalized relational model** within Salesforce CRM with **8 custom objects** and **100+ custom fields**:
 
 ```
 ┌──────────────────┐       ┌──────────────────┐       ┌──────────────────┐
 │   Customer__c    │       │   Restaurant__c  │       │ DeliveryAgent__c │
 ├──────────────────┤       ├──────────────────┤       ├──────────────────┤
 │ Firebase_UID__c  │       │ Name             │       │ Name             │
-│ Name             │       │ City__c          │       │ City__c          │
-│ Phone__c         │       │ Prep_Time__c     │       │ Available__c     │
-│ Address__c       │       │ Is_Active__c     │       │ Workload__c      │
+│ Name             │       │ City__c          │       │ Current_City__c  │
+│ Phone__c         │       │ Prep_Time__c     │       │ Service_Status__c│
+│ Address__c       │       │ Is_Active__c     │       │ Active_Orders__c │
 │ Onboarded__c     │       │ Cuisine_Type__c  │       │ Max_Orders__c    │
 └────────┬─────────┘       └────────┬─────────┘       └────────┬─────────┘
          │                          │                          │
-         │                          │                          │
          │         ┌────────────────┴──────────────┐          │
-         │         │                                │          │
          │         │         Order__c               │          │
-         └─────────┤                                ├──────────┘
+         └─────────┤    (28+ fields, central)       ├──────────┘
                    ├────────────────────────────────┤
                    │ Customer__c (Lookup)           │
                    │ Restaurant__c (Lookup)         │
@@ -263,7 +542,7 @@ The platform uses a **normalized relational model** within Salesforce CRM:
                    │ Order_Status__c                │
                    │ Payment_Status__c              │
                    │ Total_Amount__c                │
-                   │ Order_Time__c                  │
+                   │ Credits_Used__c                │
                    └────────┬───────────────────────┘
                             │
                 ┌───────────┴───────────┐
@@ -273,19 +552,45 @@ The platform uses a **normalized relational model** within Salesforce CRM:
     ├──────────────────────┤ ├────────────────────┤
     │ Order__c (Lookup)    │ │ Order__c (Lookup)  │
     │ Amount__c            │ │ Customer__c        │
-    │ Stripe_ID__c         │ │ Reason__c          │
-    │ Status__c            │ │ Status__c          │
-    │ Transaction_Time__c  │ │ Refund_Amount__c   │
+    │ Stripe_Session_Id__c │ │ Issue_Type__c      │
+    │ Status__c            │ │ Ticket_Status__c   │
+    │ Transaction_Type__c  │ │ Priority__c        │
+    └──────────────────────┘ └────────────────────┘
+
+    ┌──────────────────────┐ ┌────────────────────┐
+    │ Customer_Credit__c   │ │ Restaurant_Owners__c│
+    ├──────────────────────┤ ├────────────────────┤
+    │ Customer__c (Lookup) │ │ Restaurant__c      │
+    │ Amount__c            │ │ Owner_Name__c      │
+    │ Type__c              │ │ Contact__c         │
     └──────────────────────┘ └────────────────────┘
 ```
 
 ### 🗃️ Object Definitions
 
 <details>
-<summary><b>Customer__c</b> - Customer profiles and authentication</summary>
+<summary><b>📋 Order__c</b> — 28+ fields, central to all operations</summary>
 
 | Field | Type | Description |
-|-------|------|-------------|
+|:------|:-----|:------------|
+| `Customer__c` | Lookup(Customer__c) | Order owner |
+| `Restaurant__c` | Lookup(Restaurant__c) | Restaurant reference |
+| `Delivery_Agent__c` | Lookup(DeliveryAgent__c) | Assigned agent |
+| `Order_Status__c` | Picklist | `PAYMENT_PENDING` → `CONFIRMED` → `ASSIGNED` → `OUT_FOR_DELIVERY` → `DELIVERED` |
+| `Payment_Status__c` | Picklist | `PENDING` / `PAID` / `REFUNDED` |
+| `Order_Total__c` | Currency | Order amount |
+| `Credits_Used__c` | Currency | Wallet credits applied |
+| `SLA_Status__c` | Formula | SLA monitoring |
+| `Refund_Requested__c` | Checkbox | Refund flag |
+| `Ops_Priority__c` | Formula | Operations priority |
+
+</details>
+
+<details>
+<summary><b>👤 Customer__c</b> — Customer profiles and authentication</summary>
+
+| Field | Type | Description |
+|:------|:-----|:------------|
 | `Firebase_UID__c` | Text(128) | Unique Firebase identifier |
 | `Name` | Text(80) | Customer full name |
 | `Email__c` | Email | Primary email address |
@@ -297,62 +602,68 @@ The platform uses a **normalized relational model** within Salesforce CRM:
 </details>
 
 <details>
-<summary><b>Restaurant__c</b> - Restaurant catalog and metadata</summary>
+<summary><b>🍕 Restaurant__c</b> — Restaurant catalog and metadata</summary>
 
 | Field | Type | Description |
-|-------|------|-------------|
+|:------|:-----|:------------|
 | `Name` | Text(80) | Restaurant name |
 | `City__c` | Picklist | Operating city |
-| `Prep_Time__c` | Number | Average preparation time (minutes) |
+| `Prep_Time__c` | Number | Average prep time (minutes) |
 | `Is_Active__c` | Checkbox | Operational status |
 | `Cuisine_Type__c` | Multi-Picklist | Cuisine categories |
 | `Rating__c` | Number(3,2) | Average customer rating |
+| `Onboarding_Status__c` | Picklist | Approval workflow state |
+| `Prep_Time_Risk_Level__c` | Formula | Risk classification |
 
 </details>
 
 <details>
-<summary><b>Order__c</b> - Order lifecycle management</summary>
+<summary><b>💳 Payment_Transaction__c</b> — Payment records and reconciliation</summary>
 
 | Field | Type | Description |
-|-------|------|-------------|
-| `Customer__c` | Lookup(Customer__c) | Order owner |
-| `Restaurant__c` | Lookup(Restaurant__c) | Restaurant reference |
-| `Delivery_Agent__c` | Lookup(DeliveryAgent__c) | Assigned agent |
-| `Order_Status__c` | Picklist | PAYMENT_PENDING, CONFIRMED, ASSIGNED, DELIVERED |
-| `Payment_Status__c` | Picklist | UNPAID, PAID, REFUNDED |
-| `Total_Amount__c` | Currency | Order total |
-| `Order_Time__c` | DateTime | Order placement timestamp |
-
-</details>
-
-<details>
-<summary><b>PaymentTransaction__c</b> - Payment records and reconciliation</summary>
-
-| Field | Type | Description |
-|-------|------|-------------|
+|:------|:-----|:------------|
 | `Order__c` | Lookup(Order__c) | Associated order |
 | `Amount__c` | Currency | Transaction amount |
-| `Stripe_ID__c` | Text(255) | Stripe transaction ID |
-| `Status__c` | Picklist | PENDING, SUCCESS, FAILED, REFUNDED |
-| `Transaction_Time__c` | DateTime | Payment timestamp |
+| `Transaction_Type__c` | Picklist | `PAYMENT` / `REFUND` |
+| `Status__c` | Picklist | `SUCCESS` / `FAILED` / `PENDING` |
+| `Stripe_Session_Id__c` | Text(255) | Stripe session reference |
+| `Stripe_Payment_Intent_Id__c` | Text(255) | Payment intent reference |
 
 </details>
+
+<details>
+<summary><b>🎫 Support_Ticket__c</b> — Issue & refund tracking</summary>
+
+| Field | Type | Description |
+|:------|:-----|:------------|
+| `Order__c` | Lookup(Order__c) | Associated order |
+| `Customer__c` | Lookup(Customer__c) | Ticket owner |
+| `Issue_Type__c` | Picklist | Issue classification |
+| `Ticket_Status__c` | Picklist | `NEW` → `IN_PROGRESS` → `RESOLVED` → `CLOSED` |
+| `Priority__c` | Picklist | `HIGH` / `MEDIUM` / `LOW` |
+| `Finance_Approval_Status__c` | Picklist | Refund approval state |
+| `Recommended_Refund_Amount__c` | Currency | Finance recommendation |
+
+</details>
+
+<div align="right"><a href="#-table-of-contents">⬆️ Back to Top</a></div>
 
 ---
 
 ## 🔐 Authentication & Security
 
-QuickPlate implements a **multi-layered security architecture**:
+QuickPlate implements a **multi-layered security architecture** using a Firebase ↔ Salesforce bridge pattern.
 
 ### 🔑 Authentication Flow
 
 ```mermaid
 sequenceDiagram
-    participant U as User
-    participant R as React App
-    participant F as Firebase
-    participant A as Apex API
-    participant S as Salesforce CRM
+    participant U as 👤 User
+    participant R as ⚛️ React App
+    participant F as 🔐 Firebase
+    participant G as 🔑 Google Identity
+    participant A as 📡 Apex API
+    participant S as ☁️ Salesforce CRM
 
     U->>R: Click "Sign in with Google"
     R->>F: Initiate OAuth
@@ -360,8 +671,8 @@ sequenceDiagram
     U->>F: Enter Credentials
     F->>R: Return ID Token
     R->>A: API Call + ID Token
-    A->>F: Verify Token
-    F->>A: Token Valid + UID
+    A->>G: Verify Token
+    G->>A: Token Valid + UID
     A->>S: Query Customer by UID
     
     alt Customer Exists
@@ -379,15 +690,18 @@ sequenceDiagram
 ### 🛡️ Security Layers
 
 | Layer | Implementation | Purpose |
-|-------|----------------|---------|
+|:------|:--------------|:--------|
 | **Client Authentication** | Firebase ID Tokens | Verify user identity |
 | **API Authorization** | Token validation in Apex | Prevent unauthorized access |
 | **Data Access Control** | Salesforce Sharing Rules | Row-level security |
 | **Field-Level Security** | Profile & Permission Sets | Column-level protection |
 | **Guest User Isolation** | Site Guest User + Permissions | Public API security |
 | **Cross-User Prevention** | UID to Customer mapping | Data segregation |
+| **Wallet Concurrency** | `FOR UPDATE` row locking | Race condition prevention |
+| **Webhook Idempotency** | Transaction state checks | Duplicate event prevention |
 
-### 🔒 Security Best Practices
+<details>
+<summary><b>🔒 Security Code Example — Secure API Endpoint</b></summary>
 
 ```apex
 // Example: Secure API endpoint with token validation
@@ -421,6 +735,10 @@ global class OrderAPI {
 }
 ```
 
+</details>
+
+<div align="right"><a href="#-table-of-contents">⬆️ Back to Top</a></div>
+
 ---
 
 ## 🔄 Core Workflows
@@ -428,10 +746,6 @@ global class OrderAPI {
 ### 1️⃣ Customer Onboarding
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    ONBOARDING WORKFLOW                       │
-└─────────────────────────────────────────────────────────────┘
-
 [Google Login] → [Token Verified] → [Customer Created]
                                             ↓
                                     [Check Profile]
@@ -451,16 +765,6 @@ global class OrderAPI {
                                                     [Access Platform]
 ```
 
-**API Endpoint**: `POST /api/v1/customer/onboard`
-
-**Required Fields**:
-- Name (Text, max 80 characters)
-- Phone (E.164 format)
-- Address (Complete street address)
-- City (From supported cities list)
-
----
-
 ### 2️⃣ Order Creation & Payment
 
 ```mermaid
@@ -478,7 +782,7 @@ stateDiagram-v2
     
     PaymentSuccess --> WebhookReceived: Stripe Webhook
     WebhookReceived --> UpdateOrder: Update Transaction
-    UpdateOrder --> OrderConfirmed: Status: CONFIRMED
+    UpdateOrder --> OrderConfirmed: Status CONFIRMED
     
     OrderConfirmed --> AssignAgent: Trigger Assignment
     AssignAgent --> OrderAssigned: Agent Assigned
@@ -489,34 +793,29 @@ stateDiagram-v2
     PaymentFailed --> PaymentPending: Retry Payment
 ```
 
-**Order States**:
+**Order States:**
 
 | Status | Description | Payment Status |
-|--------|-------------|----------------|
+|:-------|:-----------|:--------------|
 | `PAYMENT_PENDING` | Order created, awaiting payment | `UNPAID` |
 | `CONFIRMED` | Payment successful, order confirmed | `PAID` |
 | `ASSIGNED` | Delivery agent assigned | `PAID` |
-| `IN_DELIVERY` | Order out for delivery | `PAID` |
+| `OUT_FOR_DELIVERY` | Order out for delivery | `PAID` |
 | `DELIVERED` | Order completed | `PAID` |
 | `CANCELLED` | Order cancelled | `UNPAID` or `REFUNDED` |
 
----
-
 ### 3️⃣ Automated Delivery Assignment
 
-**Algorithm**: Intelligent agent matching based on availability and workload
-
 ```apex
-// Simplified assignment logic
+// Intelligent agent matching — load-balanced assignment
 public static DeliveryAgent__c assignDeliveryAgent(Order__c order) {
-    // Query available agents in order's city
     List<DeliveryAgent__c> availableAgents = [
-        SELECT Id, Name, Workload__c, Max_Orders__c
+        SELECT Id, Name, Active_Orders_Count__c, Max_Active_Orders__c
         FROM DeliveryAgent__c
-        WHERE City__c = :order.Restaurant__r.City__c
-          AND Available__c = true
-          AND Workload__c < Max_Orders__c
-        ORDER BY Workload__c ASC
+        WHERE Current_City__c = :order.Restaurant__r.City__c
+          AND Service_Status__c = 'ONLINE'
+          AND Active_Orders_Count__c < Max_Active_Orders__c
+        ORDER BY Active_Orders_Count__c ASC
         LIMIT 1
     ];
     
@@ -525,26 +824,16 @@ public static DeliveryAgent__c assignDeliveryAgent(Order__c order) {
     }
     
     DeliveryAgent__c agent = availableAgents[0];
-    
-    // Update order and agent
     order.Delivery_Agent__c = agent.Id;
     order.Order_Status__c = 'ASSIGNED';
     update order;
     
-    agent.Workload__c += 1;
+    agent.Active_Orders_Count__c += 1;
     update agent;
     
     return agent;
 }
 ```
-
-**Assignment Criteria**:
-1. ✅ Same city as restaurant
-2. ✅ Currently available
-3. ✅ Below maximum order capacity
-4. ✅ Lowest current workload
-
----
 
 ### 4️⃣ Refund & Support Workflow
 
@@ -568,10 +857,7 @@ Customer Request → Support Ticket Created → Agent Review
                     Notify Customer
 ```
 
-**API Endpoints**:
-- `POST /api/v1/support/ticket` - Create support ticket
-- `PUT /api/v1/support/ticket/{id}/approve` - Approve refund
-- `PUT /api/v1/support/ticket/{id}/reject` - Reject refund
+<div align="right"><a href="#-table-of-contents">⬆️ Back to Top</a></div>
 
 ---
 
@@ -579,7 +865,7 @@ Customer Request → Support Ticket Created → Agent Review
 
 ### Base URL
 ```
-Production: https://quickplate.my.salesforce-sites.com/services/apexrest
+Production:  https://quickplate.my.salesforce-sites.com/services/apexrest
 Development: https://quickplate--dev.sandbox.my.salesforce-sites.com/services/apexrest
 ```
 
@@ -589,9 +875,26 @@ Authorization: Bearer <FIREBASE_ID_TOKEN>
 Content-Type: application/json
 ```
 
----
-
 ### 📍 Endpoints
+
+| Category | Method | Endpoint | Description |
+|:---------|:------:|:---------|:------------|
+| **Auth** | `POST` | `/auth/firebase` | Verify token → return/create customer session |
+| **Orders** | `POST` | `/order/create` | Create new order |
+| | `GET` | `/order/status/{id}` | Poll order status |
+| | `GET` | `/customer/orders` | List customer's orders |
+| **Payments** | `POST` | `/checkout/create-session` | Generate Stripe checkout session |
+| | `POST` | `/stripe/webhook` | Handle Stripe async events |
+| **Wallet** | `GET` | `/wallet/balance` | Fetch wallet balance |
+| | `POST` | `/wallet/add-funds` | Add credits to wallet |
+| **Profile** | `PATCH` | `/customer/profile` | Update profile details |
+| | `POST` | `/customer/onboard` | Complete customer onboarding |
+| **Support** | `POST` | `/case/create` | Raise support ticket |
+| | `GET` | `/case/list` | List support tickets |
+| **Discovery** | `GET` | `/restaurants` | Browse active restaurants |
+
+<details>
+<summary><b>📋 Detailed Endpoint Documentation</b></summary>
 
 <details>
 <summary><b>POST</b> /api/v1/customer/onboard</summary>
@@ -749,6 +1052,10 @@ Content-Type: application/json
 
 </details>
 
+</details>
+
+<div align="right"><a href="#-table-of-contents">⬆️ Back to Top</a></div>
+
 ---
 
 ## 🚀 Getting Started
@@ -758,21 +1065,22 @@ Content-Type: application/json
 ```bash
 Node.js >= 18.x
 npm >= 9.x
-Salesforce Developer Account
-Firebase Project
-Stripe Account
+Salesforce CLI (sf / sfdx)
+Firebase Project (configured)
+Stripe Account (test keys)
 ```
 
 ### Installation
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/quickplate.git
-cd quickplate
+git clone https://github.com/Varunshiyam/QUICK-PLATE-CRM.git
+cd QUICK-PLATE-CRM
 ```
 
-2. **Install dependencies**
+2. **Install frontend dependencies**
 ```bash
+cd frontend-WEB
 npm install
 ```
 
@@ -784,60 +1092,69 @@ cp .env.example .env
 Edit `.env` with your credentials:
 ```env
 # Firebase Configuration
-REACT_APP_FIREBASE_API_KEY=your_api_key
-REACT_APP_FIREBASE_AUTH_DOMAIN=your_domain
-REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_domain
+VITE_FIREBASE_PROJECT_ID=your_project_id
 
 # Salesforce API
-REACT_APP_SF_API_BASE_URL=https://your-instance.salesforce.com
+VITE_API_BASE_URL=https://your-instance.salesforce.com
 
 # Stripe
-REACT_APP_STRIPE_PUBLIC_KEY=pk_test_your_key
+VITE_STRIPE_PUBLIC_KEY=pk_test_your_key
 ```
 
 4. **Deploy Salesforce Metadata**
 ```bash
-# Login to Salesforce
-sfdx auth:web:login -a QuickPlate
+# Authenticate to your org
+sf org login web --set-default
 
-# Deploy custom objects and Apex classes
-sfdx force:source:deploy -p force-app/main/default
+# Deploy metadata
+sf project deploy start --source-dir Salesforce-CRM/force-app
 ```
 
 5. **Start development server**
 ```bash
-npm start
+npm run dev
 ```
 
-Visit `http://localhost:3000` 🎉
+Visit `http://localhost:5173` 🎉
 
----
+### ⚙️ Environment Configuration
 
-## ⚙️ Environment Configuration
-
-### Frontend (.env)
+<details>
+<summary><b>Frontend (.env)</b></summary>
 
 ```env
 # Firebase
-REACT_APP_FIREBASE_API_KEY=
-REACT_APP_FIREBASE_AUTH_DOMAIN=
-REACT_APP_FIREBASE_PROJECT_ID=
-REACT_APP_FIREBASE_STORAGE_BUCKET=
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=
-REACT_APP_FIREBASE_APP_ID=
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
 
 # Salesforce
-REACT_APP_SF_API_BASE_URL=
-REACT_APP_SF_SITE_URL=
+VITE_API_BASE_URL=
+VITE_SF_SITE_URL=
 
 # Stripe
-REACT_APP_STRIPE_PUBLIC_KEY=
+VITE_STRIPE_PUBLIC_KEY=
 
 # Environment
-REACT_APP_ENV=development
+VITE_ENV=development
 ```
 
-### Backend (Salesforce)
+</details>
+
+<details>
+<summary><b>Salesforce Org Requirements</b></summary>
+
+| Requirement | Details |
+|:------------|:--------|
+| Remote Site Settings | `identitytoolkit.googleapis.com`, `api.stripe.com` |
+| Custom Permissions | `Finance_LWC_Components`, `Operation_LWC_Components` |
+| Queues | `Customer Service Queue` |
+| Approval Processes | `Restaurant_Approval`, `Refund Approval to Finance Team` |
 
 Configure Custom Settings:
 - Navigate to **Setup → Custom Settings**
@@ -848,41 +1165,467 @@ Configure Custom Settings:
   - `Firebase_Project_ID__c`
   - `Max_Delivery_Agent_Workload__c`
 
----
+</details>
 
-## 📦 Deployment
+### 📦 Deployment
 
-### Frontend Deployment (Vercel/Netlify)
+<details>
+<summary><b>Frontend (Firebase Hosting)</b></summary>
 
 ```bash
 # Build production bundle
 npm run build
 
-# Deploy to Vercel
-vercel --prod
-
-# Or deploy to Netlify
-netlify deploy --prod --dir=build
+# Deploy to Firebase
+firebase deploy --only hosting
 ```
 
-### Backend Deployment (Salesforce)
+</details>
+
+<details>
+<summary><b>Salesforce Backend</b></summary>
 
 ```bash
 # Deploy to production
-sfdx force:source:deploy -p force-app/main/default -u production
+sf project deploy start --source-dir Salesforce-CRM/force-app -o production
 
 # Assign permission sets
-sfdx force:user:permset:assign -n QuickPlate_Customer_Access -u user@email.com
+sf org assign permset --name QuickPlate_Customer_Access --target-org user@email.com
 ```
 
-### Stripe Webhook Configuration
+</details>
 
-1. Go to Stripe Dashboard → Webhooks
+<details>
+<summary><b>Stripe Webhook Setup</b></summary>
+
+1. Go to **Stripe Dashboard → Webhooks**
 2. Add endpoint: `https://your-salesforce-site.com/services/apexrest/webhook/stripe`
 3. Select events:
    - `checkout.session.completed`
    - `payment_intent.succeeded`
    - `payment_intent.payment_failed`
+
+</details>
+
+<div align="right"><a href="#-table-of-contents">⬆️ Back to Top</a></div>
+
+---
+
+## 🌟 GSSoC'26 Open Source Program
+
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=rect&color=0:FF6B00,100:FFB347&height=80&text=🔥%20GirlScript%20Summer%20of%20Code%202026%20🔥&fontSize=28&fontColor=ffffff&fontAlignY=50" width="100%" />
+
+<br/><br/>
+
+![GSSoC 2026](https://img.shields.io/badge/GSSoC'26-Open%20For%20Contributions-FF6600?style=for-the-badge&logo=github&logoColor=white)
+![Season](https://img.shields.io/badge/Season-2026-FF8C00?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)
+
+**Welcome to QuickPlate's GSSoC'26 program!** 🧡
+
+</div>
+
+🔗 **[📘 GSSoC'26 Contribution Guide →](./gssoc26/Readme.md)**
+
+> 📌 If you're a contributor, please start from the guide above before raising issues or PRs.
+
+### How to Contribute
+
+1. **Fork** the repository
+2. **Clone** your fork locally
+3. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+4. **Commit** your changes (`git commit -m 'feat: add amazing feature'`)
+5. **Push** to the branch (`git push origin feature/amazing-feature`)
+6. **Open** a Pull Request against `Gssoc-Dev` branch
+
+### Code Standards
+
+- Follow [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
+- Use ESLint and Prettier
+- Write meaningful commit messages (conventional commits preferred)
+- Add tests for new features
+- Ensure no console errors or warnings
+
+<div align="right"><a href="#-table-of-contents">⬆️ Back to Top</a></div>
+
+---
+
+## 👨‍💻 Contributors & Credits
+
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=rect&color=0:22c55e,50:16a34a,100:15803d&height=70&text=⭐%20Our%20Amazing%20Contributors%20⭐&fontSize=26&fontColor=ffffff&fontAlignY=50" width="100%" />
+
+<br/><br/>
+
+*QuickPlate is built by an incredible community of open-source contributors. Every PR, bug fix, and feature makes a difference!*
+
+<br/>
+
+<!-- ANIMATED CONTRIBUTOR SHOWCASE -->
+<marquee behavior="scroll" direction="left" scrollamount="3">
+  <a href="https://github.com/Varunshiyam"><img src="https://github.com/Varunshiyam.png" width="60" height="60" style="border-radius:50%" alt="Varunshiyam"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/Siddh2024"><img src="https://github.com/Siddh2024.png" width="60" height="60" style="border-radius:50%" alt="Siddh2024"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/PrishaJain64"><img src="https://github.com/PrishaJain64.png" width="60" height="60" style="border-radius:50%" alt="PrishaJain64"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/sheeeuWu"><img src="https://github.com/sheeeuWu.png" width="60" height="60" style="border-radius:50%" alt="sheeeuWu"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/Sharanyaaa08"><img src="https://github.com/Sharanyaaa08.png" width="60" height="60" style="border-radius:50%" alt="Sharanyaaa08"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/akshatsinghai6682-sketch"><img src="https://github.com/akshatsinghai6682-sketch.png" width="60" height="60" style="border-radius:50%" alt="akshatsinghai6682-sketch"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/saam-07"><img src="https://github.com/saam-07.png" width="60" height="60" style="border-radius:50%" alt="saam-07"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/shalinchristian"><img src="https://github.com/shalinchristian.png" width="60" height="60" style="border-radius:50%" alt="shalinchristian"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/ayushyadav0707"><img src="https://github.com/ayushyadav0707.png" width="60" height="60" style="border-radius:50%" alt="ayushyadav0707"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/oshin-30"><img src="https://github.com/oshin-30.png" width="60" height="60" style="border-radius:50%" alt="oshin-30"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/krishattri01"><img src="https://github.com/krishattri01.png" width="60" height="60" style="border-radius:50%" alt="krishattri01"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/aryankalra404"><img src="https://github.com/aryankalra404.png" width="60" height="60" style="border-radius:50%" alt="aryankalra404"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/parasmani-dev"><img src="https://github.com/parasmani-dev.png" width="60" height="60" style="border-radius:50%" alt="parasmani-dev"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/yousuf-26-07"><img src="https://github.com/yousuf-26-07.png" width="60" height="60" style="border-radius:50%" alt="yousuf-26-07"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/Jeshika311"><img src="https://github.com/Jeshika311.png" width="60" height="60" style="border-radius:50%" alt="Jeshika311"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/Vidheendu"><img src="https://github.com/Vidheendu.png" width="60" height="60" style="border-radius:50%" alt="Vidheendu"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/sonal-jakhar"><img src="https://github.com/sonal-jakhar.png" width="60" height="60" style="border-radius:50%" alt="sonal-jakhar"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/Varshinigurram"><img src="https://github.com/Varshinigurram.png" width="60" height="60" style="border-radius:50%" alt="Varshinigurram"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/yashvi-3106"><img src="https://github.com/yashvi-3106.png" width="60" height="60" style="border-radius:50%" alt="yashvi-3106"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/Akshita-2307"><img src="https://github.com/Akshita-2307.png" width="60" height="60" style="border-radius:50%" alt="Akshita-2307"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/RiddhiBose"><img src="https://github.com/RiddhiBose.png" width="60" height="60" style="border-radius:50%" alt="RiddhiBose"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/Biraj-Sarkar"><img src="https://github.com/Biraj-Sarkar.png" width="60" height="60" style="border-radius:50%" alt="Biraj-Sarkar"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/puvvalasanjanagayathri-eng"><img src="https://github.com/puvvalasanjanagayathri-eng.png" width="60" height="60" style="border-radius:50%" alt="puvvalasanjanagayathri-eng"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/anshul23102"><img src="https://github.com/anshul23102.png" width="60" height="60" style="border-radius:50%" alt="anshul23102"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/shanupriya0311"><img src="https://github.com/shanupriya0311.png" width="60" height="60" style="border-radius:50%" alt="shanupriya0311"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/shivv2430"><img src="https://github.com/shivv2430.png" width="60" height="60" style="border-radius:50%" alt="shivv2430"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/shineetejol9"><img src="https://github.com/shineetejol9.png" width="60" height="60" style="border-radius:50%" alt="shineetejol9"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/NiranjanRSoorej06"><img src="https://github.com/NiranjanRSoorej06.png" width="60" height="60" style="border-radius:50%" alt="NiranjanRSoorej06"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/Dippp10-ally"><img src="https://github.com/Dippp10-ally.png" width="60" height="60" style="border-radius:50%" alt="Dippp10-ally"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/Priyanshu-ai902"><img src="https://github.com/Priyanshu-ai902.png" width="60" height="60" style="border-radius:50%" alt="Priyanshu-ai902"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/Aarya1402"><img src="https://github.com/Aarya1402.png" width="60" height="60" style="border-radius:50%" alt="Aarya1402"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/Mohit-001-hash"><img src="https://github.com/Mohit-001-hash.png" width="60" height="60" style="border-radius:50%" alt="Mohit-001-hash"/></a>&nbsp;&nbsp;
+  <a href="https://github.com/lakshiii08"><img src="https://github.com/lakshiii08.png" width="60" height="60" style="border-radius:50%" alt="lakshiii08"/></a>&nbsp;&nbsp;
+</marquee>
+
+<br/><br/>
+
+<!-- AUTO-UPDATING CONTRIBUTOR GRID -->
+<a href="https://github.com/Varunshiyam/QUICK-PLATE-CRM/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Varunshiyam/QUICK-PLATE-CRM&columns=12&anon=1" width="100%" />
+</a>
+
+<br/><br/>
+
+*Made with [contrib.rocks](https://contrib.rocks) · Auto-updates with every merged PR*
+
+</div>
+
+<br/>
+
+### 🏆 Project Maintainer
+
+<table>
+<tr>
+<td align="center" width="200">
+  <a href="https://github.com/Varunshiyam">
+    <img src="https://github.com/Varunshiyam.png" width="100" height="100" style="border-radius:50%" alt="Varunshiyam"/>
+    <br/>
+    <b>Varun Shiyam</b>
+  </a>
+  <br/>
+  <sub>🏗️ Creator & Maintainer</sub>
+  <br/><br/>
+  <a href="https://github.com/Varunshiyam"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github" alt="GitHub"/></a>
+</td>
+</tr>
+</table>
+
+### 🌟 GSSoC'26 Contributors
+
+> Every contributor listed below has made meaningful contributions to QuickPlate through the GirlScript Summer of Code 2026 program. Thank you for making QuickPlate better! 🧡
+
+<table>
+<tr>
+<td align="center" width="150">
+  <a href="https://github.com/Siddh2024">
+    <img src="https://github.com/Siddh2024.png" width="80" height="80" style="border-radius:50%" alt="Siddh2024"/>
+    <br/><b>Siddh Sharma</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Price_Fix-22c55e?style=flat-square&logoColor=white" alt=""/>
+  <img src="https://img.shields.io/badge/Env_Vars-3b82f6?style=flat-square" alt=""/>
+  <img src="https://img.shields.io/badge/Navbar-8b5cf6?style=flat-square" alt=""/>
+  <img src="https://img.shields.io/badge/Filter-f59e0b?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/PrishaJain64">
+    <img src="https://github.com/PrishaJain64.png" width="80" height="80" style="border-radius:50%" alt="PrishaJain64"/>
+    <br/><b>Prisha Jain</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Coupon_System-22c55e?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/anshul23102">
+    <img src="https://github.com/anshul23102.png" width="80" height="80" style="border-radius:50%" alt="anshul23102"/>
+    <br/><b>Anshul</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Security-ef4444?style=flat-square" alt=""/>
+  <img src="https://img.shields.io/badge/Auth_Fix-ef4444?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/sheeeuWu">
+    <img src="https://github.com/sheeeuWu.png" width="80" height="80" style="border-radius:50%" alt="sheeeuWu"/>
+    <br/><b>Shefali</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Tabs_Filter-3b82f6?style=flat-square" alt=""/>
+  <img src="https://img.shields.io/badge/Order_UI-8b5cf6?style=flat-square" alt=""/>
+</td>
+</tr>
+<tr>
+<td align="center" width="150">
+  <a href="https://github.com/Sharanyaaa08">
+    <img src="https://github.com/Sharanyaaa08.png" width="80" height="80" style="border-radius:50%" alt="Sharanyaaa08"/>
+    <br/><b>Sharanya</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Discover_Filter-22c55e?style=flat-square" alt=""/>
+  <img src="https://img.shields.io/badge/Navigation-3b82f6?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/akshatsinghai6682-sketch">
+    <img src="https://github.com/akshatsinghai6682-sketch.png" width="80" height="80" style="border-radius:50%" alt="akshatsinghai6682-sketch"/>
+    <br/><b>Akshat Singhai</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Empty_Cart_UX-f59e0b?style=flat-square" alt=""/>
+  <img src="https://img.shields.io/badge/Clean_Fix-22c55e?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/saam-07">
+    <img src="https://github.com/saam-07.png" width="80" height="80" style="border-radius:50%" alt="saam-07"/>
+    <br/><b>Saamya Narayan</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Help_Modal-8b5cf6?style=flat-square" alt=""/>
+  <img src="https://img.shields.io/badge/Address_Fix-3b82f6?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/shalinchristian">
+    <img src="https://github.com/shalinchristian.png" width="80" height="80" style="border-radius:50%" alt="shalinchristian"/>
+    <br/><b>Shalin Christian</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/A11y-22c55e?style=flat-square" alt=""/>
+  <img src="https://img.shields.io/badge/API_Errors-ef4444?style=flat-square" alt=""/>
+</td>
+</tr>
+<tr>
+<td align="center" width="150">
+  <a href="https://github.com/ayushyadav0707">
+    <img src="https://github.com/ayushyadav0707.png" width="80" height="80" style="border-radius:50%" alt="ayushyadav0707"/>
+    <br/><b>Ayush Yadav</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/PWA_Support-635BFF?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/oshin-30">
+    <img src="https://github.com/oshin-30.png" width="80" height="80" style="border-radius:50%" alt="oshin-30"/>
+    <br/><b>Oshin</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Edit_Profile-22c55e?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/krishattri01">
+    <img src="https://github.com/krishattri01.png" width="80" height="80" style="border-radius:50%" alt="krishattri01"/>
+    <br/><b>Krish Attri</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Skeleton_UI-f59e0b?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/aryankalra404">
+    <img src="https://github.com/aryankalra404.png" width="80" height="80" style="border-radius:50%" alt="aryankalra404"/>
+    <br/><b>Aryan Kalra</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Payment_Fix-ef4444?style=flat-square" alt=""/>
+</td>
+</tr>
+<tr>
+<td align="center" width="150">
+  <a href="https://github.com/Vidheendu">
+    <img src="https://github.com/Vidheendu.png" width="80" height="80" style="border-radius:50%" alt="Vidheendu"/>
+    <br/><b>Vidheendu</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Analytics-8b5cf6?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/Varshinigurram">
+    <img src="https://github.com/Varshinigurram.png" width="80" height="80" style="border-radius:50%" alt="Varshinigurram"/>
+    <br/><b>Varshini</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Theme_Toggle-f59e0b?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/yashvi-3106">
+    <img src="https://github.com/yashvi-3106.png" width="80" height="80" style="border-radius:50%" alt="yashvi-3106"/>
+    <br/><b>Yashvi</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Discover_V2-22c55e?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/Priyanshu-ai902">
+    <img src="https://github.com/Priyanshu-ai902.png" width="80" height="80" style="border-radius:50%" alt="Priyanshu-ai902"/>
+    <br/><b>Priyanshu</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Address_Mgmt-3b82f6?style=flat-square" alt=""/>
+  <img src="https://img.shields.io/badge/Validation-ef4444?style=flat-square" alt=""/>
+</td>
+</tr>
+<tr>
+<td align="center" width="150">
+  <a href="https://github.com/parasmani-dev">
+    <img src="https://github.com/parasmani-dev.png" width="80" height="80" style="border-radius:50%" alt="parasmani-dev"/>
+    <br/><b>Parasmani</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Feature-22c55e?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/yousuf-26-07">
+    <img src="https://github.com/yousuf-26-07.png" width="80" height="80" style="border-radius:50%" alt="yousuf-26-07"/>
+    <br/><b>Mohamed Yousuf</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/FAQ-3b82f6?style=flat-square" alt=""/>
+  <img src="https://img.shields.io/badge/Address_Fix-22c55e?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/Jeshika311">
+    <img src="https://github.com/Jeshika311.png" width="80" height="80" style="border-radius:50%" alt="Jeshika311"/>
+    <br/><b>Jeshika</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Contact_UI-8b5cf6?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/sonal-jakhar">
+    <img src="https://github.com/sonal-jakhar.png" width="80" height="80" style="border-radius:50%" alt="sonal-jakhar"/>
+    <br/><b>Sonal Jakhar</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Download_Btn-f59e0b?style=flat-square" alt=""/>
+</td>
+</tr>
+<tr>
+<td align="center" width="150">
+  <a href="https://github.com/Akshita-2307">
+    <img src="https://github.com/Akshita-2307.png" width="80" height="80" style="border-radius:50%" alt="Akshita-2307"/>
+    <br/><b>Akshita</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Alt_Text-22c55e?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/RiddhiBose">
+    <img src="https://github.com/RiddhiBose.png" width="80" height="80" style="border-radius:50%" alt="RiddhiBose"/>
+    <br/><b>Riddhi Bose</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Menu_Fix-ef4444?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/Biraj-Sarkar">
+    <img src="https://github.com/Biraj-Sarkar.png" width="80" height="80" style="border-radius:50%" alt="Biraj-Sarkar"/>
+    <br/><b>Biraj Sarkar</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Search_Filter-3b82f6?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/puvvalasanjanagayathri-eng">
+    <img src="https://github.com/puvvalasanjanagayathri-eng.png" width="80" height="80" style="border-radius:50%" alt="puvvalasanjanagayathri-eng"/>
+    <br/><b>Sanjana</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Veg_Filter-22c55e?style=flat-square" alt=""/>
+</td>
+</tr>
+<tr>
+<td align="center" width="150">
+  <a href="https://github.com/shanupriya0311">
+    <img src="https://github.com/shanupriya0311.png" width="80" height="80" style="border-radius:50%" alt="shanupriya0311"/>
+    <br/><b>Shanupriya</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Payment-635BFF?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/shivv2430">
+    <img src="https://github.com/shivv2430.png" width="80" height="80" style="border-radius:50%" alt="shivv2430"/>
+    <br/><b>Shiv</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Brand_Logo-f59e0b?style=flat-square" alt=""/>
+  <img src="https://img.shields.io/badge/Dark_Mode-8b5cf6?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/shineetejol9">
+    <img src="https://github.com/shineetejol9.png" width="80" height="80" style="border-radius:50%" alt="shineetejol9"/>
+    <br/><b>Shinee Tejol</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Contributions-22c55e?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/NiranjanRSoorej06">
+    <img src="https://github.com/NiranjanRSoorej06.png" width="80" height="80" style="border-radius:50%" alt="NiranjanRSoorej06"/>
+    <br/><b>Niranjan</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Titlebar-3b82f6?style=flat-square" alt=""/>
+</td>
+</tr>
+<tr>
+<td align="center" width="150">
+  <a href="https://github.com/Dippp10-ally">
+    <img src="https://github.com/Dippp10-ally.png" width="80" height="80" style="border-radius:50%" alt="Dippp10-ally"/>
+    <br/><b>Dippp</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Docs-3b82f6?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/Aarya1402">
+    <img src="https://github.com/Aarya1402.png" width="80" height="80" style="border-radius:50%" alt="Aarya1402"/>
+    <br/><b>Aarya</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Test_Coverage-ef4444?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/Mohit-001-hash">
+    <img src="https://github.com/Mohit-001-hash.png" width="80" height="80" style="border-radius:50%" alt="Mohit-001-hash"/>
+    <br/><b>Mohit</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/Prereqs_Fix-22c55e?style=flat-square" alt=""/>
+</td>
+<td align="center" width="150">
+  <a href="https://github.com/lakshiii08">
+    <img src="https://github.com/lakshiii08.png" width="80" height="80" style="border-radius:50%" alt="lakshiii08"/>
+    <br/><b>Lakshi</b>
+  </a>
+  <br/>
+  <img src="https://img.shields.io/badge/GSSoC_Dev-FF6600?style=flat-square" alt=""/>
+</td>
+</tr>
+</table>
+
+<div align="right"><a href="#-table-of-contents">⬆️ Back to Top</a></div>
 
 ---
 
@@ -890,71 +1633,31 @@ sfdx force:user:permset:assign -n QuickPlate_Customer_Access -u user@email.com
 
 ### Optimizations Implemented
 
-- ⚡ **React Code Splitting**: Lazy loading for routes
-- 🔄 **API Response Caching**: 5-minute TTL for restaurant lists
-- 📊 **Database Indexing**: Indexed fields on Customer, Order, Restaurant
-- 🚀 **Salesforce Bulk Processing**: Batch Apex for high-volume operations
-- 💾 **State Management**: Redux for client-side caching
+- ⚡ **React Code Splitting** — Lazy loading for routes
+- 🔄 **API Response Caching** — 5-minute TTL for restaurant lists
+- 📊 **Database Indexing** — Indexed fields on Customer, Order, Restaurant
+- 🚀 **Salesforce Bulk Processing** — Batch Apex for high-volume operations
+- 💾 **Zustand State Management** — Lightweight client-side store
+- 🎨 **Framer Motion** — Hardware-accelerated animations
+- 📱 **PWA** — Service worker caching for offline support
 
 ### Scalability Metrics
 
 | Metric | Target | Current |
-|--------|--------|---------|
+|:-------|:------:|:-------:|
 | API Response Time | < 200ms | 150ms avg |
 | Order Processing | < 2s | 1.8s avg |
 | Concurrent Users | 10,000+ | Tested to 15,000 |
 | Orders/Hour | 5,000+ | Supports 7,500 |
 | Database Growth | Linear | Optimized indexes |
 
----
-
-## 🧪 Testing
-
-```bash
-# Run unit tests
-npm test
-
-# Run integration tests
-npm run test:integration
-
-# Run E2E tests
-npm run test:e2e
-
-# Coverage report
-npm run test:coverage
-```
-
-### Salesforce Testing
-
-```bash
-# Run Apex tests
-sfdx force:apex:test:run -n OrderAPITest,PaymentServiceTest -r human
-```
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Please follow these guidelines:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Code Style
-
-- Follow [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
-- Use ESLint and Prettier
-- Write meaningful commit messages
-- Add tests for new features
+<div align="right"><a href="#-table-of-contents">⬆️ Back to Top</a></div>
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
@@ -964,7 +1667,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Need Help?**
 
-[📧 Email Support](mailto:support@quickplate.com) • [💬 Discord Community](https://discord.gg/quickplate) • [📚 Documentation](https://docs.quickplate.com)
+[📧 Email Support](mailto:varunshiyam.analyst@gmail.com) · [🐛 Report Bug](https://github.com/Varunshiyam/QUICK-PLATE-CRM/issues/new) · [💡 Request Feature](https://github.com/Varunshiyam/QUICK-PLATE-CRM/issues/new) · [📚 Salesforce Docs](./Salesforce-CRM/README.md)
 
 </div>
 
@@ -972,19 +1675,23 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- Firebase Team for authentication services
-- Stripe for payment infrastructure
-- Salesforce for enterprise CRM platform
-- React community for amazing tools and libraries
+- **Firebase Team** — Authentication services & hosting
+- **Stripe** — Payment infrastructure & webhook system
+- **Salesforce** — Enterprise CRM platform & Lightning
+- **React Community** — Amazing tools and libraries
+- **GirlScript Foundation** — GSSoC'26 open source program
+- **All Contributors** — For making QuickPlate better every day! 🧡
 
 ---
 
 <div align="center">
 
-**Built with ❤️ by the QuickPlate Team**
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF6B00,50:FF8C00,100:FFB347&height=120&section=footer&fontSize=20&fontColor=ffffff&animation=fadeIn" width="100%" />
 
-⭐ Star us on GitHub — it helps!
+**Built with ❤️ by [Varun Shiyam](https://github.com/Varunshiyam) & the QuickPlate Community**
 
-[Website](https://quickplate.com) • [Blog](https://blog.quickplate.com) • [Twitter](https://twitter.com/quickplate)
+⭐ **Star us on GitHub** — it motivates contributors and helps the project grow!
+
+[🌐 Live Demo](https://quick-plate-crm.web.app/) · [📘 GSSoC Guide](./gssoc26/Readme.md) · [☁️ Salesforce Docs](./Salesforce-CRM/README.md)
 
 </div>
