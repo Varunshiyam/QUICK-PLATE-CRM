@@ -49,14 +49,14 @@ contributors = [
 print(f"Fetching avatars for {len(contributors)} contributors...")
 avatars = {}
 
-# Fallback 1x1 png in case of fetch failure
-fallback_png = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+# Fallback 1x1 transparent png
+fallback_png = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAA bibliography"
 
 for c in contributors:
     username = c["user"]
     url = f"https://github.com/{username}.png?size=140"
     try:
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)'})
         with urllib.request.urlopen(req, context=ctx, timeout=10) as response:
             data = response.read()
             avatars[username] = base64.b64encode(data).decode('utf-8')
@@ -88,15 +88,15 @@ for i, c in enumerate(all_cards):
     badge = html.escape(c["badge"])
     b64_img = avatars.get(c["user"], fallback_png)
     
-    # Clip id
-    clip_id = f"clip-{i}"
+    # Unique Clip id
+    clip_id = f"avatar-clip-{i}"
     
     card = f"""
     <!-- Card {i}: {username} -->
     <g transform="translate({x}, 20)">
       <defs>
-        <clipPath id="{clip_id}">
-          <circle cx="150" cy="115" r="62"/>
+        <clipPath id="{clip_id}" clipPathUnits="userSpaceOnUse">
+          <circle cx="150" cy="115" r="58"/>
         </clipPath>
       </defs>
       
@@ -105,11 +105,11 @@ for i, c in enumerate(all_cards):
       <rect x="0" y="0" width="{card_width}" height="{card_height}" rx="24" ry="24" fill="none" stroke="url(#border-grad)" stroke-width="1" opacity="0.6"/>
       
       <!-- Glow accent behind avatar -->
-      <circle cx="150" cy="115" r="68" fill="{color}" opacity="0.18" filter="url(#blur-glow)"/>
-      <circle cx="150" cy="115" r="65" fill="none" stroke="{color}" stroke-width="3.5"/>
+      <circle cx="150" cy="115" r="64" fill="{color}" opacity="0.2" filter="url(#blur-glow)"/>
+      <circle cx="150" cy="115" r="62" fill="none" stroke="{color}" stroke-width="3"/>
       
       <!-- Avatar -->
-      <image href="data:image/png;base64,{b64_img}" x="88" y="53" width="124" height="124" clip-path="url(#{clip_id})"/>
+      <image href="data:image/png;base64,{b64_img}" xlink:href="data:image/png;base64,{b64_img}" x="92" y="57" width="116" height="116" preserveAspectRatio="xMidYMid slice" clip-path="url(#{clip_id})"/>
       
       <!-- Made with Love badge -->
       <g transform="translate(18, 20)">
