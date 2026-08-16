@@ -1,0 +1,157 @@
+.wallet-page {
+  min-height: 100dvh;
+  background-color: #f8fafc;
+  padding-bottom: 8rem;
+}
+
+.wallet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.wallet-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: #0f172a;
+  margin: 0;
+}
+
+.wallet-back-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #0f172a;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.wallet-main {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.wallet-balance-card {
+  width: 100%;
+  background: linear-gradient(135deg, #fb7e18 0%, #d4630a 100%);
+  border-radius: 24px;
+  padding: 2.5rem 1.5rem;
+  color: white;
+  text-align: center;
+  box-shadow: 0 14px 30px -8px rgba(251, 126, 24, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.wallet-balance-card::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+  border-radius: 50%;
+}
+
+.balance-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.balance-amount {
+  font-family: 'Outfit', sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 0;
+}
+
+.wallet-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+}
+
+.action-btn {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: #0f172a;
+  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.03);
+}
+
+.action-icon {
+  background: rgba(251, 126, 24, 0.1);
+  padding: 0.875rem;
+  border-radius: 50%;
+  color: #fb7e18;
+  font-size: 1.5rem;
+  display: flex;
+}
+
+.action-btn span {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.recent-activity {
+  width: 100%;
+}
+
+.activity-title {
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 0;
+  color: #94a3b8;
+  text-align: center;
+}
+
+.empty-state .material-symbols-outlined {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-state p {
+  font-weight: 500;
+  font-size: 0.875rem;
+}

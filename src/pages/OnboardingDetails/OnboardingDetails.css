@@ -1,0 +1,308 @@
+/* src/pages/OnboardingDetails/OnboardingDetails.css */
+
+.obd-page {
+  position: relative;
+  display: flex;
+  min-height: 100dvh;
+  width: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  max-width: 480px;
+  margin: 0 auto;
+  background-color: #f8f7f5;
+  font-family: 'Inter', var(--font-display, sans-serif);
+}
+
+@media (prefers-color-scheme: dark) {
+  .obd-page {
+    background-color: #23180f;
+  }
+}
+
+.obd-bg-icon {
+  position: absolute;
+  top: -2.5rem;
+  right: -2.5rem;
+  opacity: 0.1;
+  pointer-events: none;
+  transform: rotate(12deg);
+}
+
+.obd-bg-icon .material-symbols-outlined {
+  font-size: 200px;
+  color: #fb7e18;
+}
+
+.obd-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  padding: 4rem 1.5rem 2.5rem;
+  flex: 1;
+}
+
+/* Header */
+
+.obd-header {
+  margin-bottom: 2.5rem;
+}
+
+.obd-icon-badge {
+  width: 3rem;
+  height: 3rem;
+  background-color: rgba(251, 126, 24, 0.1);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.obd-icon-badge .material-symbols-outlined {
+  color: #fb7e18;
+  font-size: 1.875rem;
+}
+
+.obd-title {
+  color: #0f172a;
+  font-size: 2.25rem;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+@media (prefers-color-scheme: dark) {
+  .obd-title {
+    color: #f1f5f9;
+  }
+}
+
+.obd-primary-text {
+  color: #fb7e18;
+}
+
+.obd-subtitle {
+  margin-top: 0.75rem;
+  color: #475569;
+  font-size: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .obd-subtitle {
+    color: #94a3b8;
+  }
+}
+
+/* Location Section */
+
+.obd-section {
+  margin-bottom: 2rem;
+}
+
+.obd-label {
+  color: #0f172a;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  display: block;
+  margin-left: 0.25rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .obd-label {
+    color: #f1f5f9;
+  }
+}
+
+.obd-location-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: rgba(251, 126, 24, 0.05);
+  border: 2px dashed rgba(251, 126, 24, 0.3);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s, opacity 0.2s;
+}
+
+.obd-location-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.obd-location-btn:not(:disabled):hover {
+  background-color: rgba(251, 126, 24, 0.1);
+}
+
+.obd-location-btn-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.obd-location-icon-wrapper {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: #fb7e18;
+  color: #fff;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.obd-location-icon-wrapper .material-symbols-outlined {
+  font-size: 1.25rem;
+}
+
+.obd-location-text {
+  text-align: left;
+}
+
+.obd-location-title {
+  color: #0f172a;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .obd-location-title {
+    color: #f1f5f9;
+  }
+}
+
+.obd-location-sub {
+  color: #64748b;
+  font-size: 0.75rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .obd-location-sub {
+    color: #94a3b8;
+  }
+}
+
+.obd-chevron {
+  color: #fb7e18;
+  transition: transform 0.2s;
+}
+
+.obd-location-btn:hover .obd-chevron {
+  transform: translateX(0.25rem);
+}
+
+/* Form Styles */
+
+.obd-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.obd-input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.obd-input-box {
+  position: relative;
+}
+
+.obd-input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 1.25rem;
+}
+
+.obd-input {
+  width: 100%;
+  height: 3.5rem;
+  padding-left: 3rem;
+  padding-right: 1rem;
+  border-radius: 1rem;
+  border: none;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  color: #0f172a;
+  font-size: 1rem;
+}
+
+.obd-input:focus {
+  outline: 2px solid #fb7e18;
+  outline-offset: -2px;
+}
+
+.obd-input::placeholder {
+  color: #94a3b8;
+}
+
+@media (prefers-color-scheme: dark) {
+  .obd-input {
+    background-color: #1e293b;
+    color: #f1f5f9;
+  }
+}
+
+/* Footer Section */
+
+.obd-spacer {
+  flex-grow: 1;
+}
+
+.obd-footer {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.obd-submit-btn {
+  width: 100%;
+  height: 4rem;
+  background-color: #fb7e18;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(251, 126, 24, 0.2), 0 4px 6px -2px rgba(251, 126, 24, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s, background-color 0.2s, opacity 0.2s;
+}
+
+.obd-submit-btn:hover:not(:disabled) {
+  background-color: rgba(251, 126, 24, 0.9);
+}
+
+.obd-submit-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.obd-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.obd-legal-text {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  padding: 0 1rem;
+}
+
+.obd-legal-text a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(251, 126, 24, 0.3);
+  color: inherit;
+}
