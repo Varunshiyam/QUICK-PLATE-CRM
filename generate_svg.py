@@ -2,6 +2,8 @@ import urllib.request
 import base64
 import os
 import ssl
+import html
+import xml.etree.ElementTree as ET
 
 # Ignore SSL verification if needed
 ctx = ssl.create_default_context()
@@ -10,7 +12,7 @@ ctx.verify_mode = ssl.CERT_NONE
 
 contributors = [
     {"user": "Varunshiyam", "name": "Varun Shiyam", "tag": "PROJECT CREATOR", "color": "#FF6B00", "badge": "👑 Maintainer"},
-    {"user": "Siddh2024", "name": "Siddh Sharma", "tag": "PRICE & CURRENCY", "color": "#22c55e", "badge": "⭐ Core Contributor"},
+    {"user": "Siddh2024", "name": "Siddh Sharma", "tag": "PRICE & CURRENCY", "color": "#22c55e", "badge": "⭐ Core Dev"},
     {"user": "PrishaJain64", "name": "Prisha Jain", "tag": "COUPON SYSTEM", "color": "#ec4899", "badge": "⭐ GSSoC'26"},
     {"user": "anshul23102", "name": "Anshul", "tag": "API SECURITY", "color": "#ef4444", "badge": "🛡️ Security"},
     {"user": "sheeeuWu", "name": "Shefali", "tag": "TABS & ORDER UI", "color": "#8b5cf6", "badge": "🎨 Frontend"},
@@ -70,8 +72,8 @@ total_unit = card_width + card_gap
 num_cards = len(contributors)
 total_scroll_dist = num_cards * total_unit
 
-# Duration: ~4 seconds per card for smooth sliding
-anim_duration = max(40, num_cards * 3.5)
+# Duration: ~3.5s per card
+anim_duration = int(num_cards * 3.5)
 
 # Duplicate the list once for seamless looping
 all_cards = contributors + contributors
@@ -79,12 +81,12 @@ all_cards = contributors + contributors
 cards_svg = []
 for i, c in enumerate(all_cards):
     x = i * total_unit
-    username = c["user"]
-    display_name = c["name"]
-    tag = c["tag"]
-    color = c["color"]
-    badge = c["badge"]
-    b64_img = avatars.get(username, fallback_png)
+    username = html.escape(c["user"])
+    display_name = html.escape(c["name"])
+    tag = html.escape(c["tag"])
+    color = html.escape(c["color"])
+    badge = html.escape(c["badge"])
+    b64_img = avatars.get(c["user"], fallback_png)
     
     # Clip id
     clip_id = f"clip-{i}"
@@ -109,7 +111,7 @@ for i, c in enumerate(all_cards):
       <!-- Avatar -->
       <image href="data:image/png;base64,{b64_img}" x="88" y="53" width="124" height="124" clip-path="url(#{clip_id})"/>
       
-      <!-- Made with Love / Badge Tag at top right -->
+      <!-- Made with Love badge -->
       <g transform="translate(18, 20)">
         <rect x="0" y="0" width="110" height="22" rx="11" fill="#0f172a" stroke="#334155" stroke-width="1"/>
         <text x="55" y="15" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" text-anchor="middle">Made with ❤️</text>
@@ -145,7 +147,7 @@ for i, c in enumerate(all_cards):
     """
     cards_svg.append(card)
 
-svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 460" width="100%" height="460">
+svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1080 460" width="100%" height="460">
   <defs>
     <!-- Linear Gradients for Cards -->
     <linearGradient id="card-grad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -193,5 +195,12 @@ svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 460"
 
 with open("docs/contributors.svg", "w", encoding="utf-8") as f:
     f.write(svg_content)
+
+# Validate XML strictly
+try:
+    ET.fromstring(svg_content)
+    print("✅ XML Validation PASSED! Valid SVG structure.")
+except Exception as e:
+    print(f"❌ XML Validation FAILED: {e}")
 
 print(f"🎉 Successfully generated docs/contributors.svg ({len(svg_content)} bytes)")
