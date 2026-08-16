@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
+import logo from '../../assets/logo.png';
 import useHaptic from '../../hooks/useHaptic';
 import ThemeToggle from '../../components/ThemeToggle';
 import './Landing.css';
@@ -92,7 +93,7 @@ const Landing = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
         >
-          <div className="landing-logo">QP</div>
+          <img src={logo} alt="Quick Plate Logo" className="landing-logo-img" />
           <div className="landing-nav-links">
             <Link to="/" className="landing-nav-link active" onClick={lightTap}>
               Home

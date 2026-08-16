@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import ThemeToggle from '../../components/ThemeToggle';
+import logo from '../../assets/logo.png';
 import {
   FiShield, FiCreditCard, FiTruck, FiActivity,
   FiClock, FiLayers, FiSearch, FiLock,
@@ -40,7 +40,7 @@ const Features = () => {
       {/* Nav */}
       <header className="landing-header">
         <nav className="landing-nav">
-          <div className="landing-logo">QP</div>
+          <img src={logo} alt="Quick Plate Logo" className="landing-logo-img" />
           <div className="landing-nav-links">
             <Link to="/" className="landing-nav-link" onClick={lightTap}>Home</Link>
             <Link to="/features" className="landing-nav-link active" onClick={lightTap}>Features</Link>

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getStoredUser } from '../../services/firebase';
 import useHaptic from '../../hooks/useHaptic';
+import logo from '../../assets/logo.png';
 import './RaiseRefund.css';
 
 const getInitialOrders = () => {
@@ -123,7 +124,7 @@ const RaiseRefund = () => {
         {/* Branding Header */}
         <div className="rr-branding">
           <div className="rr-branding-logo">
-            <span className="material-symbols-outlined rr-brand-icon">receipt_long</span>
+            <img src={logo} alt="Quick Plate Logo" className="rr-brand-icon-img" />
             <span className="rr-brand-name">QUICK PLATE</span>
           </div>
           <p className="rr-brand-subtitle">Professional Support Powered by Salesforce</p>

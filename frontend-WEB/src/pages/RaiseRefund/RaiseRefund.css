@@ -75,8 +75,10 @@
   color: #f97f1a;
 }
 
-.rr-brand-icon {
-  font-size: 1.875rem;
+.rr-brand-icon-img {
+  height: 45px;
+  width: auto;
+  object-fit: contain;
 }
 
 .rr-brand-name {
