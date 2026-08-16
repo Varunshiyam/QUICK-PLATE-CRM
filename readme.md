@@ -1253,7 +1253,7 @@ sf org assign permset --name QuickPlate_Customer_Access --target-org user@email.
 
 ---
 
-## Contributors👩💻👨💻
+## Contributors💖
 
 <div align="center">
 
