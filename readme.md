@@ -239,6 +239,16 @@ QuickPlate's Salesforce backend is a **dual-interface** system powering both the
 ║                                                              ║
 ╚══════════════════════════════════════════════════════════════╝
 ```
+<img width="2048" height="640" alt="10" src="https://github.com/user-attachments/assets/8b7fd96d-60e5-4c9e-ada2-ddc3247829c8" />
+
+<img width="2048" height="640" alt="8" src="https://github.com/user-attachments/assets/7d93646e-b347-4505-82e6-f1fb03bbceff" />
+
+<img width="2048" height="640" alt="9" src="https://github.com/user-attachments/assets/ef708769-ac8a-4f5d-bc36-dec1c9126f09" />
+
+<img width="2048" height="640" alt="11" src="https://github.com/user-attachments/assets/92a8fbdc-0b02-4e32-8a8e-3d3b1405cd99" />
+
+
+
 
 ### 👥 Platform Teams
 
