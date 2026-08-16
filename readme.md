@@ -1258,7 +1258,7 @@ sf org assign permset --name QuickPlate_Customer_Access --target-org user@email.
 <div align="center">
 
 <p>
-  <img src="https://api.vaunt.dev/v1/github/entities/Varunshiyam/repositories/QUICK-PLATE-CRM/contributors?format=svg&limit=54" width="750" height="260" alt="QuickPlate Contributors" />
+  <img src="https://raw.githubusercontent.com/Varunshiyam/QUICK-PLATE-CRM/main/docs/contributors.svg" width="100%" alt="QuickPlate Contributors" />
 </p>
 
 </div>
